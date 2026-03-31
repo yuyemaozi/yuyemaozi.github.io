@@ -226,7 +226,45 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#正文">正文</a>
+      <ol>
+        <li><a href="#简单介绍">简单介绍</a></li>
+        <li><a href="#数值种类">数值种类</a></li>
+        <li><a href="#数值表示">数值表示</a></li>
+        <li><a href="#杂项">杂项</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -280,7 +318,8 @@
     >HDLBits</a>，由于是纯英语网站，所以需要配合浏览器的沉浸式翻译，其实效果也一般，也可以借助AI，不过只用作翻译，不要要求它解答</p>
 <p>由于是个人的回顾，所以整体的思路不连贯，仅仅作个人记录</p>
 <h2 id="正文">正文
-</h2><div class="highlight"><div class="chroma">
+</h2><h3 id="简单介绍">简单介绍
+</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -334,7 +373,123 @@
 </span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这是从菜鸟教程里随便拿的一个代码</p>
+</div><p>这是从菜鸟教程里随便拿的一个代码，大致总结一下基本的语法之类的内容</p>
+<hr>
+<p><strong>moudle</strong>和<strong>endmoule</strong>之间的就是一个电路模块，可以理解位编程语言的函数</p>
+<p><strong>counter10</strong>就是一个电路的名字，方便之后复用</p>
+<p>之后会进行端口的定义在**（）；<strong>中间，不同端口之间用</strong>，** 分隔开（显然都是英语的符号）</p>
+<p><strong>input</strong>是输入接口<strong>output</strong>是输出接口，可以定义线宽</p>
+<hr>
+<p>reg，是寄存器类型，wire是线类型，他们中间都能用**[  :  ]**来定义线宽，之后就是定义名称</p>
+<p>assign相当于连线的意思</p>
+<p>之后的always模块就留到之后介绍了</p>
+<hr>
+<h3 id="数值种类">数值种类
+</h3><p>Verilog HDL 有下列四种基本的值来表示硬件电路中的电平逻辑：</p>
+<ul>
+<li>0：逻辑 0 或 &ldquo;假&rdquo;</li>
+<li>1：逻辑 1 或 &ldquo;真&rdquo;</li>
+<li>x 或 X：未知</li>
+<li>z 或 Z：高阻</li>
+</ul>
+<p><strong>X</strong>意味着信号数值的不确定，即在实际电路里，信号可能为 1，也可能为 0。</p>
+<p><strong>Z</strong>表示高阻状态，字面意思，有很高的阻值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="c1">// 多个设备都想用同一条数据总线
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">assign</span> <span class="n">data_bus</span> <span class="o">=</span> <span class="p">(</span><span class="n">enable1</span><span class="p">)</span> <span class="o">?</span> <span class="n">data_out1</span> <span class="o">:</span> <span class="mh">1</span><span class="p">&#39;</span><span class="n">bz</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">assign</span> <span class="n">data_bus</span> <span class="o">=</span> <span class="p">(</span><span class="n">enable2</span><span class="p">)</span> <span class="o">?</span> <span class="n">data_out2</span> <span class="o">:</span> <span class="mh">1</span><span class="p">&#39;</span><span class="n">bz</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>当 <code>enable1=1</code>：设备1驱动总线</li>
+<li>当 <code>enable2=1</code>：设备2驱动总线</li>
+<li>当都不使能：总线处于高阻，谁都没驱动</li>
+</ul>
+<h3 id="数值表示">数值表示
+</h3><p>数字声明时，合法的基数格式有 4 中，包括：十进制(&rsquo;d 或 &lsquo;D)，十六进制(&lsquo;h 或 &lsquo;H)，二进制（&lsquo;b 或 &lsquo;B），八进制（&lsquo;o 或 &lsquo;O）。数值可指明位宽，也可不指明位宽。</p>
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="mh">4</span><span class="mb">&#39;b1011</span>         <span class="c1">// 4bit 数值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mh">32&#39;h3022</span><span class="n">_c0de</span>   <span class="c1">// 32bit 的数值
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><font color="red">前面的数字是2进制下的位数，不是该进制下的位数</font></p>
+<p>一般直接写数字时，默认为十进制表示，例如下面的 3 种写法是等效的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="n">counter</span> <span class="o">=</span> <span class="mi">&#39;d100</span> <span class="p">;</span> <span class="c1">//一般会根据编译器自动分频位宽，常见的为32bit
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">counter</span> <span class="o">=</span> <span class="mh">100</span> <span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">counter</span> <span class="o">=</span> <span class="mh">32&#39;h64</span> <span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><font color="red">常见32bit，需要注意的是如果在不指定位宽的数前面加-，可能会出现问题</font></p>
+<p>具体例子：</p>
+<p><code>mula = -4'd4 ;</code></p>
+<p>在 Verilog 里，<strong><code>-4'd4</code> 并不是直接存 -4 的补码，而是先计算 4&rsquo;d4 = 0100，然后对整个数取负</strong>。</p>
+<p>但 <code>0100</code> 作为无符号数是 4，作为有符号数是 +4。-4 的 4位补码应该是 <code>1100</code>（-8 ~ +7 的范围）。</p>
+<p>32 位的 -4 是多少？</p>
+<ul>
+<li>4 的 32 位二进制：<code>00000000_00000000_00000000_00000100</code></li>
+<li>取负（补码）：<code>11111111_11111111_11111111_11111100</code></li>
+</ul>
+<p>所以一定要定义位宽，这是一个好习惯</p>
+<h3 id="杂项">杂项
+</h3><hr>
+<p><code>[   :   ]</code> 定义位宽的时候用的小端模式，意思是大数在左边</p>
+<p>小端模式是最小位在左侧的意思</p>
+<hr>
+<p><strong>多维数组</strong></p>
+<p>Verilog指出定义多维数组，和编程语言一样</p>
+<p>支持<code>reg</code> 和<code>wire</code>类型的多维数组的定义</p>
+<hr>
+<p><code>integer</code>的使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">integer</span> <span class="n">j</span><span class="p">;</span>  <span class="c1">// 声明一个整数变量 j
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">always</span><span class="p">@</span><span class="o">*</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mh">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;=</span><span class="mh">3</span><span class="p">;</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>  <span class="c1">// j 用来控制循环次数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">byte1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">data1</span><span class="p">[(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">*</span><span class="mh">8</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="n">j</span><span class="o">*</span><span class="mh">8</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的j就是在always块中充当一个变量，用来描述这个电路功能的变量</p>
+<p>特点：</p>
+<ul>
+<li>在 Verilog 标准里，<code>integer</code> 的位宽是<strong>实现相关的</strong>，但绝大多数仿真器和综合工具都把它当作<strong>32位有符号整数</strong>。</li>
+<li>如果你在 <code>always</code> 块里用 <code>integer</code> 做循环控制，是<strong>可以综合成硬件</strong>的。例如上面的代码，综合工具会把它展开成实际的硬件逻辑。</li>
+</ul>
+<hr>
+<p>使用<code>{}</code>拼接时要注意拼接时有顺序的</p>
+<p><code>{32{1'b0}}</code> 意思是32个一位2进制的0，可以方便拼接</p>
+<hr>
+<p><code>&amp;&amp;</code>符号是将两边的数作为真假</p>
+<p>而<code>&amp;</code>是将两个数的每一位做与运算，注意这一点，其他的逻辑符号类似</p>
+<hr>
 
 </section>
 

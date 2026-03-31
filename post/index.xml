@@ -18,7 +18,8 @@
     &gt;HDLBits&lt;/a&gt;，由于是纯英语网站，所以需要配合浏览器的沉浸式翻译，其实效果也一般，也可以借助AI，不过只用作翻译，不要要求它解答&lt;/p&gt;
 &lt;p&gt;由于是个人的回顾，所以整体的思路不连贯，仅仅作个人记录&lt;/p&gt;
 &lt;h2 id=&#34;正文&#34;&gt;正文
-&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;/h2&gt;&lt;h3 id=&#34;简单介绍&#34;&gt;简单介绍
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
@@ -72,7 +73,123 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;endmodule&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;这是从菜鸟教程里随便拿的一个代码&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;这是从菜鸟教程里随便拿的一个代码，大致总结一下基本的语法之类的内容&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;moudle&lt;/strong&gt;和&lt;strong&gt;endmoule&lt;/strong&gt;之间的就是一个电路模块，可以理解位编程语言的函数&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;counter10&lt;/strong&gt;就是一个电路的名字，方便之后复用&lt;/p&gt;
+&lt;p&gt;之后会进行端口的定义在**（）；&lt;strong&gt;中间，不同端口之间用&lt;/strong&gt;，** 分隔开（显然都是英语的符号）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;input&lt;/strong&gt;是输入接口&lt;strong&gt;output&lt;/strong&gt;是输出接口，可以定义线宽&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;reg，是寄存器类型，wire是线类型，他们中间都能用**[  :  ]**来定义线宽，之后就是定义名称&lt;/p&gt;
+&lt;p&gt;assign相当于连线的意思&lt;/p&gt;
+&lt;p&gt;之后的always模块就留到之后介绍了&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;数值种类&#34;&gt;数值种类
+&lt;/h3&gt;&lt;p&gt;Verilog HDL 有下列四种基本的值来表示硬件电路中的电平逻辑：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;0：逻辑 0 或 &amp;ldquo;假&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;1：逻辑 1 或 &amp;ldquo;真&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;x 或 X：未知&lt;/li&gt;
+&lt;li&gt;z 或 Z：高阻&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;X&lt;/strong&gt;意味着信号数值的不确定，即在实际电路里，信号可能为 1，也可能为 0。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Z&lt;/strong&gt;表示高阻状态，字面意思，有很高的阻值&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-verilog&#34; data-lang=&#34;verilog&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 多个设备都想用同一条数据总线
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;assign&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data_bus&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;enable1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;?&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data_out1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bz&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;assign&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data_bus&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;enable2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;?&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data_out2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bz&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;当 &lt;code&gt;enable1=1&lt;/code&gt;：设备1驱动总线&lt;/li&gt;
+&lt;li&gt;当 &lt;code&gt;enable2=1&lt;/code&gt;：设备2驱动总线&lt;/li&gt;
+&lt;li&gt;当都不使能：总线处于高阻，谁都没驱动&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;数值表示&#34;&gt;数值表示
+&lt;/h3&gt;&lt;p&gt;数字声明时，合法的基数格式有 4 中，包括：十进制(&amp;rsquo;d 或 &amp;lsquo;D)，十六进制(&amp;lsquo;h 或 &amp;lsquo;H)，二进制（&amp;lsquo;b 或 &amp;lsquo;B），八进制（&amp;lsquo;o 或 &amp;lsquo;O）。数值可指明位宽，也可不指明位宽。&lt;/p&gt;
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-verilog&#34; data-lang=&#34;verilog&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;mh&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;mb&#34;&gt;&amp;#39;b1011&lt;/span&gt;         &lt;span class=&#34;c1&#34;&gt;// 4bit 数值
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mh&#34;&gt;32&amp;#39;h3022&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_c0de&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;// 32bit 的数值
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;font color=&#34;red&#34;&gt;前面的数字是2进制下的位数，不是该进制下的位数&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;一般直接写数字时，默认为十进制表示，例如下面的 3 种写法是等效的：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-verilog&#34; data-lang=&#34;verilog&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;counter&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;&amp;#39;d100&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;//一般会根据编译器自动分频位宽，常见的为32bit
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;counter&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;100&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;counter&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;32&amp;#39;h64&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;font color=&#34;red&#34;&gt;常见32bit，需要注意的是如果在不指定位宽的数前面加-，可能会出现问题&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;具体例子：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mula = -4&#39;d4 ;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在 Verilog 里，&lt;strong&gt;&lt;code&gt;-4&#39;d4&lt;/code&gt; 并不是直接存 -4 的补码，而是先计算 4&amp;rsquo;d4 = 0100，然后对整个数取负&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;但 &lt;code&gt;0100&lt;/code&gt; 作为无符号数是 4，作为有符号数是 +4。-4 的 4位补码应该是 &lt;code&gt;1100&lt;/code&gt;（-8 ~ +7 的范围）。&lt;/p&gt;
+&lt;p&gt;32 位的 -4 是多少？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;4 的 32 位二进制：&lt;code&gt;00000000_00000000_00000000_00000100&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;取负（补码）：&lt;code&gt;11111111_11111111_11111111_11111100&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以一定要定义位宽，这是一个好习惯&lt;/p&gt;
+&lt;h3 id=&#34;杂项&#34;&gt;杂项
+&lt;/h3&gt;&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;[   :   ]&lt;/code&gt; 定义位宽的时候用的小端模式，意思是大数在左边&lt;/p&gt;
+&lt;p&gt;小端模式是最小位在左侧的意思&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;多维数组&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Verilog指出定义多维数组，和编程语言一样&lt;/p&gt;
+&lt;p&gt;支持&lt;code&gt;reg&lt;/code&gt; 和&lt;code&gt;wire&lt;/code&gt;类型的多维数组的定义&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;integer&lt;/code&gt;的使用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-verilog&#34; data-lang=&#34;verilog&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;integer&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;// 声明一个整数变量 j
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;always&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;begin&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mh&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&#34;mh&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mh&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;begin&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;// j 用来控制循环次数
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;byte1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;mh&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;mh&#34;&gt;8&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;mh&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里的j就是在always块中充当一个变量，用来描述这个电路功能的变量&lt;/p&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在 Verilog 标准里，&lt;code&gt;integer&lt;/code&gt; 的位宽是&lt;strong&gt;实现相关的&lt;/strong&gt;，但绝大多数仿真器和综合工具都把它当作&lt;strong&gt;32位有符号整数&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;如果你在 &lt;code&gt;always&lt;/code&gt; 块里用 &lt;code&gt;integer&lt;/code&gt; 做循环控制，是&lt;strong&gt;可以综合成硬件&lt;/strong&gt;的。例如上面的代码，综合工具会把它展开成实际的硬件逻辑。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;使用&lt;code&gt;{}&lt;/code&gt;拼接时要注意拼接时有顺序的&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;{32{1&#39;b0}}&lt;/code&gt; 意思是32个一位2进制的0，可以方便拼接&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;符号是将两边的数作为真假&lt;/p&gt;
+&lt;p&gt;而&lt;code&gt;&amp;amp;&lt;/code&gt;是将两个数的每一位做与运算，注意这一点，其他的逻辑符号类似&lt;/p&gt;
+&lt;hr&gt;
 </description>
         </item>
         <item>
