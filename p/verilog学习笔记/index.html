@@ -490,6 +490,90 @@
 <p><code>&amp;&amp;</code>符号是将两边的数作为真假</p>
 <p>而<code>&amp;</code>是将两个数的每一位做与运算，注意这一点，其他的逻辑符号类似</p>
 <hr>
+<p>异或门的特殊作用：</p>
+<p><strong>异或门天然具有“奇偶检测”的特性</strong>：多个位异或的结果，正好等于这些位中 <strong>1 的个数的奇偶性</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="mh">0</span> <span class="o">^</span> <span class="mh">0</span> <span class="o">=</span> <span class="mh">0</span>   <span class="c1">// 0 个 1 → 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mh">0</span> <span class="o">^</span> <span class="mh">1</span> <span class="o">=</span> <span class="mh">1</span>   <span class="c1">// 1 个 1 → 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mh">1</span> <span class="o">^</span> <span class="mh">0</span> <span class="o">=</span> <span class="mh">1</span>   <span class="c1">// 1 个 1 → 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="mh">1</span> <span class="o">^</span> <span class="mh">1</span> <span class="o">=</span> <span class="mh">0</span>   <span class="c1">// 2 个 1 → 0
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以利用这种性质做奇偶校验</p>
+<hr>
+<p>generate和always的一点区别</p>
+<p><font color="red">目前的粗浅理解，不一定正确</font></p>
+<p><code>always</code>里面不能放assign，因为块里面的内容是描述硬件行为的，不是具体描述硬件本身的</p>
+<p>申明变量的时候必须在always块的开头</p>
+<p>块中也不能实例化其他电路，因为他是行为描述，实例化时结构描述，两者语法和语义不同</p>
+<p>块里使用&lt;=的非阻值赋值，也就是在这个块里是同时进行赋值的，没有顺序了</p>
+<p><code>generate</code>要使用assign，因为generate是批量生产硬件的语言</p>
+<p>当 <code>generate</code> 内的 <code>for</code> 循环包含<strong>多条语句</strong>或需要被外部引用时，必须给 <code>begin</code> 块命名。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">generate</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">100</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>   <span class="c1">// ❌ 缺少块名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">full_adder</span> <span class="n">fa</span> <span class="p">(...);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">endgenerate</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mh">3</span><span class="o">:</span><span class="n">i</span><span class="p">])</span>   <span class="c1">// ❌ 错误：位选择不能是变量
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Verilog 中，位选择 <code>[i+3:i]</code> 的 <strong>高位和低位都必须是常量</strong>，不能是变量。
+正确做法：用 <code>[i+3 : i]</code> 在 <code>generate</code> 中，<code>i</code> 是 <code>genvar</code>，但 <strong><code>i+3:i</code> 在编译时是常量</strong>，实际上<strong>可以</strong>。不过建议用 <code>[i+3 -: 4]</code> 更清晰。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl">    <span class="k">genvar</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">generate</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">100</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span> <span class="o">:</span> <span class="n">gen_bcd_fadd</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bcd_fadd</span> <span class="n">u</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">4</span><span class="o">+</span><span class="mh">3</span> <span class="o">:</span> <span class="n">i</span><span class="o">*</span><span class="mh">4</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">4</span><span class="o">+</span><span class="mh">3</span> <span class="o">:</span> <span class="n">i</span><span class="o">*</span><span class="mh">4</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">cin</span><span class="p">(</span><span class="n">carry</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mh">1</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">cout</span><span class="p">(</span><span class="n">carry</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                <span class="p">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">4</span><span class="o">+</span><span class="mh">3</span> <span class="o">:</span> <span class="n">i</span><span class="o">*</span><span class="mh">4</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">endgenerate</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样就可以了，因为i*x，最终是一个数字</p>
 
 </section>
 
