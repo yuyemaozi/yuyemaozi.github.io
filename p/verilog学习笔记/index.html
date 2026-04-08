@@ -574,6 +574,65 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这样就可以了，因为i*x，最终是一个数字</p>
+<hr>
+<p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507.png"
+	width="2095"
+	height="1582"
+	srcset="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu15763740965578833049.png 480w, /p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu13321923474851575882.png 1024w"
+	loading="lazy"
+	
+		alt="Verilog的一道题"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="132"
+		data-flex-basis="317px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">w</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">Q</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">mux</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">E</span> <span class="o">==</span> <span class="mh">0</span> <span class="o">&amp;&amp;</span> <span class="n">L</span> <span class="o">==</span> <span class="mh">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mux</span> <span class="o">&lt;=</span> <span class="n">Q</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">E</span> <span class="o">==</span> <span class="mh">1</span> <span class="o">&amp;&amp;</span> <span class="n">L</span> <span class="o">==</span> <span class="mh">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">mux</span> <span class="o">&lt;=</span> <span class="n">w</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">E</span> <span class="o">==</span> <span class="mh">0</span> <span class="o">&amp;&amp;</span> <span class="n">L</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mux</span> <span class="o">&lt;=</span> <span class="n">R</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">E</span> <span class="o">==</span> <span class="mh">1</span> <span class="o">&amp;&amp;</span> <span class="n">L</span> <span class="o">==</span> <span class="mh">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mux</span> <span class="o">&lt;=</span> <span class="n">R</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">mux</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这是我的解答过程，以前在logisim模拟的时候会将输出接到输入上去，但这是第一次在Verilog这样子接，以前以为不行，没想道可以</p>
+<p>如果单纯的只看这一个电路的话，其实就是Q保持原来的数值</p>
 
 </section>
 
