@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="链表 链表的简单介绍 我靠，链表到底是什么人想出来的，自己看的代码琢磨出来的，还是很自豪的 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 struct ListNode { int val;">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="这是我的学习笔记，所有的代码来自序 - Hello 算法和Navigation的算法笔记，放在这里仅供我自己总结学习和记录 链表 链表的简单介绍 1 2 3 4 5 6 7">
 <title>算法笔记</title>
 
 <link rel='canonical' href='https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/'>
 
 <link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="算法笔记">
-<meta property='og:description' content="链表 链表的简单介绍 我靠，链表到底是什么人想出来的，自己看的代码琢磨出来的，还是很自豪的 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 struct ListNode { int val;">
+<meta property='og:description' content="这是我的学习笔记，所有的代码来自序 - Hello 算法和Navigation的算法笔记，放在这里仅供我自己总结学习和记录 链表 链表的简单介绍 1 2 3 4 5 6 7">
 <meta property='og:url' content='https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/'>
 <meta property='og:site_name' content='杀不死的坏蛋-Unkillable Villain'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-04-02T20:08:36&#43;08:00'/><meta property='article:modified_time' content='2026-04-02T20:08:36&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-04-02T20:08:36&#43;08:00'/><meta property='article:modified_time' content='2026-04-02T20:08:36&#43;08:00'/><meta property='og:image' content='https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C.jpg' />
 <meta name="twitter:title" content="算法笔记">
-<meta name="twitter:description" content="链表 链表的简单介绍 我靠，链表到底是什么人想出来的，自己看的代码琢磨出来的，还是很自豪的 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 struct ListNode { int val;">
+<meta name="twitter:description" content="这是我的学习笔记，所有的代码来自序 - Hello 算法和Navigation的算法笔记，放在这里仅供我自己总结学习和记录 链表 链表的简单介绍 1 2 3 4 5 6 7"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C.jpg' />
   
 
 
@@ -262,6 +263,34 @@
         </li>
       </ol>
     </li>
+    <li><a href="#双向链表">双向链表</a>
+      <ol>
+        <li><a href="#创建双向链表">创建双向链表</a></li>
+        <li><a href="#查和改">查和改</a></li>
+        <li><a href="#增">增</a></li>
+        <li><a href="#删">删</a></li>
+      </ol>
+    </li>
+    <li><a href="#栈">栈</a>
+      <ol>
+        <li><a href="#基于链表实现的栈">基于链表实现的栈</a></li>
+        <li><a href="#基于数组实现的栈">基于数组实现的栈</a></li>
+        <li><a href="#支持操作">支持操作</a></li>
+        <li><a href="#时间效率">时间效率</a></li>
+      </ol>
+    </li>
+    <li><a href="#队列">队列</a>
+      <ol>
+        <li><a href="#用链表实现的队列">用链表实现的队列</a></li>
+        <li><a href="#基于数组实现的队列">基于数组实现的队列</a></li>
+      </ol>
+    </li>
+    <li><a href="#双向队列">双向队列</a>
+      <ol>
+        <li><a href="#基于双向链表实现的双向队列">基于双向链表实现的双向队列</a></li>
+        <li><a href="#用数组实现双向队列">用数组实现双向队列</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -273,8 +302,20 @@
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">
+                <img src="/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C_hu6840419066318952036.jpg"
+                        srcset="/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C_hu6840419066318952036.jpg 800w, /p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C_hu12364222325126556242.jpg 1600w"
+                        width="800" 
+                        height="449" 
+                        loading="lazy"
+                        alt="Featured image of post 算法笔记" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -319,10 +360,14 @@
     <section class="article-content">
     
     
-    <h2 id="链表">链表
+    <blockquote>
+<p>这是我的学习笔记，所有的代码来自<a class="link" href="https://www.hello-algo.com/chapter_hello_algo/"  target="_blank" rel="noopener"
+    >序 - Hello 算法</a>和<a class="link" href="https://labuladong.online/zh/algo/home/"  target="_blank" rel="noopener"
+    >Navigation的算法笔记</a>，放在这里仅供我自己总结学习和记录</p>
+</blockquote>
+<h2 id="链表">链表
 </h2><h3 id="链表的简单介绍">链表的简单介绍
-</h3><p>我靠，链表到底是什么人想出来的，自己看的代码琢磨出来的，还是很自豪的</p>
-<div class="highlight"><div class="chroma">
+</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -643,7 +688,1583 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h2 id="双向链表">双向链表
+</h2><h3 id="创建双向链表">创建双向链表
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">next</span><span class="p">,</span> <span class="o">*</span><span class="n">prev</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="nf">createDoublyLinkedList</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">arr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">arrSize</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">arr</span> <span class="o">==</span> <span class="nb">NULL</span> <span class="o">||</span> <span class="n">arrSize</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">head</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// for 循环迭代创建双链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arrSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">newNode</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">newNode</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">head</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
+</div><h3 id="查和改">查和改
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="c1">// 创建一条双链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">head</span> <span class="o">=</span> <span class="nf">createDoublyLinkedList</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">tail</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 从头节点向后遍历双链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span> <span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 从尾节点向前遍历双链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">tail</span><span class="p">;</span> <span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="增">增
+</h3><p>在双链表的头部增加元素（这个操作的时间复杂度是1）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="c1">// 创建一条双链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">head</span> <span class="o">=</span> <span class="nf">createDoublyLinkedList</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 在双链表头部插入新节点 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">newHead</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">newHead</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">newHead</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">newHead</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">head</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">newHead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">head</span> <span class="o">=</span> <span class="n">newHead</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 现在链表变成了 0 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在双链表的尾部增加元素（看情况，如果有尾链表，那操作的时间复杂度是1，如果没有的话，由于需要遍历，所以时间复杂度是n）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="c1">// 创建一条双链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">head</span> <span class="o">=</span> <span class="nf">createDoublyLinkedList</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 先走到链表的最后一个节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">while</span> <span class="p">(</span><span class="n">tail</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail</span> <span class="o">=</span> <span class="n">tail</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 在双链表尾部插入新节点 6
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">newNode</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">newNode</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">tail</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">newNode</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">tail</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 更新尾节点引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">tail</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 现在链表变成了 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5 -&gt; 6
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在中间插入新元素（时间复杂度是n）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="c1">// 创建一条双链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">head</span> <span class="o">=</span> <span class="nf">createDoublyLinkedList</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 想要插入到索引 3（第 4 个节点）
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 需要操作索引 2（第 3 个节点）的指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 组装新节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">newNode</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">newNode</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">=</span> <span class="mi">66</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">newNode</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">newNode</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 插入新节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 现在链表变成了 1 -&gt; 2 -&gt; 3 -&gt; 66 -&gt; 4 -&gt; 5
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="删">删
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="c1">// 创建一条双链表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">head</span> <span class="o">=</span> <span class="nf">createDoublyLinkedList</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 删除第 4 个节点
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 先找到第 3 个节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 现在 p 指向第 3 个节点，我们它后面那个节点摘除出去
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="n">DoublyListNode</span><span class="o">*</span> <span class="n">toDelete</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 把 toDelete 从链表中摘除
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">toDelete</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">toDelete</span><span class="o">-&gt;</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 把 toDelete 的前后指针都置为 null 是个好习惯（可选）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">toDelete</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">toDelete</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">free</span><span class="p">(</span><span class="n">toDelete</span><span class="p">);</span><span class="c1">//毕竟删除，最好还是要释放内存的
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 现在链表变成了 1 -&gt; 2 -&gt; 3 -&gt; 5
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>头部和尾部删除代码类似，这里就不赘述了</p>
+<h2 id="栈">栈
+</h2><p>栈（stack）是一种遵循先入后出逻辑的线性数据结构。</p>
+<p>我们可以将栈类比为桌面上的一摞盘子，规定每次只能移动一个盘子，那么想取出底部的盘子，则需要先将上面的盘子依次移走。我们将盘子替换为各种类型的元素（如整数、字符、对象等），就得到了栈这种数据结构。</p>
+<p>我们把堆叠元素的顶部称为“栈顶”，底部称为“栈底”。将把元素添加到栈顶的操作叫作“入栈”，删除栈顶元素的操作叫作“出栈”。</p>
+<p><img src="/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552.png"
+	width="1221"
+	height="595"
+	srcset="/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu13514807064957782184.png 480w, /p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu17650816566098834570.png 1024w"
+	loading="lazy"
+	
+		alt="栈"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="205"
+		data-flex-basis="492px"
+	
+></p>
+<h3 id="基于链表实现的栈">基于链表实现的栈
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="c1">//补充的链表的定义，原来并没有，但这也是需要的，要不代码有一点不完整
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">ListNode</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">ListNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">ListNode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* 基于链表实现的栈 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ListNode</span> <span class="o">*</span><span class="n">top</span><span class="p">;</span> <span class="c1">// 将头节点作为栈顶
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>      <span class="c1">// 栈的长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">LinkedListStack</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 构造函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="n">LinkedListStack</span> <span class="o">*</span><span class="nf">newLinkedListStack</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LinkedListStack</span> <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkedListStack</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 析构函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delLinkedListStack</span><span class="p">(</span><span class="n">LinkedListStack</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ListNode</span> <span class="o">*</span><span class="n">n</span> <span class="o">=</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">free</span><span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="c1">//别忘了释放这里临时使用指针的内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//就是在删除栈，每一步都是删除栈顶的元素，再将下一个改为栈顶
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 获取栈的长度 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">size</span><span class="p">(</span><span class="n">LinkedListStack</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 判断栈是否为空 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">isEmpty</span><span class="p">(</span><span class="n">LinkedListStack</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">size</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 入栈 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">push</span><span class="p">(</span><span class="n">LinkedListStack</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ListNode</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ListNode</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span> <span class="c1">// 更新新加节点指针域
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">node</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span>     <span class="c1">// 更新新加节点数据域
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>       <span class="c1">// 更新栈顶
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">s</span><span class="o">-&gt;</span><span class="n">size</span><span class="o">++</span><span class="p">;</span>           <span class="c1">// 更新栈大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 访问栈顶元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">peek</span><span class="p">(</span><span class="n">LinkedListStack</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;栈为空</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">INT_MAX</span><span class="p">;</span>   <span class="c1">//int类型的最大数，只要发现是这个数，就说明栈为空
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 出栈 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">pop</span><span class="p">(</span><span class="n">LinkedListStack</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="nf">peek</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ListNode</span> <span class="o">*</span><span class="n">tmp</span> <span class="o">=</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span> <span class="o">=</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">top</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 释放内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">free</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">s</span><span class="o">-&gt;</span><span class="n">size</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="基于数组实现的栈">基于数组实现的栈
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/* 基于数组实现的栈 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span><span class="c1">//为了方便扩容，所以这里使用的是指针，但下文并没有写扩容函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">ArrayStack</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 构造函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="n">ArrayStack</span> <span class="o">*</span><span class="nf">newArrayStack</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ArrayStack</span> <span class="o">*</span><span class="n">stack</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ArrayStack</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 初始化一个大容量，避免扩容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">MAX_SIZE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">stack</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 析构函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delArrayStack</span><span class="p">(</span><span class="n">ArrayStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">stack</span><span class="p">);</span><span class="c1">//不能忘记释放这里的内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 获取栈的长度 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">size</span><span class="p">(</span><span class="n">ArrayStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 判断栈是否为空 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">isEmpty</span><span class="p">(</span><span class="n">ArrayStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 入栈 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">push</span><span class="p">(</span><span class="n">ArrayStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">==</span> <span class="n">MAX_SIZE</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;栈已满</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span><span class="c1">//C语言中指针和数组的访问方式相同
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 访问栈顶元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">peek</span><span class="p">(</span><span class="n">ArrayStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;栈为空</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">INT_MAX</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">stack</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[</span><span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span><span class="c1">//注意这里的减1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 出栈 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">pop</span><span class="p">(</span><span class="n">ArrayStack</span> <span class="o">*</span><span class="n">stack</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="nf">peek</span><span class="p">(</span><span class="n">stack</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stack</span><span class="o">-&gt;</span><span class="n">size</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="支持操作">支持操作
+</h3><p>两种实现都支持栈定义中的各项操作。数组实现额外支持随机访问，但这已超出了栈的定义范畴，因此一般不会用到。</p>
+<h3 id="时间效率">时间效率
+</h3><p>在基于数组的实现中，入栈和出栈操作都在预先分配好的连续内存中进行，具有很好的缓存本地性，因此效率较高。然而，如果入栈时超出数组容量，会触发扩容机制，导致该次入栈操作的时间复杂度变为n</p>
+<p>在基于链表的实现中，链表的扩容非常灵活，不存在上述数组扩容时效率降低的问题。但是，入栈操作需要初始化节点对象并修改指针，因此效率相对较低。不过，如果入栈元素本身就是节点对象，那么可以省去初始化步骤，从而提高效率。</p>
+<h2 id="队列">队列
+</h2><h3 id="用链表实现的队列">用链表实现的队列
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="c1">//同样补充链表的定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">ListNode</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">ListNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">ListNode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* 基于链表实现的队列 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ListNode</span> <span class="o">*</span><span class="n">front</span><span class="p">,</span> <span class="o">*</span><span class="n">rear</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">queSize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">LinkedListQueue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 构造函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="nf">newLinkedListQueue</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LinkedListQueue</span> <span class="o">*</span><span class="n">queue</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkedListQueue</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">rear</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">queue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 析构函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delLinkedListQueue</span><span class="p">(</span><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 释放所有节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">while</span> <span class="p">(</span><span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ListNode</span> <span class="o">*</span><span class="n">tmp</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">free</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 释放 queue 结构体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">free</span><span class="p">(</span><span class="n">queue</span><span class="p">);</span><span class="c1">//再提醒一下自己，不能把这个忘了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 获取队列的长度 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">size</span><span class="p">(</span><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 判断队列是否为空 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">empty</span><span class="p">(</span><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="nf">size</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 入队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">push</span><span class="p">(</span><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 尾节点处添加 node
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">ListNode</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="nf">newListNode</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 如果队列为空，则令头、尾节点都指向该节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">queue</span><span class="o">-&gt;</span><span class="n">rear</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 如果队列不为空，则将该节点添加到尾节点后
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">queue</span><span class="o">-&gt;</span><span class="n">rear</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">queue</span><span class="o">-&gt;</span><span class="n">rear</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">front               rear
+</span></span></span><span class="line"><span class="cl"><span class="cm">  ↓                  ↓
+</span></span></span><span class="line"><span class="cl"><span class="cm">[1] -&gt; [2] -&gt; [3] -&gt; NULL
+</span></span></span><span class="line"><span class="cl"><span class="cm">               ↑
+</span></span></span><span class="line"><span class="cl"><span class="cm">              node
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* 访问队首元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">peek</span><span class="p">(</span><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">assert</span><span class="p">(</span><span class="nf">size</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/*这是一个宏，如果条件为真，什么都不做，如果条件为假，程序会终止并输出错误信息 */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 出队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">pop</span><span class="p">(</span><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="nf">peek</span><span class="p">(</span><span class="n">queue</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ListNode</span> <span class="o">*</span><span class="n">tmp</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 打印队列 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">printLinkedListQueue</span><span class="p">(</span><span class="n">LinkedListQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 拷贝链表中的数据到数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ListNode</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">node</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printArray</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="基于数组实现的队列">基于数组实现的队列
+</h3><p>在数组中删除首元素的时间复杂度为n，这会导致出队操作效率较低。然而，我们可以采用以下巧妙方法来避免这个问题。</p>
+<p>我们可以使用一个变量 <code>front</code> 指向队首元素的索引，并维护一个变量 <code>size</code> 用于记录队列长度。定义 <code>rear = front + size</code> ，这个公式计算出的 <code>rear</code> 指向队尾元素之后的下一个位置。</p>
+<p>基于此设计，<strong>数组中包含元素的有效区间为 <code>[front, rear - 1]</code></strong></p>
+<ul>
+<li>入队操作：将输入元素赋值给 <code>rear</code> 索引处，并将 <code>size</code> 增加 1 。</li>
+<li>出队操作：只需将 <code>front</code> 增加 1 ，并将 <code>size</code> 减少 1 。</li>
+</ul>
+<p>你可能会发现一个问题：在不断进行入队和出队的过程中，<code>front</code> 和 <code>rear</code> 都在向右移动，<strong>当它们到达数组尾部时就无法继续移动了</strong>。为了解决此问题，我们可以将数组视为首尾相接的“环形数组”。</p>
+<p>对于环形数组，我们需要让 <code>front</code> 或 <code>rear</code> 在越过数组尾部时，直接回到数组头部继续遍历。这种周期性规律可以通过“取余操作”来实现，代码如下所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/* 基于环形数组实现的队列 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">nums</span><span class="p">;</span>       <span class="c1">// 用于存储队列元素的数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">front</span><span class="p">;</span>       <span class="c1">// 队首指针，指向队首元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">queSize</span><span class="p">;</span>     <span class="c1">// 当前队列的元素数量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">queCapacity</span><span class="p">;</span> <span class="c1">// 队列容量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">ArrayQueue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 构造函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="n">ArrayQueue</span> <span class="o">*</span><span class="nf">newArrayQueue</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span> <span class="o">=</span> <span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ArrayQueue</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 初始化数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queCapacity</span> <span class="o">=</span> <span class="n">capacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">nums</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queCapacity</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">queue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 析构函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delArrayQueue</span><span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">queue</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">queue</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 获取队列的容量 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queCapacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 获取队列的长度 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">size</span><span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 判断队列是否为空 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">empty</span><span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 访问队首元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">peek</span><span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">assert</span><span class="p">(</span><span class="nf">size</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 入队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">push</span><span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">size</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">==</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">queue</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;队列已满</span><span class="se">\r\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 计算队尾指针，指向队尾索引 + 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 通过取余操作实现 rear 越过数组尾部后回到头部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">rear</span> <span class="o">=</span> <span class="p">(</span><span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">+</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">)</span> <span class="o">%</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queCapacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 将 num 添加至队尾
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">rear</span><span class="p">]</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 出队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">pop</span><span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="nf">peek</span><span class="p">(</span><span class="n">queue</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 队首指针向后移动一位，若越过尾部，则返回到数组头部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="p">(</span><span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queCapacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 返回数组用于打印 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="nf">toArray</span><span class="p">(</span><span class="n">ArrayQueue</span> <span class="o">*</span><span class="n">queue</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">queSize</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">queSize</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="nf">calloc</span><span class="p">(</span><span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//calloc就是专门为分配数组设计的，分配内存后自动填充为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//设计这个循环就是把一个环形数组再转化为正常的数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span> <span class="o">%</span> <span class="n">queue</span><span class="o">-&gt;</span><span class="n">queCapacity</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的取余操作其实是通过数组的整体的数量来控制首指针和尾指针的位置，只要刚好到达数组的数量，那取余操作就可以将他变为0，其实就是商1取0</p>
+<p>以上实现的队列仍然具有局限性：其长度不可变。然而，这个问题不难解决，我们可以将数组替换为动态数组，从而引入扩容机制。</p>
+<p>两种实现的对比结论与栈一致，在此不再赘述。</p>
+<h2 id="双向队列">双向队列
+</h2><p>双向队列（double-ended queue）提供了更高的灵活性，允许在头部和尾部执行元素的添加或删除操作。</p>
+<h3 id="基于双向链表实现的双向队列">基于双向链表实现的双向队列
+</h3><p>对于双向队列而言，头部和尾部都可以执行入队和出队操作。换句话说，双向队列需要实现另一个对称方向的操作。为此，我们采用“双向链表”作为双向队列的底层数据结构。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/* 双向链表节点 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">DoublyListNode</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>                     <span class="c1">// 节点值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">struct</span> <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span> <span class="c1">// 后继节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">struct</span> <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">prev</span><span class="p">;</span> <span class="c1">// 前驱节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">DoublyListNode</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 构造函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="n">DoublyListNode</span> <span class="o">*</span><span class="nf">newDoublyListNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="n">DoublyListNode</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">DoublyListNode</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">new</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">new</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">new</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">new</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 析构函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delDoublyListNode</span><span class="p">(</span><span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 基于双向链表实现的双向队列 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">front</span><span class="p">,</span> <span class="o">*</span><span class="n">rear</span><span class="p">;</span> <span class="c1">// 头节点 front ，尾节点 rear
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">queSize</span><span class="p">;</span>                  <span class="c1">// 双向队列的长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">LinkedListDeque</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 构造函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="nf">newLinkedListDeque</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span> <span class="o">=</span> <span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">LinkedListDeque</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 析构函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delLinkedListdeque</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 释放所有节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">&amp;&amp;</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">tmp</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">free</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 释放 deque 结构体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">free</span><span class="p">(</span><span class="n">deque</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 获取队列的长度 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">size</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 判断队列是否为空 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">empty</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="nf">size</span><span class="p">(</span><span class="n">deque</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 入队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">push</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">isFront</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="nf">newDoublyListNode</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 若链表为空，则令 front 和 rear 都指向node
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="nf">empty</span><span class="p">(</span><span class="n">deque</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 队首入队操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">isFront</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将 node 添加至链表头部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span> <span class="c1">// 更新头节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 队尾入队操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 将 node 添加至链表尾部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span> <span class="o">=</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">++</span><span class="p">;</span> <span class="c1">// 更新队列长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 队首入队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">pushFirst</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">push</span><span class="p">(</span><span class="n">deque</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 队尾入队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">pushLast</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">push</span><span class="p">(</span><span class="n">deque</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 访问队首元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">peekFirst</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">assert</span><span class="p">(</span><span class="nf">size</span><span class="p">(</span><span class="n">deque</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 访问队尾元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">peekLast</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">assert</span><span class="p">(</span><span class="nf">size</span><span class="p">(</span><span class="n">deque</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//这里的访问都用到了assert函数，为了是访问的安全
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* 出队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">pop</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">isFront</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">empty</span><span class="p">(</span><span class="n">deque</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 队首出队操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">isFront</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val</span> <span class="o">=</span> <span class="nf">peekFirst</span><span class="p">(</span><span class="n">deque</span><span class="p">);</span> <span class="c1">// 暂存头节点值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">fNext</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">fNext</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fNext</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">delDoublyListNode</span><span class="p">(</span><span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">fNext</span><span class="p">;</span> <span class="c1">// 更新头节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 队尾出队操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val</span> <span class="o">=</span> <span class="nf">peekLast</span><span class="p">(</span><span class="n">deque</span><span class="p">);</span> <span class="c1">// 暂存尾节点值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">rPrev</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span><span class="o">-&gt;</span><span class="n">prev</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">rPrev</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">rPrev</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span><span class="o">-&gt;</span><span class="n">prev</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">delDoublyListNode</span><span class="p">(</span><span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deque</span><span class="o">-&gt;</span><span class="n">rear</span> <span class="o">=</span> <span class="n">rPrev</span><span class="p">;</span> <span class="c1">// 更新尾节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">--</span><span class="p">;</span> <span class="c1">// 更新队列长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 队首出队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">popFirst</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">pop</span><span class="p">(</span><span class="n">deque</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 队尾出队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">popLast</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">pop</span><span class="p">(</span><span class="n">deque</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 打印队列 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">printLinkedListDeque</span><span class="p">(</span><span class="n">LinkedListDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 拷贝链表中的数据到数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DoublyListNode</span> <span class="o">*</span><span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">node</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printArray</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="用数组实现双向队列">用数组实现双向队列
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/* 基于环形数组实现的双向队列 */</span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">nums</span><span class="p">;</span>       <span class="c1">// 用于存储队列元素的数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">front</span><span class="p">;</span>       <span class="c1">// 队首指针，指向队首元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">queSize</span><span class="p">;</span>     <span class="c1">// 尾指针，指向队尾 + 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">queCapacity</span><span class="p">;</span> <span class="c1">// 队列容量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span> <span class="n">ArrayDeque</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 构造函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="n">ArrayDeque</span> <span class="o">*</span><span class="nf">newArrayDeque</span><span class="p">(</span><span class="kt">int</span> <span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span> <span class="o">=</span> <span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ArrayDeque</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 初始化数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queCapacity</span> <span class="o">=</span> <span class="n">capacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">nums</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queCapacity</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 析构函数 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">delArrayDeque</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 第1步：先释放数组内存，这里的顺序不能换，因为这个结构体并没有存储数据，数据实则是在nums指向的内存中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">free</span><span class="p">(</span><span class="n">deque</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">deque</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 获取双向队列的容量 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queCapacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 获取双向队列的长度 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">size</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 判断双向队列是否为空 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">empty</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 计算环形数组索引 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">dequeIndex</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 通过取余操作实现数组首尾相连
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 当 i 越过数组尾部时，回到头部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 当 i 越过数组头部后，回到尾部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">deque</span><span class="p">))</span> <span class="o">%</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">deque</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 队首入队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">pushFirst</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">==</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">deque</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;双向队列已满</span><span class="se">\r\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 队首指针向左移动一位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 通过取余操作实现 front 越过数组头部回到尾部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="nf">dequeIndex</span><span class="p">(</span><span class="n">deque</span><span class="p">,</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/*这里其实就想把front向左移动一位，但可能越界，所以就利用了那个函数*/</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 将 num 添加到队首
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">]</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 队尾入队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">pushLast</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">==</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">deque</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;双向队列已满</span><span class="se">\r\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 计算队尾指针，指向队尾索引 + 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">rear</span> <span class="o">=</span> <span class="nf">dequeIndex</span><span class="p">(</span><span class="n">deque</span><span class="p">,</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">+</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 将 num 添加至队尾
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">rear</span><span class="p">]</span> <span class="o">=</span> <span class="n">num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 访问队首元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">peekFirst</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 访问异常：双向队列为空
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">assert</span><span class="p">(</span><span class="nf">empty</span><span class="p">(</span><span class="n">deque</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 访问队尾元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">peekLast</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 访问异常：双向队列为空
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">assert</span><span class="p">(</span><span class="nf">empty</span><span class="p">(</span><span class="n">deque</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">last</span> <span class="o">=</span> <span class="nf">dequeIndex</span><span class="p">(</span><span class="n">deque</span><span class="p">,</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">+</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">last</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 队首出队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">popFirst</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="nf">peekFirst</span><span class="p">(</span><span class="n">deque</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 队首指针向后移动一位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">=</span> <span class="nf">dequeIndex</span><span class="p">(</span><span class="n">deque</span><span class="p">,</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*这里的出队只需要移动指针和将元素个数减少一个就行，不需要移动整个数组，这就是环形数组的好处*/</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/* 队尾出队 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">popLast</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="nf">peekLast</span><span class="p">(</span><span class="n">deque</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 返回数组用于打印 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="nf">toArray</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">queSize</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">queSize</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="nf">calloc</span><span class="p">(</span><span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">front</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span> <span class="o">%</span> <span class="n">deque</span><span class="o">-&gt;</span><span class="n">queCapacity</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/*再对这里的取余操作做一个说明吧，j初始化为首元素的下标，j % queCapacity，也是为了保证环形结构*/</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/* 计算环形数组索引 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">dequeIndex</span><span class="p">(</span><span class="n">ArrayDeque</span> <span class="o">*</span><span class="n">deque</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 通过取余操作实现数组首尾相连
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 当 i 越过数组尾部时，回到头部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 当 i 越过数组头部后，回到尾部
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">deque</span><span class="p">))</span> <span class="o">%</span> <span class="nf">capacity</span><span class="p">(</span><span class="n">deque</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将这部分代码单独拿出来做一个笔记</p>
+<p>举个例子，当capacity等于5的时候：</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">情况</th>
+<th style="text-align:left"><code>i</code> 例子</th>
+<th style="text-align:left">结果</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">正常范围内</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">不变</td>
+</tr>
+<tr>
+<td style="text-align:left">负数（逆时针）</td>
+<td style="text-align:left">-1</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">绕到尾部</td>
+</tr>
+<tr>
+<td style="text-align:left">超过容量</td>
+<td style="text-align:left">7</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">绕回到头部</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>所以函数的作用</strong>：</p>
+<blockquote>
+<p>把任何整数（可能为负或 ≥ 容量）映射到 <code>[0, capacity-1]</code> 的环形数组物理下标。</p>
+</blockquote>
+<p><code>i</code> 是<strong>未经修正的候选物理下标</strong>（可能越界）。
+取余是为了实现<strong>环形环绕</strong>，不是简单的恒等变换。</p>
+
 </section>
 
 
