@@ -255,6 +255,7 @@
         <li><a href="#数值种类">数值种类</a></li>
         <li><a href="#数值表示">数值表示</a></li>
         <li><a href="#杂项">杂项</a></li>
+        <li><a href="#verilog部分题目的总结">Verilog部分题目的总结</a></li>
       </ol>
     </li>
   </ol>
@@ -553,7 +554,36 @@
 </span></span><span class="line"><span class="cl"><span class="k">endgenerate</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><hr>
+</div><p>再补充always中的一点东西，当always块中时组合逻辑电路时</p>
+<p><strong>📌 总结</strong></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left">组合逻辑 <code>always @(*)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">赋值方式</td>
+<td style="text-align:left">阻塞赋值 <code>=</code></td>
+</tr>
+<tr>
+<td style="text-align:left">执行顺序</td>
+<td style="text-align:left"><strong>顺序执行</strong>（与书写顺序一致）</td>
+</tr>
+<tr>
+<td style="text-align:left">综合结果</td>
+<td style="text-align:left">纯组合逻辑（门电路）</td>
+</tr>
+<tr>
+<td style="text-align:left">注意事项</td>
+<td style="text-align:left">避免组合环、防止锁存器</td>
+</tr>
+</tbody>
+</table></div>
+<p>所以，<strong>在组合逻辑的 always 模块中，赋值是有顺序的</strong>，这与 Verilog 中过程块（<code>always</code>、<code>initial</code>）的语义一致。</p>
+<hr>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -654,6 +684,620 @@
 </div>
 </div><p>这是我的解答过程，以前在logisim模拟的时候会将输出接到输入上去，但这是第一次在Verilog这样子接，以前以为不行，没想道可以</p>
 <p>如果单纯的只看这一个电路的话，其实就是Q保持原来的数值</p>
+<hr>
+<h3 id="verilog部分题目的总结">Verilog部分题目的总结
+</h3><p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117.png"
+	width="1991"
+	height="728"
+	srcset="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu8133919660145964550.png 480w, /p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu5743247467523108779.png 1024w"
+	loading="lazy"
+	
+		alt="时钟"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="273"
+		data-flex-basis="656px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl"><span class="c1">//60的计数器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">module</span> <span class="n">count_60</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">ena</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">en</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">temp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ena</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">temp</span> <span class="o">==</span> <span class="mh">8</span><span class="mi">&#39;d59</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="n">temp</span> <span class="o">&lt;=</span> <span class="n">temp</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//这里最终的输出是使用组合逻辑电路，使能信号不能用寄存器和时序电路来做
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">assign</span> <span class="n">out</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">en</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp</span> <span class="o">==</span> <span class="mh">8</span><span class="mi">&#39;d59</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">ena</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//把二进制转化为BCD码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">module</span> <span class="n">binary_bcd</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">bin_in</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">bcd_out</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">ones</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">tens</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//这里使用的也是组合逻辑，避免延迟
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">integer</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">       <span class="n">ones</span> <span class="o">=</span> <span class="mh">4</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="n">tens</span> <span class="o">=</span> <span class="mh">4</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mh">7</span><span class="p">;</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mh">0</span><span class="p">;</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">-</span><span class="mh">1</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">ones</span> <span class="o">&gt;=</span> <span class="mh">4</span><span class="mi">&#39;d5</span><span class="p">)</span>	<span class="n">ones</span> <span class="o">=</span> <span class="n">ones</span> <span class="o">+</span> <span class="mh">4</span><span class="mi">&#39;d3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">tens</span> <span class="o">&gt;=</span> <span class="mh">4</span><span class="mi">&#39;d5</span><span class="p">)</span>	<span class="n">tens</span> <span class="o">=</span> <span class="n">tens</span> <span class="o">+</span> <span class="mh">4</span><span class="mi">&#39;d3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tens</span> <span class="o">=</span> <span class="p">{</span><span class="n">tens</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">ones</span><span class="p">[</span><span class="mh">3</span><span class="p">]};</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ones</span> <span class="o">=</span> <span class="p">{</span><span class="n">ones</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">bin_in</span><span class="p">[</span><span class="n">i</span><span class="p">]};</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">bcd_out</span> <span class="o">=</span> <span class="p">{</span><span class="n">tens</span><span class="p">,</span><span class="n">ones</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//12的计数器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">module</span> <span class="n">count_12</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">ena</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">en</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">temp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d12</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ena</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">temp</span> <span class="o">==</span> <span class="mh">8</span><span class="mi">&#39;d12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="n">temp</span> <span class="o">&lt;=</span> <span class="n">temp</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">out</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">en</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp</span> <span class="o">==</span> <span class="mh">8</span><span class="mi">&#39;d11</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">ena</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//顶层电路
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">ena</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">pm</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">hh</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">mm</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">ss</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">wire</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">p3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">wire</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">temp1</span><span class="p">,</span><span class="n">temp2</span><span class="p">,</span><span class="n">temp3</span><span class="p">;</span><span class="c1">//用wire类型，避免寄存器的延迟
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//模块化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">count_60</span> <span class="n">u1</span><span class="p">(</span><span class="n">clk</span><span class="p">,</span><span class="n">reset</span><span class="p">,</span><span class="n">ena</span><span class="p">,</span><span class="n">temp1</span><span class="p">,</span><span class="n">p1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count_60</span> <span class="n">u2</span><span class="p">(</span><span class="n">clk</span><span class="p">,</span><span class="n">reset</span><span class="p">,</span><span class="n">p1</span><span class="p">,</span><span class="n">temp2</span><span class="p">,</span><span class="n">p2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count_12</span> <span class="n">u3</span><span class="p">(</span><span class="n">clk</span><span class="p">,</span><span class="n">reset</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">temp3</span><span class="p">,</span><span class="n">p3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">pm_reg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pm_reg</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">p3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pm_reg</span> <span class="o">&lt;=</span> <span class="o">~</span><span class="n">pm_reg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="n">binary_bcd</span> <span class="n">ss_bcd</span><span class="p">(</span><span class="n">temp1</span><span class="p">,</span><span class="n">ss</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">binary_bcd</span> <span class="n">mm_bcd</span><span class="p">(</span><span class="n">temp2</span><span class="p">,</span><span class="n">mm</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">binary_bcd</span> <span class="n">hh_bcd</span><span class="p">(</span><span class="n">temp3</span><span class="p">,</span><span class="n">hh</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">pm_reg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>时钟信号处理</strong></p>
+<p>目前我感觉时序逻辑在Verilog中比较难处理，最主要的就是寄存器的更新问题，在Verilog中寄存器在时序逻辑中的更新逻辑如下</p>
+<p><strong>在时钟边沿到来时，所有赋值语句的右边表达式</strong>同时被计算**（采样），然后<strong>在边沿结束时</strong>统一更新**左边的寄存器。</p>
+<p>这就存在一个问题，那就是假如我们存在一个个寄存器temp，我们将一个数据给了temp后，在同一个时钟周期内，temp的值是不能传给其他寄存器或者输出的，不难理解，由于更新逻辑，temp传出去的数据其实是它上一个周期的数据，所以说这样会导致慢一个周期，在设计电路的时候要考虑到这一点</p>
+<p>我会用两个例子来说明这一点，先说这一个例子（这个例子是错误的）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">count_60</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">ena</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">en</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">temp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">temp_en</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">temp_en</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">ena</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">temp</span> <span class="o">==</span> <span class="mh">8</span><span class="mi">&#39;d59</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp_en</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp</span> <span class="o">&lt;=</span> <span class="n">temp</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp_en</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="n">temp_en</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们看这个例子，不难发现这里的使能信号用的是寄存器，这样做是不行的，会慢一个周期</p>
+<p>所以说这时候我们就应该使用组合逻辑电路，就能及时更新了。</p>
+<p>这里大概总结一下，不能将寄存器视作一个变量，按程序的思维走，它就是电路中的寄存器，只有当遇到上升沿的时候才会更新寄存器的值，而且是所有寄存器同时赋值。如果我们要将一个数值及时更改，就不应该用寄存器。</p>
+<p>其实没必要想的太复杂，还记得logisim中有时候将一个电路既接寄存器，也要接输出端吗，放在这里也一样，如果将寄存器再接输出端，</p>
+<p>明显就会慢一步，因为组合逻辑电路的值是及时输出的，而寄存器必须要等一个上升沿。</p>
+<p><strong>二进制转BCD</strong></p>
+<p>这道题还有一个值得说的点，就是这个二进制转BCD，直接看代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">binary_bcd</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">bin_in</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">bcd_out</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">ones</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">tens</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//这里使用的也是组合逻辑，避免延迟
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">integer</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">       <span class="n">ones</span> <span class="o">=</span> <span class="mh">4</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="n">tens</span> <span class="o">=</span> <span class="mh">4</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mh">7</span><span class="p">;</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mh">0</span><span class="p">;</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">-</span><span class="mh">1</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">ones</span> <span class="o">&gt;=</span> <span class="mh">4</span><span class="mi">&#39;d5</span><span class="p">)</span>	<span class="n">ones</span> <span class="o">=</span> <span class="n">ones</span> <span class="o">+</span> <span class="mh">4</span><span class="mi">&#39;d3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">tens</span> <span class="o">&gt;=</span> <span class="mh">4</span><span class="mi">&#39;d5</span><span class="p">)</span>	<span class="n">tens</span> <span class="o">=</span> <span class="n">tens</span> <span class="o">+</span> <span class="mh">4</span><span class="mi">&#39;d3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tens</span> <span class="o">=</span> <span class="p">{</span><span class="n">tens</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">ones</span><span class="p">[</span><span class="mh">3</span><span class="p">]};</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ones</span> <span class="o">=</span> <span class="p">{</span><span class="n">ones</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">bin_in</span><span class="p">[</span><span class="n">i</span><span class="p">]};</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">bcd_out</span> <span class="o">=</span> <span class="p">{</span><span class="n">tens</span><span class="p">,</span><span class="n">ones</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>二进制转BCD没有用到寄存器，所以不需要时序逻辑，如果用时序逻辑的话，可能会出现延迟</p>
+<p>写电路之前还是要判断需不需要用到时序逻辑，最主要的区别就是电路需不需要之前的状态，如果要用之前的状态，那就一定需要寄存器来存储，反之不需要，这处的逻辑是相通的。</p>
+<p>这里可以思考一下，这里的reg真的是寄存器吗？</p>
+<p>直接说答案，其实是不是的，<code>always</code>块中使用reg变量是为了满足Verilog的语法要求，实际上这里的</p>
+<p>接下来是对二进制转BCD的说明：</p>
+<p>先讲一下逻辑：BCD码这里就不说是什么了，我们知道一位BCD码的最大数是1001，就是就，当出现1010的时候就得变为0001_0000</p>
+<p>接下来直接举一个例子来说明：</p>
+<p>1110(十进制14)</p>
+<p>送入最高位得到0001；</p>
+<p>送入第二位得到0011；</p>
+<p>送入第三位得到0111 &gt; 0100，在0111基础上进行修正，即0111 + 0011 = 1010；</p>
+<p>（<em>为什么要这样修正呢，其实是当一个数大于5时，再输入一个数就会使结果大于10，那就一定不是BCD了</em>）</p>
+<p>为什么要加3呢，其实这是一个神奇的地方，（abc + 0011）*2+d，即<font color="red">abc X 2+6 </font> + d，红字的部分就直接 ≥ 16 了，超过了4位2进制数表示的范围, 向更高位进一位！那么此时表示十位的BCD码为0001。</p>
+<p>在修正的结果上送入第四位得到1_0100，即0001_0100即为1110的BCD码（十进制14）。</p>
+<hr>
+<p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038.png"
+	width="1773"
+	height="1155"
+	srcset="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu6174467605347702487.png 480w, /p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu708535268236511772.png 1024w"
+	loading="lazy"
+	
+		alt="生命游戏"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="153"
+		data-flex-basis="368px"
+	
+></p>
+<p><strong>康威生命游戏</strong></p>
+<p>这真的是一个很神奇的机器，附上我的解决方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">load</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="p">[</span><span class="mh">255</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">data</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">255</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">q</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">temp</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">][</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">temp_next</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">][</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">integer</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">sum</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">					<span class="n">sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> 
+</span></span><span class="line"><span class="cl">       				<span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">       				<span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">       				<span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">case</span> <span class="p">(</span><span class="n">sum</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="mh">4</span><span class="mi">&#39;d2</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                        <span class="mh">4</span><span class="mi">&#39;d3</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">default</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">                <span class="k">end</span>
+</span></span><span class="line"><span class="cl">            <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">load</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">16</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">16</span> <span class="o">+</span> <span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">16</span> <span class="o">+</span> <span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">16</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">             <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>定义<code>i</code> <code>j</code> <code>sum</code>变量的时候使用的是<code>int</code> <code>integer</code> 来定义变量，其实区别不大，这里使用也就是想试试:</p>
+<p>在 Verilog 和 SystemVerilog 中，<code>int</code> 和 <code>integer</code> 都表示整数，但有以下关键区别：</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left"><code>integer</code> (Verilog)</th>
+<th style="text-align:left"><code>int</code> (SystemVerilog)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>位宽</strong></td>
+<td style="text-align:left">32 位（有符号）</td>
+<td style="text-align:left">32 位（有符号）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>初始值</strong></td>
+<td style="text-align:left"><code>x</code>（未知态）</td>
+<td style="text-align:left"><code>0</code>（默认值）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>声明位置</strong></td>
+<td style="text-align:left">只能在过程块（<code>always</code>、<code>initial</code>）或局部作用域中声明</td>
+<td style="text-align:left">可以在任何地方声明（模块级、过程块、端口、结构体等）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>可综合性</strong></td>
+<td style="text-align:left">通常可综合（作为循环变量或临时计算）</td>
+<td style="text-align:left">可综合（更现代）</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>使用场景</strong></td>
+<td style="text-align:left">传统 Verilog 中用于循环控制、中间计算</td>
+<td style="text-align:left">SystemVerilog 中通用整数变量，更接近 C 语言的 <code>int</code></td>
+</tr>
+</tbody>
+</table></div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">					<span class="n">sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> 
+</span></span><span class="line"><span class="cl">       				<span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">       				<span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">       				<span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span><span class="o">%</span><span class="mh">16</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">case</span> <span class="p">(</span><span class="n">sum</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="mh">4</span><span class="mi">&#39;d2</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                        <span class="mh">4</span><span class="mi">&#39;d3</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">default</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">                <span class="k">end</span>
+</span></span><span class="line"><span class="cl">            <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>循环的实现</strong></p>
+<p>这里循环是通过取余来实现的，应该不难理解，主要是Verilog要避免复数的行为，所以<code>i-1</code>改成了<code>i+15</code>因为从数学角度来看，这两个数对16同余，这样就实现了循环</p>
+<p><strong>循环的优化</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 使用位与代替 %16
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> 
+</span></span><span class="line"><span class="cl">                       <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">]</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">]</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">]</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">][(</span><span class="n">j</span><span class="o">+</span><span class="mh">15</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">15</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">case</span> <span class="p">(</span><span class="n">sum</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="mh">4</span><span class="mi">&#39;d2</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="mh">4</span><span class="mi">&#39;d3</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">default</span><span class="o">:</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">            <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里的循环使用与门实现的，大概解释一下：</p>
+<ul>
+<li>16 的二进制是 <code>1 0000</code>（5 位，1 后面 4 个 0）。</li>
+<li>任何一个整数除以 16 的余数，只取决于这个数的<strong>低 4 位</strong>（因为高位都是 16 的整数倍）。</li>
+<li>例如：<code>(i+1) % 16</code> 的结果就是 <code>(i+1)</code> 这个数的低 4 位。</li>
+<li>提取低 4 位的方法：用 <code>&amp; 15</code>（15 的二进制是 <code>0 1111</code>），按位与操作会把高位全部清零，只保留低 4 位。</li>
+</ul>
+<p>上述方法适用于所有2的倍数的情况</p>
+<p><strong>时序逻辑部分</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">load</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">16</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">16</span> <span class="o">+</span> <span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">16</span> <span class="o">+</span> <span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">16</span><span class="p">;</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mh">16</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">temp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">temp_next</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">             <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>时序逻辑这一块之前又出现延迟了，这次算是真正搞清楚了，我们为什么需要时序逻辑？粗浅的理解就是这里需要寄存器，我们必须将细胞的状态存储在寄存器中，因为细胞下一刻的状态与现在细胞的状态有关，所以需要将这存储起来，这里<code>temp_next</code>既要接输出，又要接寄存器，就是这么一个道理</p>
 
 </section>
 
@@ -677,6 +1321,30 @@
 
 
     
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
 </article>
 
     
@@ -687,6 +1355,30 @@
     <h2 class="section-title">相关文章</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/learn-c-the-hard-way/">
+        
+        
+            <div class="article-image">
+                <img src="/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.5aeab9a1875221b443c0914c7f946535_hu10319868914554698792.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Learn c the hard way"
+                        
+                        data-hash="md5-Wuq5oYdSIbRDwJFMf5RlNQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Learn c the hard way</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="has-image">
@@ -833,6 +1525,74 @@
         document.head.appendChild(customFont);
     }());
 </script>
+<script>
+  const cdnPath = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
+  const css_Path = "https://yuyemaozi.github.io/waifu/waifu.css"
+  const json_Path = "https://yuyemaozi.github.io/waifu/waifu-tips.json"
+  const model_path = "https://yuyemaozi.github.io/"
+  const config = {
+    
+    path: {
+      homePath: "/",
+      modelPath: model_path + "/Resources/",
+      cssPath: css_Path,
+      tipsJsonPath: json_Path,
+      tipsJsPath: cdnPath + "/waifu-tips.js",
+      live2dCorePath: cdnPath + "/Core/live2dcubismcore.js",
+      live2dSdkPath: cdnPath + "/live2d-sdk.js"
+    },
+    
+    tools: ["hitokoto", "asteroids", "express",  "photo", "info"],
+    
+    drag: {
+      enable: false,
+      direction: ["x", "y"]
+    },
+    
+    switchType: "order"
+  }
+
+  
+  if (screen.width >= 768) {
+    Promise.all([
+      loadExternalResource(config.path.cssPath, "css"),
+      loadExternalResource(config.path.live2dCorePath, "js"),
+      loadExternalResource(config.path.live2dSdkPath, "js"),
+      loadExternalResource(config.path.tipsJsPath, "js")
+    ]).then(() => {
+      initWidget({
+        waifuPath: config.path.tipsJsonPath,
+        cdnPath: config.path.modelPath,
+        tools: config.tools,
+        dragEnable: config.drag.enable,
+        dragDirection: config.drag.direction,
+        switchType: config.switchType
+      });
+    });
+  }
+
+  
+  function loadExternalResource(url, type) {
+    return new Promise((resolve, reject) => {
+      let tag;
+      if (type === "css") {
+        tag = document.createElement("link");
+        tag.rel = "stylesheet";
+        tag.href = url;
+      }
+      else if (type === "js") {
+        tag = document.createElement("script");
+        tag.src = url;
+      }
+      if (tag) {
+        tag.onload = () => resolve(url);
+        tag.onerror = () => reject(url);
+        document.head.appendChild(tag);
+      }
+    });
+  }
+</script>
+
 
     </body>
 </html>
