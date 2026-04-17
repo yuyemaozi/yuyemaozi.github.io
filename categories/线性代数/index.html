@@ -401,21 +401,19 @@
 <script>
   const cdnPath = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
   const css_Path = "https://yuyemaozi.github.io/waifu/waifu.css"
-  const json_Path = "https://yuyemaozi.github.io/waifu/waifu-tips.json"
-  const model_path = "https://yuyemaozi.github.io/"
   const config = {
     
     path: {
       homePath: "/",
-      modelPath: model_path + "/Resources/",
+      modelPath: cdnPath + "/Resources/",
       cssPath: css_Path,
-      tipsJsonPath: json_Path,
+      tipsJsonPath: cdnPath + "/waifu-tips.json",
       tipsJsPath: cdnPath + "/waifu-tips.js",
       live2dCorePath: cdnPath + "/Core/live2dcubismcore.js",
       live2dSdkPath: cdnPath + "/live2d-sdk.js"
     },
     
-    tools: ["hitokoto", "asteroids", "express","photo", "info"],
+    tools: ["hitokoto", "asteroids", "express", "photo", "info", "quit"],
     
     drag: {
       enable: false,
@@ -465,6 +463,7 @@
     });
   }
 </script>
+
 
 
     </body>
