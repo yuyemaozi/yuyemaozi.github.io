@@ -2502,19 +2502,24 @@
 <script>
   const cdnPath = "https://cdn.jsdelivr.net/gh/letere-gzj/live2d-widget-v3@main";
   const css_Path = "https://yuyemaozi.github.io/waifu/waifu.css"
+  const json_Path = "https://yuyemaozi.github.io/waifu/waifu-tips.json"
+  const model_path = "https://yuyemaozi.github.io/"
+  const q_Path = "https://yuyemaozi.github.io/waifu/waifu-tips.js"
+  const live2dcubismcore_path = "https://yuyemaozi.github.io/waifu/live2dcubismcore.js"
+  const live2d_sdk_path = "https://yuyemaozi.github.io/waifu/live2d-sdk.js"
   const config = {
     
     path: {
       homePath: "/",
-      modelPath: cdnPath + "/Resources/",
+      modelPath: model_path + "/Resources/",
       cssPath: css_Path,
-      tipsJsonPath: cdnPath + "/waifu-tips.json",
-      tipsJsPath: cdnPath + "/waifu-tips.js",
-      live2dCorePath: cdnPath + "/Core/live2dcubismcore.js",
-      live2dSdkPath: cdnPath + "/live2d-sdk.js"
+      tipsJsonPath: json_Path,
+      tipsJsPath: q_Path,
+      live2dCorePath: live2dcubismcore_path,
+      live2dSdkPath: live2d_sdk_path
     },
     
-    tools: ["hitokoto", "asteroids", "express", "photo", "info", "quit"],
+    tools: ["hitokoto", "asteroids", "express","photo", "info"],
     
     drag: {
       enable: false,
