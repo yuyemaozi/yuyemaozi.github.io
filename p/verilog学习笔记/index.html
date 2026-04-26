@@ -254,8 +254,15 @@
         <li><a href="#简单介绍">简单介绍</a></li>
         <li><a href="#数值种类">数值种类</a></li>
         <li><a href="#数值表示">数值表示</a></li>
+        <li><a href="#parameter介绍">parameter介绍</a></li>
         <li><a href="#杂项">杂项</a></li>
-        <li><a href="#verilog部分题目的总结">Verilog部分题目的总结</a></li>
+        <li><a href="#verilog部分题目的总结">Verilog部分题目的总结</a>
+          <ol>
+            <li><a href="#时钟">时钟</a></li>
+            <li><a href="#康威生命游戏">康威生命游戏</a></li>
+            <li><a href="#状态机">状态机</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>
@@ -471,6 +478,123 @@
 <li>取负（补码）：<code>11111111_11111111_11111111_11111100</code></li>
 </ul>
 <p>所以一定要定义位宽，这是一个好习惯</p>
+<h3 id="parameter介绍">parameter介绍
+</h3><p><code>parameter</code> 是 Verilog 中用于定义<strong>常量</strong>的关键字。它允许你在模块内部定义一个<strong>编译时</strong>确定的值，并且可以在模块实例化时被<strong>覆盖</strong>（重新定义）。这样可以提高代码的可重用性和可配置性。</p>
+<p>基本语法（有比较老的，就不展示了）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="err">模块名</span> <span class="p">#(</span><span class="k">parameter</span> <span class="err">参数名</span> <span class="o">=</span> <span class="err">默认值</span><span class="p">)</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="err">端口列表</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>基本使用：</p>
+<p><strong>定义位宽</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">my_register</span> <span class="p">#(</span><span class="k">parameter</span> <span class="n">WIDTH</span> <span class="o">=</span> <span class="mh">8</span><span class="p">)</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">d</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">q</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>定义状态机状态</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">parameter</span> <span class="n">A</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b00</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">&#39;b11</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>定义延迟时间（仿真用）</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">parameter</span> <span class="n">DELAY</span> <span class="o">=</span> <span class="mh">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">always</span> <span class="p">#</span><span class="n">DELAY</span> <span class="n">clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">clk</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>实例化覆盖参数</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="c1">// 定义模块
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">module</span> <span class="n">counter</span> <span class="p">#(</span><span class="k">parameter</span> <span class="n">MAX</span> <span class="o">=</span> <span class="mh">255</span><span class="p">)</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">q</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="n">MAX</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">q</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">q</span> <span class="o">+</span> <span class="mh">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 实例化并覆盖参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">counter</span> <span class="p">#(.</span><span class="n">MAX</span><span class="p">(</span><span class="mh">59</span><span class="p">))</span> <span class="n">u_counter</span> <span class="p">(</span><span class="n">clk</span><span class="p">,</span> <span class="n">q</span><span class="p">);</span>   <span class="c1">// 模 60 计数器
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样就可以定义一个计数器，只需要在使用的时候确定具体的参数就可以了</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">作用</td>
+<td style="text-align:left">定义模块内的常量，提高可配置性</td>
+</tr>
+<tr>
+<td style="text-align:left">可覆盖</td>
+<td style="text-align:left">是，实例化时可用 <code>#(.PARAM(value))</code> 覆盖</td>
+</tr>
+<tr>
+<td style="text-align:left">作用域</td>
+<td style="text-align:left">模块内部</td>
+</tr>
+<tr>
+<td style="text-align:left">替代</td>
+<td style="text-align:left"><code>localparam</code> 用于不可覆盖的常量</td>
+</tr>
+</tbody>
+</table></div>
 <h3 id="杂项">杂项
 </h3><hr>
 <p><code>[   :   ]</code> 定义位宽的时候用的小端模式，意思是大数在左边</p>
@@ -686,7 +810,8 @@
 <p>如果单纯的只看这一个电路的话，其实就是Q保持原来的数值</p>
 <hr>
 <h3 id="verilog部分题目的总结">Verilog部分题目的总结
-</h3><p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117.png"
+</h3><h4 id="时钟">时钟
+</h4><p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117.png"
 	width="1991"
 	height="728"
 	srcset="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu8133919660145964550.png 480w, /p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu5743247467523108779.png 1024w"
@@ -1043,8 +1168,8 @@
 		data-flex-basis="368px"
 	
 ></p>
-<p><strong>康威生命游戏</strong></p>
-<p>这真的是一个很神奇的机器，附上我的解决方法：</p>
+<h4 id="康威生命游戏">康威生命游戏
+</h4><p>这真的是一个很神奇的机器，附上我的解决方法：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1298,6 +1423,188 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>时序逻辑这一块之前又出现延迟了，这次算是真正搞清楚了，我们为什么需要时序逻辑？粗浅的理解就是这里需要寄存器，我们必须将细胞的状态存储在寄存器中，因为细胞下一刻的状态与现在细胞的状态有关，所以需要将这存储起来，这里<code>temp_next</code>既要接输出，又要接寄存器，就是这么一个道理</p>
+<h4 id="状态机">状态机
+</h4><p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318.png"
+	width="2427"
+	height="963"
+	srcset="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu7794704999594027502.png 480w, /p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu5011168357329910665.png 1024w"
+	loading="lazy"
+	
+		alt="状态机"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="252"
+		data-flex-basis="604px"
+	
+></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">areset</span><span class="p">,</span>    <span class="c1">// Asynchronous reset to state B
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">input</span> <span class="n">in</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">out</span><span class="p">);</span><span class="c1">//  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">A</span><span class="o">=</span><span class="mh">0</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mh">1</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">state</span><span class="p">,</span> <span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>    <span class="c1">// This is a combinational always block
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// State transition logic
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_state</span> <span class="o">=</span> <span class="o">~</span><span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>    <span class="c1">// This is a sequential always block
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// State flip-flops with asynchronous reset
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">areset</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">           <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">           <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">out</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="o">~</span><span class="n">state</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">areset</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>说实话，这个bug真的很抽象</p>
+<p>直接看错误的逻辑图：</p>
+<p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321.png"
+	width="1763"
+	height="740"
+	srcset="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu18308513695516278964.png 480w, /p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu10321969456419693981.png 1024w"
+	loading="lazy"
+	
+		alt="错误的逻辑图"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="238"
+		data-flex-basis="571px"
+	
+></p>
+<p><strong>错误的原因</strong></p>
+<p><code>assign out = ~(~state &amp; ~areset);</code></p>
+<p>就是这句话，当<code>in</code>和<code>areset</code>同时发生变化时，<code>state</code>由于<code>clk</code>没有到时钟结束，所以<code>state</code>的状态没变，但由于<code>areset</code>发生了变化，所以<code>assign out = ~(~state &amp; ~areset)</code>这句话执行了，导致了错误</p>
+<p>这是因为这道题要求的是异步复位</p>
+<p>看正确的代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">areset</span><span class="p">,</span>    <span class="c1">// Asynchronous reset to state B
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">input</span> <span class="n">in</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">out</span><span class="p">);</span><span class="c1">//  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">A</span><span class="o">=</span><span class="mh">0</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mh">1</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">state</span><span class="p">,</span> <span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>    <span class="c1">// This is a combinational always block
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// State transition logic
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="n">next_state</span> <span class="o">=</span> <span class="o">~</span><span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">,</span><span class="k">posedge</span> <span class="n">areset</span><span class="p">)</span> <span class="k">begin</span>    <span class="c1">// This is a sequential always block
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// State flip-flops with asynchronous reset
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">areset</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">           <span class="n">state</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">           <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">out</span> <span class="o">=</span> <span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以发现更改的只有时钟沿：</p>
+<ul>
+<li><code>posedge areset</code> 表示复位信号 <code>areset</code> 的<strong>上升沿</strong>会立即触发 <code>always</code> 块，不受时钟控制。</li>
+<li>当 <code>areset</code> 为高时，<code>state</code> 被强制赋值为 <code>B</code>，这就是异步复位的含义：<strong>复位信号可以随时（与时钟无关）将状态清零</strong>。</li>
+</ul>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">复位类型</th>
+<th style="text-align:left">敏感列表</th>
+<th style="text-align:left">复位行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">异步复位</td>
+<td style="text-align:left"><code>@(posedge clk, posedge reset)</code></td>
+<td style="text-align:left">复位信号<strong>立即</strong>生效，与时钟无关</td>
+</tr>
+<tr>
+<td style="text-align:left">同步复位</td>
+<td style="text-align:left"><code>@(posedge clk)</code></td>
+<td style="text-align:left">复位信号只在<strong>时钟边沿</strong>生效</td>
+</tr>
+</tbody>
+</table></div>
 
 </section>
 
