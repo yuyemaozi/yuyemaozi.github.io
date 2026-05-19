@@ -261,6 +261,12 @@
             <li><a href="#时钟">时钟</a></li>
             <li><a href="#康威生命游戏">康威生命游戏</a></li>
             <li><a href="#状态机">状态机</a></li>
+            <li><a href="#状态机遇到的一个bug">状态机遇到的一个bug</a></li>
+          </ol>
+        </li>
+        <li><a href="#状态机题目引发的延迟和毛刺现象的思考">状态机题目引发的延迟和毛刺现象的思考</a>
+          <ol>
+            <li><a href="#题目分析">题目分析</a></li>
           </ol>
         </li>
       </ol>
@@ -1605,6 +1611,449 @@
 </tr>
 </tbody>
 </table></div>
+<h4 id="状态机遇到的一个bug">状态机遇到的一个bug
+</h4><p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985.png"
+	width="1791"
+	height="953"
+	srcset="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu9772632342990113123.png 480w, /p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu10792195422472966487.png 1024w"
+	loading="lazy"
+	
+		alt="image-20260504144611985"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="187"
+		data-flex-basis="451px"
+	
+></p>
+<p>自己写的代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">areset</span><span class="p">,</span>    <span class="c1">// Freshly brainwashed Lemmings walk left.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">input</span> <span class="n">bump_left</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">bump_right</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">ground</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">walk_left</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">walk_right</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">aaah</span> <span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">right</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span><span class="n">left</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">state</span><span class="p">,</span><span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">temp_ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">right:</span>	<span class="n">next_state</span> <span class="o">=</span> <span class="n">bump_right</span> <span class="o">?</span> <span class="n">left</span> <span class="o">:</span> <span class="n">right</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">left:</span>	<span class="n">next_state</span> <span class="o">=</span> <span class="n">bump_left</span> <span class="o">?</span> <span class="n">right</span> <span class="o">:</span> <span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">default</span><span class="o">:</span>	<span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">,</span><span class="k">posedge</span> <span class="n">areset</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">areset</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">           <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">left</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">           <span class="n">temp_ground</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">           <span class="n">aaah</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp_ground</span> <span class="o">=</span> <span class="n">ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">ground</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">               <span class="n">aaah</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">               <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">end</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">               <span class="n">aaah</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">               <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">walk_left</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">left</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">temp_ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">walk_right</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">right</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">temp_ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>网上找的答案：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">areset</span><span class="p">,</span>    <span class="c1">// Freshly brainwashed Lemmings walk left.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">input</span> <span class="n">bump_left</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">bump_right</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">ground</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">walk_left</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">walk_right</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">aaah</span> <span class="p">);</span> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">left</span><span class="o">=</span><span class="mh">0</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="mh">1</span><span class="p">,</span><span class="n">fl</span><span class="o">=</span><span class="mh">2</span><span class="p">,</span><span class="n">fr</span><span class="o">=</span><span class="mh">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">state</span><span class="p">,</span><span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">,</span> <span class="k">posedge</span> <span class="n">areset</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">areset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="o">&lt;=</span><span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">state</span><span class="o">&lt;=</span><span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">left:</span> <span class="n">next_state</span><span class="o">=</span><span class="n">ground</span><span class="o">?</span><span class="p">(</span><span class="n">bump_left</span><span class="o">?</span><span class="nl">right:</span><span class="n">left</span><span class="p">)</span><span class="o">:</span><span class="n">fl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">right:</span> <span class="n">next_state</span><span class="o">=</span><span class="n">ground</span><span class="o">?</span><span class="p">(</span><span class="n">bump_right</span><span class="o">?</span><span class="nl">left:</span><span class="n">right</span><span class="p">)</span><span class="o">:</span><span class="n">fr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">fl:</span>    <span class="n">next_state</span><span class="o">=</span><span class="n">ground</span><span class="o">?</span><span class="nl">left:</span><span class="n">fl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">fr:</span>    <span class="n">next_state</span><span class="o">=</span><span class="n">ground</span><span class="o">?</span><span class="nl">right:</span><span class="n">fr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">walk_left</span><span class="o">=</span><span class="p">(</span><span class="n">state</span><span class="o">==</span><span class="n">left</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">walk_right</span><span class="o">=</span><span class="p">(</span><span class="n">state</span><span class="o">==</span><span class="n">right</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">aaah</span><span class="o">=</span><span class="p">(</span><span class="n">state</span><span class="o">==</span><span class="n">fr</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">state</span><span class="o">==</span><span class="n">fl</span><span class="p">);</span><span class="c1">//不能写成aaah=(state==fr|fl),这样结果不对，但我不知道为什么，请看到这段代码的人留言告诉我一声，万分感谢。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> 
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>思考后更改的答案：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">areset</span><span class="p">,</span>    <span class="c1">// Freshly brainwashed Lemmings walk left.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">input</span> <span class="n">bump_left</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">bump_right</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">ground</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">walk_left</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">walk_right</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">aaah</span> <span class="p">);</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">right</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span><span class="n">left</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">state</span><span class="p">,</span><span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">temp_ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">temp_ground</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">right:</span>	<span class="n">next_state</span> <span class="o">=</span> <span class="n">bump_right</span> <span class="o">?</span> <span class="n">left</span> <span class="o">:</span> <span class="n">right</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">left:</span>	<span class="n">next_state</span> <span class="o">=</span> <span class="n">bump_left</span> <span class="o">?</span> <span class="n">right</span> <span class="o">:</span> <span class="n">left</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">default</span><span class="o">:</span>	<span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>	<span class="n">next_state</span> <span class="o">=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">,</span><span class="k">posedge</span> <span class="n">areset</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">areset</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">           <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">left</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl">           <span class="n">temp_ground</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">           <span class="n">aaah</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">            <span class="n">temp_ground</span> <span class="o">=</span> <span class="n">ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">ground</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">               <span class="n">aaah</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">               <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">end</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">               <span class="n">aaah</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">               <span class="n">state</span> <span class="o">&lt;=</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">end</span>
+</span></span><span class="line"><span class="cl">        <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">walk_left</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">left</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">temp_ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">walk_right</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">right</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">temp_ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其实先夸一下网上找的解法，他将下落也视作了一种状态，其实我的解法一点也不好，并没有理解状态这么一个东西，但仍有值得思考的地方：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">walk_left</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">left</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">temp_ground</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">walk_right</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">right</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">temp_ground</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>我们先分析这么一段，以前我直接与的是<code>ground</code>信号，出现了问题，为什么呢？</li>
+</ul>
+<p><code>assign</code>是连续赋值， 所以只要等号右侧的值无论是谁发生改变，就会立即发生改变。</p>
+<p>那就必须要注意左侧的所有变量的值要同时发生改变（大部分情况），所以左侧都是寄存器类型的变量，都在一个周期结束后被赋值，其实就是避免的毛刺现象</p>
+<h3 id="状态机题目引发的延迟和毛刺现象的思考">状态机题目引发的延迟和毛刺现象的思考
+</h3><p><img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745.png"
+	width="1775"
+	height="633"
+	srcset="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu2953925591068064043.png 480w, /p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu1293199645608941011.png 1024w"
+	loading="lazy"
+	
+		alt="状态机题目引发的延迟和毛刺现象的思考"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="280"
+		data-flex-basis="672px"
+	
+></p>
+<p>错误的代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">in</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>    <span class="c1">// Synchronous reset
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">output</span> <span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">out_bytes</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="n">done</span><span class="p">);</span> <span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">reg</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>	<span class="n">state</span><span class="p">,</span><span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">state1</span> <span class="o">=</span> <span class="mh">3</span><span class="mi">&#39;d1</span><span class="p">,</span><span class="n">state2</span> <span class="o">=</span> <span class="mh">3</span><span class="mi">&#39;d2</span><span class="p">,</span><span class="n">state3</span> <span class="o">=</span> <span class="mh">3</span><span class="mi">&#39;d3</span><span class="p">,</span><span class="n">state4</span> <span class="o">=</span> <span class="mh">3</span><span class="mi">&#39;d4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state1:</span> <span class="n">next_state</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="o">?</span> <span class="n">state2</span> <span class="o">:</span> <span class="n">state1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state2:</span> <span class="n">next_state</span> <span class="o">=</span> <span class="n">state3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state3:</span> <span class="n">next_state</span> <span class="o">=</span> <span class="n">state4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state4:</span> <span class="n">next_state</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="o">?</span> <span class="n">state2</span> <span class="o">:</span> <span class="n">state1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">reset</span><span class="p">)</span>	<span class="n">state</span> <span class="o">&lt;=</span> <span class="n">state1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>	<span class="n">state</span> <span class="o">&lt;=</span> <span class="n">next_state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl">            <span class="k">assign</span> <span class="n">done</span> <span class="o">=</span> <span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">state4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state1:</span>	<span class="n">out_bytes</span><span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">16</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state2:</span> <span class="n">out_bytes</span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">8</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state3:</span> <span class="n">out_bytes</span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state4:</span> <span class="n">out_bytes</span><span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">16</span><span class="p">]</span> <span class="o">=</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>改正其实不复杂，只需要改为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Verilog" data-lang="Verilog"><span class="line"><span class="cl">    <span class="k">always</span><span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span><span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state1:</span>	<span class="n">out_bytes</span><span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">16</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state2:</span> <span class="n">out_bytes</span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">8</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state3:</span> <span class="n">out_bytes</span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">state4:</span> <span class="n">out_bytes</span><span class="p">[</span><span class="mh">23</span><span class="o">:</span><span class="mh">16</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">in</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">endcase</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将一个组合逻辑改为了时序逻辑就可以了</p>
+<h4 id="题目分析">题目分析
+</h4><p>一个完整的状态机通常包含三类信号：</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">信号类别</th>
+<th style="text-align:left">例子（本题）</th>
+<th style="text-align:left">更新时机</th>
+<th style="text-align:left">逻辑类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>状态寄存器</strong></td>
+<td style="text-align:left"><code>state</code></td>
+<td style="text-align:left">只在时钟上升沿更新</td>
+<td style="text-align:left"><strong>时序逻辑</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>次态计算</strong></td>
+<td style="text-align:left"><code>next_state</code></td>
+<td style="text-align:left">由当前状态和输入随时决定</td>
+<td style="text-align:left"><strong>组合逻辑</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>输出信号</strong></td>
+<td style="text-align:left"><code>done</code>, <code>out_bytes</code></td>
+<td style="text-align:left">题目要求 <code>done</code> 在固定周期有效，<code>out_bytes</code> 需要保持完整消息</td>
+<td style="text-align:left">有时序/组合两种可能</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><code>out_bytes</code> 必须<strong>保存</strong>完整的三字节消息，直到下一个 <code>done</code> 有效。</li>
+<li>由于消息的字节不是同时到达的，而是分三个时钟周期依次到来，所以<strong>必须用寄存器</strong>来存储它们，否则数据会丢失。</li>
+<li>因此 <code>out_bytes</code> 必须用时序逻辑（寄存器）来实现。</li>
+</ul>
+<p>可是寄存器要更新，又不能在 <code>done</code> 有效时被新数据破坏。所以你看到的正确解法中，<code>out_bytes</code> 的赋值在<strong>每个时钟上升沿</strong>发生，但利用非阻塞赋值的特性确保：</p>
+<ul>
+<li>在接收消息的三个周期内，依次填入字节。</li>
+<li>在 <code>done</code> 周期（即状态 <code>DONE</code>）中，虽然也执行了 <code>out_bytes[23:16] &lt;= in</code>，但<strong>当前周期输出的是旧值</strong>（完整消息），而 <code>in</code> 是新消息的第一个字节。等下一周期 <code>state</code> 退回到 <code>BYTE1</code>，输出才会被新消息覆盖。</li>
+</ul>
+<p>这正是<strong>时序逻辑</strong>的典型应用：需要“记忆”历史值。</p>
 
 </section>
 

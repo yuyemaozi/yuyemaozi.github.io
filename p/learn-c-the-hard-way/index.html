@@ -277,8 +277,34 @@
             <li><a href="#注意事项">注意事项</a></li>
           </ol>
         </li>
+        <li><a href="#dbgh文件内容">dbg.h文件内容</a></li>
       </ol>
     </li>
+    <li><a href="#面对对象编程">面对对象编程</a>
+      <ol>
+        <li><a href="#objecth文件">object.h文件</a></li>
+        <li><a href="#objectc文件">object.c文件</a></li>
+        <li><a href="#ex19h文件">ex19.h文件</a></li>
+        <li><a href="#ex19c文件">ex19.c文件</a></li>
+      </ol>
+    </li>
+    <li><a href="#高级数据类型和控制结构">高级数据类型和控制结构</a>
+      <ol>
+        <li><a href="#volatile"><code>volatile</code></a>
+          <ol>
+            <li><a href="#例子">例子：</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#变参函数">变参函数</a>
+      <ol>
+        <li><a href="#代码">代码：</a></li>
+        <li><a href="#可变参数的介绍">可变参数的介绍</a></li>
+      </ol>
+    </li>
+    <li><a href="#八个防御性编程策略">八个防御性编程策略</a></li>
+    <li><a href="#clang介绍">clang介绍</a></li>
   </ol>
 </nav>
         </div>
@@ -1314,7 +1340,15 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>int (*operation)(int, int);</code>简单介绍一下这个，前面的<code>int</code>其实就是函数返回的类型，<code>（int ，int）</code>是传递的参数的类型。</p>
-<p>之后的赋值比较好理解，由于函数名字本身就是地址，将地址赋值给指针，来完成对应的操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="err">返回值类型</span> <span class="p">(</span><span class="o">*</span><span class="err">指针变量名</span><span class="p">)(</span><span class="err">参数类型列表</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后的赋值比较好理解，由于函数名字本身就是地址，将地址赋值给指针，来完成对应的操作</p>
 <p>如果定义的指针的类型和函数返回值的类型不匹配会出现什么情况？</p>
 <p>例如：</p>
 <div class="highlight"><div class="chroma">
@@ -1725,6 +1759,1461 @@
 <li><strong>性能</strong>：在性能敏感的代码中，断言可能会增加额外的开销，尤其是在大量调用的情况下。因此，发布版本中通常会禁用断言。</li>
 <li><strong>错误处理</strong>：断言不应该用于处理可以预期并且可以恢复的错误情况。断言更多地用于捕获程序员的错误。</li>
 </ul>
+<h3 id="dbgh文件内容">dbg.h文件内容
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#ifndef __dbg_h__
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define __dbg_h__
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;errno.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#ifdef NDEBUG
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define debug(M, ...)
+</span></span></span><span class="line"><span class="cl"><span class="cp">#else
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define debug(M, ...) fprintf(stderr, &#34;DEBUG %s:%d: &#34; M &#34;\n&#34;, __FILE__, __LINE__, ##__VA_ARGS__)
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define clean_errno() (errno == 0 ? &#34;None&#34; : strerror(errno))
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define log_err(M, ...) fprintf(stderr, &#34;[ERROR] (%s:%d: errno: %s) &#34; M &#34;\n&#34;, __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define log_warn(M, ...) fprintf(stderr, &#34;[WARN] (%s:%d: errno: %s) &#34; M &#34;\n&#34;, __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define log_info(M, ...) fprintf(stderr, &#34;[INFO] (%s:%d) &#34; M &#34;\n&#34;, __FILE__, __LINE__, ##__VA_ARGS__)
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define check(A, M, ...) if(!(A)) { log_err(M, ##__VA_ARGS__); errno=0; goto error; }
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define sentinel(M, ...)  { log_err(M, ##__VA_ARGS__); errno=0; goto error; }
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define check_mem(A) check((A), &#34;Out of memory.&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define check_debug(A, M, ...) if(!(A)) { debug(M, ##__VA_ARGS__); errno=0; goto error; }
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="面对对象编程">面对对象编程
+</h2><h3 id="objecth文件">object.h文件
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#ifndef _object_h
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define _object_h
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//ifndef和endif联合使用，意思是只要_object_h没有被定义过，就执行这之间的内容，进行结构体的定义和函数申明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//这是一个枚举变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NORTH</span><span class="p">,</span> <span class="n">SOUTH</span><span class="p">,</span> <span class="n">EAST</span><span class="p">,</span> <span class="n">WEST</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">Direction</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//object结构体，面向对象编程，这个程序的所有对象的行为在这里
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//解释一下为什么都是void类型的指针，因为有不同的结构体指针会传过来，在函数内部将指针进行类型转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">init</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">describe</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destroy</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">move</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">Direction</span> <span class="n">direction</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">attack</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">Object</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//object.c中的函数的申明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">Object_init</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span> <span class="c1">//对象建立函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">Object_destroy</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span> <span class="c1">//对象释放函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">Object_describe</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span> <span class="c1">//对象描述函数，打印结构体中的char *description
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">Object_move</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">Direction</span> <span class="n">direction</span><span class="p">);</span> <span class="c1">//对象移动函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">Object_attack</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">);</span> <span class="c1">//伤害函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">Object_new</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="n">Object</span> <span class="n">proto</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">description</span><span class="p">);</span> <span class="c1">//创建新对象的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//宏定义 NEW（T，N），会被转化为后面的内容，T和N相应替换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#define NEW(T, N) Object_new(sizeof(T), T##Proto, N)
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define _(N) proto.N
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">适合放在 .h 文件</th>
+<th style="text-align:left">禁止放在 .h 文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">函数声明</td>
+<td style="text-align:left"><strong>函数定义</strong>（非 <code>inline</code>）</td>
+</tr>
+<tr>
+<td style="text-align:left">宏定义</td>
+<td style="text-align:left"><strong>变量定义</strong>（非 <code>extern</code>）</td>
+</tr>
+<tr>
+<td style="text-align:left">类型定义（struct, union, enum）</td>
+<td style="text-align:left">不必要的 <code>#include</code>（会拖慢编译）</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>extern</code> 变量声明</td>
+<td style="text-align:left">具体的业务逻辑代码</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>inline</code> 函数定义</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table></div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#ifndef _object_h
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>是为了防止在同一个<code>.c</code>源文件出现重复定义的行为：</p>
+<p>假设你有三个头文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// common.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#define BUFFER_SIZE 1024
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// network.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;common.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="nf">send_data</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// file_io.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;common.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="nf">read_file</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后你的 <code>main.c</code> 包含了后两个头文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="c1">// main.c
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;network.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;file_io.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="objectc文件">object.c文件
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;object.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//相应函数的定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">Object_destroy</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//由于传递的是指向结构体的空指针，无法访问结构体内部元素，这里进行转化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Object</span> <span class="o">*</span><span class="n">obj</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//释放对应对象的内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">obj</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">)</span> <span class="nf">free</span><span class="p">(</span><span class="n">obj</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">free</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//打印对应对象内部的描述
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">Object_describe</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Object</span> <span class="o">*</span><span class="n">obj</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%s.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">obj</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Object_init</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// do nothing really
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="nf">Object_move</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">Direction</span> <span class="n">direction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You can&#39;t go that direction.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Object_attack</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You can&#39;t attack that.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="nf">Object_new</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="n">Object</span> <span class="n">proto</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">description</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// setup the default functions in case they aren&#39;t set
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//保证所生成的对象结构体内部的函数都接上对应函数，即使这个结构体不需要，要接上这个函数内部的函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">proto</span><span class="p">.</span><span class="n">init</span><span class="p">)</span> <span class="n">proto</span><span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">Object_init</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">proto</span><span class="p">.</span><span class="n">describe</span><span class="p">)</span> <span class="n">proto</span><span class="p">.</span><span class="n">describe</span> <span class="o">=</span> <span class="n">Object_describe</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">proto</span><span class="p">.</span><span class="n">destroy</span><span class="p">)</span> <span class="n">proto</span><span class="p">.</span><span class="n">destroy</span> <span class="o">=</span> <span class="n">Object_destroy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">proto</span><span class="p">.</span><span class="n">attack</span><span class="p">)</span> <span class="n">proto</span><span class="p">.</span><span class="n">attack</span> <span class="o">=</span> <span class="n">Object_attack</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">proto</span><span class="p">.</span><span class="n">move</span><span class="p">)</span> <span class="n">proto</span><span class="p">.</span><span class="n">move</span> <span class="o">=</span> <span class="n">Object_move</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// this seems weird, but we can make a struct of one size,
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// then point a different pointer at it to &#34;cast&#34; it
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//为对应结构体申明内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Object</span> <span class="o">*</span><span class="n">el</span> <span class="o">=</span> <span class="nf">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">el</span> <span class="o">=</span> <span class="n">proto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// copy the description over
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 将这个对象的描述创建
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">el</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="nf">strdup</span><span class="p">(</span><span class="n">description</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// initialize it with whatever init we were given
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">el</span><span class="o">-&gt;</span><span class="nf">init</span><span class="p">(</span><span class="n">el</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// looks like it didn&#39;t initialize properly
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//这里的判断条件其实是保证成功创建出对象，这里的init并不是这个文件的，而是传递过来的proto里的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">el</span><span class="o">-&gt;</span><span class="nf">destroy</span><span class="p">(</span><span class="n">el</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// all done, we made an object of any type
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="n">el</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>总体介绍一下这个文件：</p>
+<p><code>void *Object_new(size_t size, Object proto, char *description)</code>是关键代码，后续创建对象运行的就是这里的代码，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl">    <span class="n">Object</span> <span class="o">*</span><span class="n">el</span> <span class="o">=</span> <span class="nf">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">el</span> <span class="o">=</span> <span class="n">proto</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里有值得注意的，我们先把一段后续的创建对象的代码拿过来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">Map</span> <span class="o">*</span><span class="n">game</span> <span class="o">=</span> <span class="nf">NEW</span><span class="p">(</span><span class="n">Map</span><span class="p">,</span> <span class="s">&#34;The Hall of the Minotaur.&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过宏定义展开后调用了上述函数，但会发现这里传递的是<code>Map</code>结构体，我们把<code> Map</code>结构体提前拿过来</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">Map</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Object</span> <span class="n">proto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">location</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以发现这里不是<code>Object</code>结构体，这里就是面对对象编程最应该学习的地方了，不难发现<code>Map</code>结构体中的第一个结构体就是<code>Object</code>结构体，它也只能放在第一个位置。</p>
+<p>在 C 语言中，如果 <strong><code>Map</code> 结构体的第一个成员是 <code>Object</code></strong>，那么：</p>
+<ul>
+<li>指向 <code>Map</code> 的指针和指向 <code>Object</code> 的指针指向<strong>同一块内存地址</strong>。</li>
+<li>标准 C 保证：<strong>指向结构体的指针可以安全地转换为指向其第一个成员的指针</strong>，反之亦然</li>
+</ul>
+<p>所以说这是一个小巧思</p>
+<p>（突然发现是自己那天弄错了，但由于存在学习的点就没删除，这里不是<code>Map</code>结构体，还是<code>object</code>结构体具体看ex19.c的代码，宏定义给<code>Map</code>加上了<code>proto</code>）</p>
+<p>其实发现<code>Map</code>还有一些拓展项，这里的<code>calloc</code>申请了内存，也进行初始化了，大小是<code>Map</code> 结构体的大小，但需要注意，<code>el</code>指针访问不了这里的拓展项</p>
+<h3 id="ex19h文件">ex19.h文件
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#ifndef _ex19_h
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define _ex19_h
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;object.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">Monster</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Object</span> <span class="n">proto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">hit_points</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Monster</span> <span class="n">Monster</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Monster_attack</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Monster_init</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">Room</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Object</span> <span class="n">proto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Monster</span> <span class="o">*</span><span class="n">bad_guy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">Room</span> <span class="o">*</span><span class="n">north</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">Room</span> <span class="o">*</span><span class="n">south</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">Room</span> <span class="o">*</span><span class="n">east</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">Room</span> <span class="o">*</span><span class="n">west</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Room</span> <span class="n">Room</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="nf">Room_move</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">Direction</span> <span class="n">direction</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Room_attack</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//int Room_init(void *self);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">Map</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Object</span> <span class="n">proto</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">location</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Map</span> <span class="n">Map</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="nf">Map_move</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">Direction</span> <span class="n">direction</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Map_attack</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Map_init</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="ex19c文件">ex19.c文件
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;errno.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;ex19.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Monster_attack</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Monster</span> <span class="o">*</span><span class="n">monster</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You attack %s!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">monster</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">description</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">monster</span><span class="o">-&gt;</span><span class="n">hit_points</span> <span class="o">-=</span> <span class="n">damage</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">monster</span><span class="o">-&gt;</span><span class="n">hit_points</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;It is still alive.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;It is dead!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Monster_init</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Monster</span> <span class="o">*</span><span class="n">monster</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">monster</span><span class="o">-&gt;</span><span class="n">hit_points</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Object</span> <span class="n">MonsterProto</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">Monster_init</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">attack</span> <span class="o">=</span> <span class="n">Monster_attack</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="nf">Room_move</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">Direction</span> <span class="n">direction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">room</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="n">NORTH</span> <span class="o">&amp;&amp;</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">north</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You go north, into:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next</span> <span class="o">=</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">north</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="n">SOUTH</span> <span class="o">&amp;&amp;</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">south</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You go south, into:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next</span> <span class="o">=</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">south</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="n">EAST</span> <span class="o">&amp;&amp;</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">east</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You go east, into:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next</span> <span class="o">=</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">east</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="n">WEST</span> <span class="o">&amp;&amp;</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">west</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You go west, into:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next</span> <span class="o">=</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">west</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You can&#39;t go that direction.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">next</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">describe</span><span class="p">)(</span><span class="n">next</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Room_attack</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">room</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Monster</span> <span class="o">*</span><span class="n">monster</span> <span class="o">=</span> <span class="n">room</span><span class="o">-&gt;</span><span class="n">bad_guy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">monster</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">monster</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">attack</span><span class="p">)(</span><span class="n">monster</span><span class="p">,</span> <span class="n">damage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You flail in the air at nothing. Idiot.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Object</span> <span class="n">RoomProto</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">move</span> <span class="o">=</span> <span class="n">Room_move</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">attack</span> <span class="o">=</span> <span class="n">Room_attack</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="o">*</span><span class="nf">Map_move</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">Direction</span> <span class="n">direction</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Map</span> <span class="o">*</span><span class="n">map</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">location</span> <span class="o">=</span> <span class="n">map</span><span class="o">-&gt;</span><span class="n">location</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">next</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">next</span> <span class="o">=</span> <span class="n">location</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">move</span><span class="p">)(</span><span class="n">location</span><span class="p">,</span> <span class="n">direction</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">map</span><span class="o">-&gt;</span><span class="n">location</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Map_attack</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">damage</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Map</span><span class="o">*</span> <span class="n">map</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">location</span> <span class="o">=</span> <span class="n">map</span><span class="o">-&gt;</span><span class="n">location</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">location</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">attack</span><span class="p">)(</span><span class="n">location</span><span class="p">,</span> <span class="n">damage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Map_init</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Map</span> <span class="o">*</span><span class="n">map</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// make some rooms for a small map
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//先创建房间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Room</span> <span class="o">*</span><span class="n">hall</span> <span class="o">=</span> <span class="nf">NEW</span><span class="p">(</span><span class="n">Room</span><span class="p">,</span> <span class="s">&#34;The great Hall&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">throne</span> <span class="o">=</span> <span class="nf">NEW</span><span class="p">(</span><span class="n">Room</span><span class="p">,</span> <span class="s">&#34;The throne room&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">arena</span> <span class="o">=</span> <span class="nf">NEW</span><span class="p">(</span><span class="n">Room</span><span class="p">,</span> <span class="s">&#34;The arena, with the minotaur&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Room</span> <span class="o">*</span><span class="n">kitchen</span> <span class="o">=</span> <span class="nf">NEW</span><span class="p">(</span><span class="n">Room</span><span class="p">,</span> <span class="s">&#34;Kitchen, you have the knife now&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// put the bad guy in the arena
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//创建怪物
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">arena</span><span class="o">-&gt;</span><span class="n">bad_guy</span> <span class="o">=</span> <span class="nf">NEW</span><span class="p">(</span><span class="n">Monster</span><span class="p">,</span> <span class="s">&#34;The evil minotaur&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// setup the map rooms
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//再将房间连接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">hall</span><span class="o">-&gt;</span><span class="n">north</span> <span class="o">=</span> <span class="n">throne</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">throne</span><span class="o">-&gt;</span><span class="n">west</span> <span class="o">=</span> <span class="n">arena</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">throne</span><span class="o">-&gt;</span><span class="n">east</span> <span class="o">=</span> <span class="n">kitchen</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">throne</span><span class="o">-&gt;</span><span class="n">south</span> <span class="o">=</span> <span class="n">hall</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">arena</span><span class="o">-&gt;</span><span class="n">east</span> <span class="o">=</span> <span class="n">throne</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">kitchen</span><span class="o">-&gt;</span><span class="n">west</span> <span class="o">=</span> <span class="n">throne</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// start the map and the character off in the hall
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//设立开始房间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">map</span><span class="o">-&gt;</span><span class="n">start</span> <span class="o">=</span> <span class="n">hall</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">map</span><span class="o">-&gt;</span><span class="n">location</span> <span class="o">=</span> <span class="n">hall</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Object</span> <span class="n">MapProto</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">Map_init</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">move</span> <span class="o">=</span> <span class="n">Map_move</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">attack</span> <span class="o">=</span> <span class="n">Map_attack</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">process_input</span><span class="p">(</span><span class="n">Map</span> <span class="o">*</span><span class="n">game</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&gt; &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="nf">getchar</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">getchar</span><span class="p">();</span> <span class="c1">// eat ENTER
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//避免缓冲区出现问题
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">damage</span> <span class="o">=</span> <span class="nf">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">switch</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="o">-</span><span class="mi">1</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//退出游戏
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Giving up? You suck.</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;n&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//移动
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">game</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">move</span><span class="p">)(</span><span class="n">game</span><span class="p">,</span> <span class="n">NORTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;s&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">game</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">move</span><span class="p">)(</span><span class="n">game</span><span class="p">,</span> <span class="n">SOUTH</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;e&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">game</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">move</span><span class="p">)(</span><span class="n">game</span><span class="p">,</span> <span class="n">EAST</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;w&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">game</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">move</span><span class="p">)(</span><span class="n">game</span><span class="p">,</span> <span class="n">WEST</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;a&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//攻击
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">game</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">attack</span><span class="p">)(</span><span class="n">game</span><span class="p">,</span> <span class="n">damage</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="sc">&#39;l&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You can go:</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">game</span><span class="o">-&gt;</span><span class="n">location</span><span class="o">-&gt;</span><span class="n">north</span><span class="p">)</span> <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;NORTH</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">game</span><span class="o">-&gt;</span><span class="n">location</span><span class="o">-&gt;</span><span class="n">south</span><span class="p">)</span> <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;SOUTH</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">game</span><span class="o">-&gt;</span><span class="n">location</span><span class="o">-&gt;</span><span class="n">east</span><span class="p">)</span> <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;EAST</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">game</span><span class="o">-&gt;</span><span class="n">location</span><span class="o">-&gt;</span><span class="n">west</span><span class="p">)</span> <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;WEST</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//保证程序不会出现问题
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;What?: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">ch</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//继续循环
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// simple way to setup the randomness
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">srand</span><span class="p">(</span><span class="nf">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// make our map to work with
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl">    <span class="n">Map</span> <span class="o">*</span><span class="n">game</span> <span class="o">=</span> <span class="nf">NEW</span><span class="p">(</span><span class="n">Map</span><span class="p">,</span> <span class="s">&#34;The Hall of the Minotaur.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//这里成功创建了地图对象，内部调用了Map_init函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;You enter the &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">game</span><span class="o">-&gt;</span><span class="n">location</span><span class="o">-&gt;</span><span class="nf">_</span><span class="p">(</span><span class="n">describe</span><span class="p">)(</span><span class="n">game</span><span class="o">-&gt;</span><span class="n">location</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//创建游戏之后运行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">while</span><span class="p">(</span><span class="nf">process_input</span><span class="p">(</span><span class="n">game</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将细节内容进行了注释，这里就大致讲一下思路：</p>
+<p>这个游戏的对象之间是有联系的，最大的是地图，里面包含房间，房间之间又有联系，房间中有怪物</p>
+<p>所以我们这里想要调用下一级的函数，必须也创建上一级的函数。</p>
+<p>举一个例子：大怪物这个函数实现就必须创建地图和房间对应的函数。</p>
+<p>个人感觉小游戏可以，但大型项目就不合适了，或许可以再多一个结构体保存游戏运行过程中的对象的结构体指针，只通过访问这个结构体就可以了</p>
+<h2 id="高级数据类型和控制结构">高级数据类型和控制结构
+</h2><blockquote>
+<p>这里只记录我目前不了解和熟悉的</p>
+</blockquote>
+<h3 id="volatile"><code>volatile</code>
+</h3><p>表示会做最坏的打算，编译器不会对它做任何优化。通常仅在对变量做一些奇怪的事情时，才会用到它。</p>
+<p>在嵌入式系统、驱动开发或与硬件交互（如读取内存映射的寄存器、全局变量被中断服务程序修改）时，变量的值可以由外部事件改变（例如硬件信号、另一个执行线程）。如果编译器执行优化，它可能会假设变量的值在两次使用之间不会变化，从而导致程序行为错误。</p>
+<p><strong>使用场景</strong>：</p>
+<ul>
+<li>读取硬件状态寄存器（如 UART 状态位）。</li>
+<li>在中断服务程序中修改的全局变量。</li>
+<li>多线程共享的变量（无锁编程中）。</li>
+</ul>
+<h4 id="例子">例子：
+</h4><p>在普通程序中，编译器会对变量进行激进的优化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>  <span class="c1">// 等待 flag 变为非零
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果 <code>flag</code> 没有被声明为 <code>volatile</code>，且编译器没有发现当前函数会修改 <code>flag</code>，它可能会将 <code>flag</code> 的值读到寄存器中，然后无限循环，因为循环内一直比较的是寄存器的旧值，永远不会感知内存中 <code>flag</code> 的变化。</p>
+<p>正确的做法是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">volatile</span> <span class="kt">int</span> <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样每次循环都会从内存中读取 <code>flag</code> 的当前值。</p>
+<h2 id="变参函数">变参函数
+</h2><h3 id="代码">代码：
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/** WARNING: This code is fresh and potentially isn&#39;t correct yet. */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdarg.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;dbg.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define MAX_DATA 100
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">read_string</span><span class="p">(</span><span class="kt">char</span> <span class="o">**</span><span class="n">out_string</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">out_string</span> <span class="o">=</span> <span class="nf">calloc</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_buffer</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check_mem</span><span class="p">(</span><span class="o">*</span><span class="n">out_string</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">result</span> <span class="o">=</span> <span class="nf">fgets</span><span class="p">(</span><span class="o">*</span><span class="n">out_string</span><span class="p">,</span> <span class="n">max_buffer</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check</span><span class="p">(</span><span class="n">result</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="s">&#34;Input error.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">error</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="n">out_string</span><span class="p">)</span> <span class="nf">free</span><span class="p">(</span><span class="o">*</span><span class="n">out_string</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">out_string</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">read_int</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">out_int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">input</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="nf">read_string</span><span class="p">(</span><span class="o">&amp;</span><span class="n">input</span><span class="p">,</span> <span class="n">MAX_DATA</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//利用另一个函数读取数据 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">check</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Failed to read number.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//由于是字符类型的数据，将其转化为int类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">*</span><span class="n">out_int</span> <span class="o">=</span> <span class="nf">atoi</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//不要忘了释放内存，毕竟这里已经用完了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">free</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">error</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">input</span><span class="p">)</span> <span class="nf">free</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">read_scan</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="o">*</span><span class="n">out_int</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">out_char</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">**</span><span class="n">out_string</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">max_buffer</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//变参函数部分，申明va_list变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">va_list</span> <span class="n">argp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//第一个参数是va_list变量，第二个是这个函数的最后一个固定参数，通过它来计算第一个可变参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">va_start</span><span class="p">(</span><span class="n">argp</span><span class="p">,</span> <span class="n">fmt</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">fmt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">fmt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;%&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">switch</span><span class="p">(</span><span class="n">fmt</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">case</span> <span class="sc">&#39;\0&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="nf">sentinel</span><span class="p">(</span><span class="s">&#34;Invalid format, you ended with %%.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">case</span> <span class="sc">&#39;d&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">out_int</span> <span class="o">=</span> <span class="nf">va_arg</span><span class="p">(</span><span class="n">argp</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//将第一个大小为 int * 的参数传递给out_int，并将argp移动到下一个参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="n">rc</span> <span class="o">=</span> <span class="nf">read_int</span><span class="p">(</span><span class="n">out_int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="nf">check</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Failed to read int.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">case</span> <span class="sc">&#39;c&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">out_char</span> <span class="o">=</span> <span class="nf">va_arg</span><span class="p">(</span><span class="n">argp</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">*</span><span class="n">out_char</span> <span class="o">=</span> <span class="nf">fgetc</span><span class="p">(</span><span class="n">stdin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">case</span> <span class="sc">&#39;s&#39;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">max_buffer</span> <span class="o">=</span> <span class="nf">va_arg</span><span class="p">(</span><span class="n">argp</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">out_string</span> <span class="o">=</span> <span class="nf">va_arg</span><span class="p">(</span><span class="n">argp</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">rc</span> <span class="o">=</span> <span class="nf">read_string</span><span class="p">(</span><span class="n">out_string</span><span class="p">,</span> <span class="n">max_buffer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="nf">check</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Failed to read string.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="nf">sentinel</span><span class="p">(</span><span class="s">&#34;Invalid format.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">fgetc</span><span class="p">(</span><span class="n">stdin</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nf">check</span><span class="p">(</span><span class="o">!</span><span class="nf">feof</span><span class="p">(</span><span class="n">stdin</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nf">ferror</span><span class="p">(</span><span class="n">stdin</span><span class="p">),</span> <span class="s">&#34;Input error.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">va_end</span><span class="p">(</span><span class="n">argp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">error</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">va_end</span><span class="p">(</span><span class="n">argp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">first_name</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">initial</span> <span class="o">=</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">last_name</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;What&#39;s your first name? &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="nf">read_scan</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="n">MAX_DATA</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">first_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//将fmt指针指向了%s，由于要改变一个一级指针，所以将二级指针传递过去
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nf">check</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Failed first name.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;What&#39;s your initial? &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rc</span> <span class="o">=</span> <span class="nf">read_scan</span><span class="p">(</span><span class="s">&#34;%c</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">initial</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Failed initial.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;What&#39;s your last name? &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rc</span> <span class="o">=</span> <span class="nf">read_scan</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="n">MAX_DATA</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">last_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Failed last name.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;How old are you? &#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rc</span> <span class="o">=</span> <span class="nf">read_scan</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">age</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;---- RESULTS ----</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;First Name: %s&#34;</span><span class="p">,</span> <span class="n">first_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Initial: &#39;%c&#39;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">initial</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Last Name: %s&#34;</span><span class="p">,</span> <span class="n">last_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;Age: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">age</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">first_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">free</span><span class="p">(</span><span class="n">last_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nl">error</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="可变参数的介绍">可变参数的介绍
+</h3><p>需要头文件<code>stdarg.h</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align:left">类型/宏</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>va_list</code></td>
+<td style="text-align:left">声明一个变量，用于存储参数信息。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>va_start(ap, last_fixed)</code></td>
+<td style="text-align:left">初始化 <code>va_list</code> 变量 <code>ap</code>，使其指向第一个可变参数。<code>last_fixed</code> 是最后一个固定参数的名称。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>va_arg(ap, type)</code></td>
+<td style="text-align:left">返回当前参数（假设类型为 <code>type</code>），并将内部指针移动到下一个参数。</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>va_end(ap)</code></td>
+<td style="text-align:left">清理 <code>va_list</code> 变量，必须与 <code>va_start</code> 配对。</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="八个防御性编程策略">八个防御性编程策略
+</h2><p>一旦你接受了这一思维，你可以重新编写你的原型，并且遵循下面的八个策略，它们被我用于尽可能把代码变得可靠。当我编写代码的“实际”版本，我会严格按照下面的策略，并且尝试消除尽可能多的错误，以一些会破坏我软件的人的方式思考。</p>
+<p>永远不要信任输入</p>
+<p>永远不要提供的输入，并总是校验它。</p>
+<p>避免错误</p>
+<p>如果错误可能发生，不管可能性多低都要避免它。</p>
+<p>过早暴露错误</p>
+<p>过早暴露错误，并且评估发生了什么、在哪里发生以及如何修复。</p>
+<p>记录假设</p>
+<p>清楚地记录所有先决条件，后置条件以及不变量。</p>
+<p>防止过多的文档</p>
+<p>不要在实现阶段就编写文档，它们可以在代码完成时编写。</p>
+<p>使一切自动化</p>
+<p>使一切自动化，尤其是测试。</p>
+<p>简单化和清晰化</p>
+<p>永远简化你的代码，在没有牺牲安全性的同时变得最小和最整洁。</p>
+<p>质疑权威</p>
+<p>不要盲目遵循或拒绝规则。</p>
+<p>这些并不是全部，仅仅是一些核心的东西，我认为程序员应该在编程可靠的代码时专注于它们。要注意我并没有真正说明如何具体做到这些，我接下来会更细致地讲解每一条，并且会布置一些覆盖它们的练习。</p>
+<h2 id="clang介绍">clang介绍
+</h2><p><code>clang</code>是和<code>gcc</code>一样的编译器，<strong>包含了预处理器、编译器，而且会自己调用汇编器、连接器或加载器等多种工具，而不是单单的一个编译器</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">源文件（.c / .cpp）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">【预处理】 -E
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">预处理后的文件（.i 或 .ii）  ← 可保留（-save-temps）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">【编译】（前端 → IR）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ├── 词法/语法/语义分析
+</span></span><span class="line"><span class="cl">      ├── 生成 LLVM IR（.ll 文本 或 .bc 二进制）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">LLVM 中间表示（.ll 或 .bc）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">【优化 &amp; 代码生成】
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">汇编代码（.s）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">【汇编】（as）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">目标文件（.o 或 .obj）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">【链接】（ld）
+</span></span><span class="line"><span class="cl">      │
+</span></span><span class="line"><span class="cl">      ▼
+</span></span><span class="line"><span class="cl">可执行文件（无扩展名 或 .exe）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里主要了解一下编译的过程：</p>
 
 </section>
 
