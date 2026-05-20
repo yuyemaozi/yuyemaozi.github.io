@@ -6759,26 +6759,35 @@ $$
         <pubDate>Sun, 08 Mar 2026 12:26:05 +0800</pubDate>
         
         <guid>https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/R-C.jpg" alt="Featured image of post 第一个博客" /&gt;&lt;div id=&#34;verification&#34; style=&#34; display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20vh;&#34;&gt;
-    &lt;div id=&#34;entry-box&#34;&gt;
-        
-        &lt;div id=&#34;secret-word&#34; style=&#34;  font-size: 1.5rem;
-    margin-bottom: 1rem;&#34;&gt;Unlock to view this content.&lt;/div&gt;
-        &lt;form id=&#34;password-form&#34; onsubmit=&#34;checkPassword(); return false;&#34; style=&#34; display: flex;
-    flex-direction: column;
-    width: auto;&#34;&gt;
-            &lt;input type=&#34;password&#34; name=&#34;password&#34; id=&#34;password&#34; placeholder=&#34;Please enter password&#34; required style=&#34;margin-bottom: 1.5rem;
-      padding: 10px 20px;&#34;&gt;
-            &lt;input type=&#34;hidden&#34; name=&#34;encryptedPassword&#34; id=&#34;encrypted-password&#34;&gt;
-            &lt;input type=&#34;submit&#34; value=&#34;Submit&#34; name=&#34;submit&#34; id=&#34;secret-submit&#34; style=&#34; padding: 10px 20px;
-      cursor: pointer;&#34; onmouseover=&#34;this.style.backgroundColor=&#39;#FAB005&#39;;&#34;
-                   onmouseout=&#34;this.style.backgroundColor=&#39;&#39;;&#34;&gt;
-        &lt;/form&gt;
-    &lt;/div&gt;
-    &lt;div id=&#34;secret&#34; style=&#34;display: none&#34; password=&#34;password&#34;&gt;
+        <description>&lt;img src="https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/R-C.jpg" alt="Featured image of post 第一个博客" /&gt;
+
+
+
+&lt;div class=&#34;hugo-encryptor-container&#34;&gt;
+  &lt;div class=&#34;hugo-encryptor-prompt&#34;&gt;
+    
+      &lt;p&gt;文章的部分内容被密码保护：&lt;/p&gt;
+    
+  &lt;/div&gt;
+  &lt;div class=&#34;hugo-encryptor-form&#34;&gt;
+    &lt;input
+      class=&#34;hugo-encryptor-input&#34;
+      placeholder=&#39;请输入密码&#39;
+    /&gt;
+    &lt;input
+      class=&#34;hugo-encryptor-button&#34;
+      type=&#34;button&#34;
+      value=&#39;点击验证&#39;
+      onclick=&#34;_click_handler(this)&#34;
+    /&gt;
+  &lt;/div&gt;
+  &lt;div
+    class=&#34;hugo-encryptor-cipher-text&#34;
+    data-password=&#34;password&#34;
+    style=&#34;display: none;&#34;
+  &gt;
+    &lt;span style=&#34;display: none;&#34;&gt;--- DON&#39;T MODIFY THIS LINE ---&lt;/span&gt;
+    
 
 我搭建了一整天的网站终于成功了，没想好要写什么内容，
 
@@ -6798,9 +6807,9 @@ $$
 
 这是我自己搭建的第一个芯片，纪念一下
 
-&lt;/div&gt;
-&lt;/div&gt;
 
+  &lt;/div&gt;
+&lt;/div&gt;
 
 </description>
         </item>
