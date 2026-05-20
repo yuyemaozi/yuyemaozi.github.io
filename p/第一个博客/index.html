@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="文章的部分内容被密码保护： --- DON'T MODIFY THIS LINE --- 我搭建了一整天的网站终于成功了，没想好要写什么内容， 估计以后会在这里总结自己“一生一芯”的学习经历，网">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="我搭建了一整天的网站终于成功了，没想好要写什么内容， 估计以后会在这里总结自己“一生一芯”的学习经历，网站我会努力学习优化（希望如此吧） 估计还">
 <title>第一个博客</title>
 
 <link rel='canonical' href='https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/'>
 
 <link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="第一个博客">
-<meta property='og:description' content="文章的部分内容被密码保护： --- DON'T MODIFY THIS LINE --- 我搭建了一整天的网站终于成功了，没想好要写什么内容， 估计以后会在这里总结自己“一生一芯”的学习经历，网">
+<meta property='og:description' content="我搭建了一整天的网站终于成功了，没想好要写什么内容， 估计以后会在这里总结自己“一生一芯”的学习经历，网站我会努力学习优化（希望如此吧） 估计还">
 <meta property='og:url' content='https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/'>
 <meta property='og:site_name' content='杀不死的坏蛋-Unkillable Villain'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-03-08T12:26:05&#43;08:00'/><meta property='article:modified_time' content='2026-03-08T12:26:05&#43;08:00'/><meta property='og:image' content='https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/R-C.jpg' />
 <meta name="twitter:title" content="第一个博客">
-<meta name="twitter:description" content="文章的部分内容被密码保护： --- DON'T MODIFY THIS LINE --- 我搭建了一整天的网站终于成功了，没想好要写什么内容， 估计以后会在这里总结自己“一生一芯”的学习经历，网"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="我搭建了一整天的网站终于成功了，没想好要写什么内容， 估计以后会在这里总结自己“一生一芯”的学习经历，网站我会努力学习优化（希望如此吧） 估计还"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/R-C.jpg' />
   
 
@@ -288,34 +288,12 @@
     <section class="article-content">
     
     
-    
-
-
-
-<div class="hugo-encryptor-container">
+    <div id="encrypted-0" class="hugo-encryptor-container">
   <div class="hugo-encryptor-prompt">
-    
-      <p>文章的部分内容被密码保护：</p>
-    
+    <input type="password" id="pwd-encrypted-0" placeholder="请输入密码" />
+    <input type="submit" onclick="_click_handler(this, 'Xg@1314520', 'encrypted-0')" value="提交" />
   </div>
-  <div class="hugo-encryptor-form">
-    <input
-      class="hugo-encryptor-input"
-      placeholder='请输入密码'
-    />
-    <input
-      class="hugo-encryptor-button"
-      type="button"
-      value='点击验证'
-      onclick="_click_handler(this)"
-    />
-  </div>
-  <div
-    class="hugo-encryptor-cipher-text"
-    data-password="password"
-    style="display: none;"
-  >
-    <span style="display: none;">--- DON'T MODIFY THIS LINE ---</span>
+  <div class="hugo-encryptor-content" style="display:none;">
     
 
 我搭建了一整天的网站终于成功了，没想好要写什么内容，
@@ -339,6 +317,20 @@
 
   </div>
 </div>
+<script>
+function _click_handler(el, password, id) {
+  var container = document.getElementById(id);
+  var prompt = container.querySelector('.hugo-encryptor-prompt');
+  var content = container.querySelector('.hugo-encryptor-content');
+  var pwd_input = document.getElementById('pwd-' + id);
+  if (pwd_input.value === password) {
+    prompt.style.display = 'none';
+    content.style.display = 'block';
+  } else {
+    alert('密码错误！');
+  }
+}
+</script>
 
 
 </section>
