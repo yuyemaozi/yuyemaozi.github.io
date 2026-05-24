@@ -24,9 +24,7 @@
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
+            localStorage.setItem(colorSchemeKey, "dark");
         })();
     </script><script>
     (function() {
@@ -201,26 +199,6 @@
         <li class="menu-bottom-section">
             <ol class="menu">
 
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <span>暗色模式</span>
-                    </li>
                 
             </ol>
         </li>
@@ -468,6 +446,7 @@
 </script>
 <script>
   
+  
   const css_Path = "https://www.unkillablevillain-blog.online/waifu/waifu.css";
   const json_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.json";
   const model_path = "https://www.unkillablevillain-blog.online/Resources/";   
@@ -530,7 +509,33 @@
       }
     });
   }
+
 </script>
+<div id="particles-js"></div>
+
+<script src=https://yuyemaozi.github.io/background/particles.min.js></script>
+<script>
+  particlesJS.load('particles-js', "https://yuyemaozi.github.io/background/particlesjs-config.json", function() {
+    console.log('particles.js loaded - callback');
+  });
+</script>
+
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+  }
+</style>
+<style>
+  body {
+    background: url(https://yuyemaozi.github.io/background/preview.jpg) no-repeat center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+</style>
 
 
 

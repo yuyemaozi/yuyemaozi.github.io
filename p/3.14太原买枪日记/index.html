@@ -24,9 +24,7 @@
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
+            localStorage.setItem(colorSchemeKey, "dark");
         })();
     </script><script>
     (function() {
@@ -202,26 +200,6 @@
             <ol class="menu">
 
                 
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <span>暗色模式</span>
-                    </li>
-                
             </ol>
         </li>
     </ol>
@@ -279,6 +257,14 @@
 
     <div class="article-details">
     
+    <header class="article-category">
+        
+            <a href="/categories/%E9%9A%8F%E7%AC%94/" >
+                随笔
+            </a>
+        
+    </header>
+    
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
@@ -320,7 +306,13 @@
     <section class="article-content">
     
     
-    <p>大致讲一下为什么要去太原吧，挑战杯要焊接PCB板，网上买了一个20元，结果很快就不能用了，所以就上太原的电子城打算买一个。</p>
+    <div id="encrypted-0" class="hugo-encryptor-container">
+  <div class="hugo-encryptor-prompt">
+    <input type="password" id="pwd-encrypted-0" placeholder="请输入密码" />
+    <input type="submit" onclick="_click_handler(this, 'Xg@1314520', 'encrypted-0')" value="提交" />
+  </div>
+  <div class="hugo-encryptor-content" style="display:none;">
+<p>大致讲一下为什么要去太原吧，挑战杯要焊接PCB板，网上买了一个20元，结果很快就不能用了，所以就上太原的电子城打算买一个。</p>
 <p>这一天下着小雨，有一个室友陪着我受苦，说实话，气温不是很高，有一点凉。</p>
 <p>跑了三个地方，两个电子城，一个电脑城，没有找到想买的东西，卖的都是我摊便宜买的那种。老搞笑了，问了好几家，一个东西，出来15，20，25好几个价格</p>
 <p>路上突然想到要不要拍几张照片记录一下，于是就有了这篇博客</p>
@@ -461,6 +453,22 @@
 <p>我迟早会怀念现在的我，就像现在的我怀念小时候一样。</p>
 <p>也不知道未来的自己会不会看到这篇博客，如果看到了，就再写一篇记录一下吧，不管到时候是面对很多困难还是生活比较安逸，都记录一下吧。</p>
 <p>也不知道有没有朋友会看的这篇博客，如果你看到了，就问候我一下吧（（（</p>
+  </div>
+</div>
+<script>
+function _click_handler(el, password, id) {
+  var container = document.getElementById(id);
+  var prompt = container.querySelector('.hugo-encryptor-prompt');
+  var content = container.querySelector('.hugo-encryptor-content');
+  var pwd_input = document.getElementById('pwd-' + id);
+  if (pwd_input.value === password) {
+    prompt.style.display = 'none';
+    content.style.display = 'block';
+  } else {
+    alert('密码错误！');
+  }
+}
+</script>
 
 </section>
 
@@ -513,6 +521,111 @@
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/5.24%E9%9A%8F%E7%AC%94/">
+        
+        
+            <div class="article-image">
+                <img src="/p/5.24%E9%9A%8F%E7%AC%94/%E8%83%8C%E6%99%AF.a41069cfce770e392496fc535c398e2e_hu11477067130068700402.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 5.24随笔"
+                        
+                        data-hash="md5-pBBpz853DjkklvxTXDmOLg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">5.24随笔</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/3.15%E9%9A%8F%E7%AC%94/">
+        
+        
+            <div class="article-image">
+                <img src="/p/3.15%E9%9A%8F%E7%AC%94/%E8%83%8C%E6%99%AF.eff2bab6ab77bc1b6c95a34ae045fa8c_hu17786617584268736116.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 3.15随笔"
+                        
+                        data-hash="md5-7/K6tqt3vBtslaNK4EX6jA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">3.15随笔</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/2026.03.11%E9%9A%8F%E7%AC%94/">
+        
+        
+            <div class="article-image">
+                <img src="/p/2026.03.11%E9%9A%8F%E7%AC%94/R-C.987f582c510be58755c4933cda68d525_hu11034996560773318294.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 2026.03.11随笔"
+                        
+                        data-hash="md5-mH9YLFEL5YdVxJM82mjVJQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">2026.03.11随笔</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/R-C.9e45a633e95179a37c907fa2797999ad_hu12894674470186561815.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 第一个博客"
+                        
+                        data-hash="md5-nkWmM&#43;lReaN8kH&#43;ieXmZrQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">第一个博客</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     
@@ -633,6 +746,7 @@
 </script>
 <script>
   
+  
   const css_Path = "https://www.unkillablevillain-blog.online/waifu/waifu.css";
   const json_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.json";
   const model_path = "https://www.unkillablevillain-blog.online/Resources/";   
@@ -695,7 +809,33 @@
       }
     });
   }
+
 </script>
+<div id="particles-js"></div>
+
+<script src=https://yuyemaozi.github.io/background/particles.min.js></script>
+<script>
+  particlesJS.load('particles-js', "https://yuyemaozi.github.io/background/particlesjs-config.json", function() {
+    console.log('particles.js loaded - callback');
+  });
+</script>
+
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+  }
+</style>
+<style>
+  body {
+    background: url(https://yuyemaozi.github.io/background/preview.jpg) no-repeat center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+</style>
 
 
 
