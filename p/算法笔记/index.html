@@ -2484,7 +2484,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>看板娘与动态背景</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-repeat: no-repeat;
             background-position: center top;
@@ -2494,6 +2499,7 @@
             min-height: 100vh;
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
+
         #particles-js {
             position: fixed;
             top: 0;
@@ -2503,14 +2509,15 @@
             z-index: -1;
             pointer-events: none;
         }
+
         @media (max-width: 767px) {
-            body { background-attachment: scroll; }
+            body {
+                background-attachment: scroll;
+            }
         }
     </style>
 </head>
 <body>
-
-<div id="particles-js"></div>
 
 
 <div id="waifu-tips" style="display: none;"></div>
@@ -2522,17 +2529,30 @@
     const MOBILE_BG_URL = "https://www.unkillablevillain-blog.online/temp/mobile_preview.png";
     const PC_BREAKPOINT = 768;
     
-    let live2dResourcesReady = false; 
+    let live2dInitialized = false;  
+    
     
     function setResponsiveBackground() {
         const isMobile = window.innerWidth < PC_BREAKPOINT;
-        document.body.style.backgroundImage = `url("${isMobile ? MOBILE_BG_URL : PC_BG_URL}")`;
+        const backgroundImageUrl = isMobile ? MOBILE_BG_URL : PC_BG_URL;
+        document.body.style.backgroundImage = `url("${backgroundImageUrl}")`;
+        console.log(`[背景] ${isMobile ? '手机' : '电脑'}模式`);
     }
     
-    window.addEventListener('resize', () => {
-        setResponsiveBackground();
-        if (window.innerWidth >= PC_BREAKPOINT) ensureLive2D();
+    
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            setResponsiveBackground();
+            const isPCMode = window.innerWidth >= PC_BREAKPOINT;
+            if (isPCMode && !live2dInitialized) {
+                console.log("窗口变为PC模式且Live2D未加载，尝试初始化");
+                initLive2DForPC();
+            }
+        }, 150);
     });
+    
     
     function loadExternalResource(url, type) {
         return new Promise((resolve, reject) => {
@@ -2554,23 +2574,34 @@
         });
     }
     
+    
     function initParticles() {
         const container = document.getElementById('particles-js');
         if (!container) return;
+        container.style.display = 'block';
         const particlesJsUrl = "https://www.unkillablevillain-blog.online/temp/particles.min.js";
         const particlesConfigUrl = "https://www.unkillablevillain-blog.online/temp/particlesjs-config.json";
+        
         loadExternalResource(particlesJsUrl, "js")
             .then(() => {
-                if (typeof particlesJS !== 'undefined') {
-                    particlesJS.load('particles-js', particlesConfigUrl, () => console.log('粒子动画已启动'));
+                if (typeof particlesJS !== 'undefined' && particlesJS.load) {
+                    particlesJS.load('particles-js', particlesConfigUrl, () => {
+                        console.log('粒子动画已启动');
+                    });
+                } else {
+                    console.error("particlesJS 加载失败");
                 }
             })
             .catch(err => console.error("粒子库错误:", err));
     }
     
     
-    function prepareLive2DResources() {
-        if (live2dResourcesReady) return Promise.resolve();
+    function initLive2DForPC() {
+        if (live2dInitialized) {
+            console.log("Live2D 已经初始化过，跳过重复加载");
+            return;
+        }
+        
         const css_Path = "https://www.unkillablevillain-blog.online/waifu/waifu.css";
         const json_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.json";
         const model_path = "https://www.unkillablevillain-blog.online/Resources/";
@@ -2578,56 +2609,56 @@
         const live2dcubismcore_path = "https://www.unkillablevillain-blog.online/waifu/live2dcubismcore.js";
         const live2d_sdk_path = "https://www.unkillablevillain-blog.online/waifu/live2d-sdk.js";
         
-        window.__waifuConfig = {
-            waifuPath: json_Path,
-            cdnPath: model_path,
+        const config = {
+            path: {
+                homePath: "/",
+                modelPath: model_path,
+                cssPath: css_Path,
+                tipsJsonPath: json_Path,
+                tipsJsPath: q_Path,
+                live2dCorePath: live2dcubismcore_path,
+                live2dSdkPath: live2d_sdk_path
+            },
             tools: ["hitokoto", "asteroids", "express", "photo"],
-            dragEnable: false,
-            dragDirection: ["x", "y"],
+            drag: { enable: false, direction: ["x", "y"] },
             switchType: "order"
         };
         
-        return Promise.all([
-            loadExternalResource(css_Path, "css"),
-            loadExternalResource(live2dcubismcore_path, "js"),
-            loadExternalResource(live2d_sdk_path, "js"),
-            loadExternalResource(q_Path, "js")
+        Promise.all([
+            loadExternalResource(config.path.cssPath, "css"),
+            loadExternalResource(config.path.live2dCorePath, "js"),
+            loadExternalResource(config.path.live2dSdkPath, "js"),
+            loadExternalResource(config.path.tipsJsPath, "js")
         ]).then(() => {
-            live2dResourcesReady = true;
-            console.log("Live2D 资源已准备就绪");
-        });
-    }
-    
-    
-    function ensureLive2D() {
-        if (window.innerWidth < PC_BREAKPOINT) return;
-        const waifuDiv = document.getElementById('waifu');
-        const hasCanvas = waifuDiv && waifuDiv.querySelector('canvas');
-        if (hasCanvas) {
-            console.log("看板娘已存在，无需重新初始化");
-            return;
-        }
-        
-        if (waifuDiv) waifuDiv.innerHTML = ''; 
-        if (typeof initWidget === 'function') {
-            try {
-                initWidget(window.__waifuConfig);
-                console.log("看板娘重新初始化成功");
-            } catch(e) {
-                console.error("initWidget 调用失败", e);
+            if (typeof initWidget === 'function') {
+                initWidget({
+                    waifuPath: config.path.tipsJsonPath,
+                    cdnPath: config.path.modelPath,
+                    tools: config.tools,
+                    dragEnable: config.drag.enable,
+                    dragDirection: config.drag.direction,
+                    switchType: config.switchType
+                });
+                live2dInitialized = true;
+                console.log("Live2D 看板娘已启动（仅一次）");
+            } else {
+                console.error("initWidget 未定义，请检查 waifu-tips.js");
             }
-        } else {
-            console.warn("initWidget 尚未加载，稍后重试");
-            setTimeout(ensureLive2D, 500);
-        }
+        }).catch(err => console.error("Live2D 资源加载失败:", err));
     }
     
     
-    async function bootstrap() {
+    function bootstrap() {
         setResponsiveBackground();
         initParticles();
-        await prepareLive2DResources();
-        ensureLive2D(); 
+        
+        const isPCMode = window.innerWidth >= PC_BREAKPOINT;
+        if (isPCMode && !live2dInitialized) {
+            console.log("首次加载，PC模式，初始化 Live2D");
+            initLive2DForPC();
+        } else {
+            console.log("手机模式或 Live2D 已存在，不重复初始化");
+        }
     }
     
     if (document.readyState === 'loading') {
@@ -2635,34 +2666,27 @@
     } else {
         bootstrap();
     }
-    
-    
-    document.addEventListener('pjax:complete', function() {
-        console.log("pjax 完成，检查看板娘状态");
-        setTimeout(() => {
-            ensureLive2D();
-            renderKaTeX(); 
-        }, 50);
-    });
-    
-    
-    (function() {
-        const topbarScript = document.createElement('script');
-        topbarScript.src = "https://www.unkillablevillain-blog.online/temp/topbar.min.js";
-        topbarScript.onload = () => {
-            if (typeof topbar !== 'undefined') {
-                topbar.config({ barColors: { '0': 'rgba(255,255,255,1)', '1.0': 'rgba(0,149,234,1)' } });
-            }
-            document.addEventListener('pjax:send', () => { if (typeof topbar !== 'undefined') topbar.show(); });
-            document.addEventListener('pjax:complete', () => { if (typeof topbar !== 'undefined') topbar.hide(); });
-        };
-        document.head.appendChild(topbarScript);
-    })();
-    
-    
+</script>
+
+<div id="particles-js"></div>
+
+
+<script src="https://www.unkillablevillain-blog.online/temp/topbar.min.js"></script>
+<script>
+    if (typeof topbar !== 'undefined') {
+        topbar.config({
+            barColors: { '0': 'rgba(255,255,255,1)', '1.0': 'rgba(0,149,234,1)' }
+        });
+    }
+    document.addEventListener('pjax:send', () => { if (typeof topbar !== 'undefined') topbar.show(); });
+    document.addEventListener('pjax:complete', () => { if (typeof topbar !== 'undefined') topbar.hide(); });
+</script>
+
+
+<script>
     (function() {
         if (window.pjax && pjax.handleResponse) {
-            const original = pjax.handleResponse;
+            pjax._handleResponse = pjax.handleResponse;
             pjax.handleResponse = function(responseText, request, href, options) {
                 if (request.responseText && request.responseText.match("<html")) {
                     if (responseText) {
@@ -2670,17 +2694,20 @@
                         let bodyClass = newDom.body.className;
                         if (bodyClass) document.body.setAttribute("class", bodyClass);
                     }
+                    pjax._handleResponse(responseText, request, href, options);
                 }
-                original.call(this, responseText, request, href, options);
             };
         }
     })();
-    
-    
+</script>
+
+
+<script>
     async function renderKaTeX() {
-        if (!document.querySelector(".math-katex")) return;
+        let katex = document.querySelector(".math-katex");
+        if (!katex) return;
         while (typeof renderMathInElement !== 'function') {
-            await new Promise(r => setTimeout(r, 500));
+            await new Promise(resolve => setTimeout(resolve, 500));
         }
         renderMathInElement(document.body, {
             delimiters: [
@@ -2692,12 +2719,22 @@
             ignoredClasses: ["gist"]
         });
     }
-    
-    renderKaTeX();
+    document.addEventListener('pjax:complete', () => { renderKaTeX(); });
 </script>
 
 </body>
 </html>
+<style>
+  @font-face {
+    font-family: '字体名';
+    src: url("https://www.unkillablevillain-blog.online/font/ziti.ttf") format('truetype');
+  }
+
+  :root {
+    --base-font-family: '字体名';
+    --code-font-family: '字体名';
+  }
+</style>
 
     </body>
 </html>
