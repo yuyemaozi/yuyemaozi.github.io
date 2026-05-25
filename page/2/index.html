@@ -640,99 +640,214 @@
         document.head.appendChild(customFont);
     }());
 </script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>看板娘与动态背景</title>
+    <style>
+         
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+             
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-size: cover;
+            background-attachment: fixed;
+            background-color: #1a1a2e;  
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+         
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;   
+        }
+
+         
+        @media (max-width: 767px) {
+            body {
+                background-attachment: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="waifu-tips" style="display: none;"></div>
+<div id="waifu" style="display: none;"></div>
+
 <script>
-  
-  
-  const css_Path = "https://www.unkillablevillain-blog.online/waifu/waifu.css";
-  const json_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.json";
-  const model_path = "https://www.unkillablevillain-blog.online/Resources/";   
-  const q_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.js";
-  const live2dcubismcore_path = "https://www.unkillablevillain-blog.online/waifu/live2dcubismcore.js";
-  const live2d_sdk_path = "https://www.unkillablevillain-blog.online/waifu/live2d-sdk.js";
-
-  const config = {
-    path: {
-      homePath: "/",
-      modelPath: model_path,    
-      cssPath: css_Path,
-      tipsJsonPath: json_Path,
-      tipsJsPath: q_Path,
-      live2dCorePath: live2dcubismcore_path,
-      live2dSdkPath: live2d_sdk_path
-    },
-    tools: ["hitokoto", "asteroids", "express","photo",],
-    drag: {
-      enable: false,
-      direction: ["x", "y"]
-    },
-    switchType: "order"
-  }
-
-  
-  if (screen.width >= 768) {
-    Promise.all([
-      loadExternalResource(config.path.cssPath, "css"),
-      loadExternalResource(config.path.live2dCorePath, "js"),
-      loadExternalResource(config.path.live2dSdkPath, "js"),
-      loadExternalResource(config.path.tipsJsPath, "js")
-    ]).then(() => {
-      initWidget({
-        waifuPath: config.path.tipsJsonPath,
-        cdnPath: config.path.modelPath,
-        tools: config.tools,
-        dragEnable: config.drag.enable,
-        dragDirection: config.drag.direction,
-        switchType: config.switchType
-      });
+    
+    
+    const PC_BG_URL = "https://www.unkillablevillain-blog.online/background/preview.jpg";
+    
+    const MOBILE_BG_URL = "https://www.unkillablevillain-blog.online/background/mobile_preview.jpg";  
+    
+    const PC_BREAKPOINT = 768;   
+    
+    
+    function setResponsiveBackground() {
+        const isMobile = window.innerWidth < PC_BREAKPOINT;
+        const backgroundImageUrl = isMobile ? MOBILE_BG_URL : PC_BG_URL;
+        document.body.style.backgroundImage = `url("${backgroundImageUrl}")`;
+        console.log(`[背景切换] 宽度: ${window.innerWidth}px, 使用: ${isMobile ? '手机版' : '电脑版'} -> ${backgroundImageUrl}`);
+    }
+    
+    
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            setResponsiveBackground();
+        }, 150);
     });
-  }
-
-  function loadExternalResource(url, type) {
-    return new Promise((resolve, reject) => {
-      let tag;
-      if (type === "css") {
-        tag = document.createElement("link");
-        tag.rel = "stylesheet";
-        tag.href = url;
-      } else if (type === "js") {
-        tag = document.createElement("script");
-        tag.src = url;
-      }
-      if (tag) {
-        tag.onload = () => resolve(url);
-        tag.onerror = () => reject(url);
-        document.head.appendChild(tag);
-      }
-    });
-  }
-
+    
+    
+    function loadExternalResource(url, type) {
+        return new Promise((resolve, reject) => {
+            let tag;
+            if (type === "css") {
+                tag = document.createElement("link");
+                tag.rel = "stylesheet";
+                tag.href = url;
+            } else if (type === "js") {
+                tag = document.createElement("script");
+                tag.src = url;
+            } else {
+                reject("未知类型");
+                return;
+            }
+            tag.onload = () => resolve(url);
+            tag.onerror = () => reject(url);
+            document.head.appendChild(tag);
+        });
+    }
+    
+    
+    function initParticles() {
+        const particlesContainer = document.getElementById('particles-js');
+        if (!particlesContainer) {
+            console.warn("未找到 #particles-js 容器，跳过粒子加载");
+            return;
+        }
+        
+        particlesContainer.style.display = 'block';
+        
+        const particlesJsUrl = "https://www.unkillablevillain-blog.online/temp/particles.min.js";
+        const particlesConfigUrl = "https://www.unkillablevillain-blog.online/temp/particlesjs-config.json";
+        
+        loadExternalResource(particlesJsUrl, "js")
+            .then(() => {
+                if (typeof particlesJS !== 'undefined' && particlesJS.load) {
+                    particlesJS.load('particles-js', particlesConfigUrl, function() {
+                        console.log('particles.js 已加载并初始化（所有设备）');
+                    });
+                } else {
+                    console.error("particlesJS 全局对象未找到");
+                }
+            })
+            .catch(err => {
+                console.error("粒子库加载失败:", err);
+            });
+    }
+    
+    
+    function initLive2DForPC() {
+        
+        const css_Path = "https://www.unkillablevillain-blog.online/waifu/waifu.css";
+        const json_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.json";
+        const model_path = "https://www.unkillablevillain-blog.online/Resources/";
+        const q_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.js";
+        const live2dcubismcore_path = "https://www.unkillablevillain-blog.online/waifu/live2dcubismcore.js";
+        const live2d_sdk_path = "https://www.unkillablevillain-blog.online/waifu/live2d-sdk.js";
+        
+        const config = {
+            path: {
+                homePath: "/",
+                modelPath: model_path,
+                cssPath: css_Path,
+                tipsJsonPath: json_Path,
+                tipsJsPath: q_Path,
+                live2dCorePath: live2dcubismcore_path,
+                live2dSdkPath: live2d_sdk_path
+            },
+            tools: ["hitokoto", "asteroids", "express", "photo"],
+            drag: {
+                enable: false,
+                direction: ["x", "y"]
+            },
+            switchType: "order"
+        };
+        
+        Promise.all([
+            loadExternalResource(config.path.cssPath, "css"),
+            loadExternalResource(config.path.live2dCorePath, "js"),
+            loadExternalResource(config.path.live2dSdkPath, "js"),
+            loadExternalResource(config.path.tipsJsPath, "js")
+        ]).then(() => {
+            if (typeof initWidget === 'function') {
+                initWidget({
+                    waifuPath: config.path.tipsJsonPath,
+                    cdnPath: config.path.modelPath,
+                    tools: config.tools,
+                    dragEnable: config.drag.enable,
+                    dragDirection: config.drag.direction,
+                    switchType: config.switchType
+                });
+                console.log("Live2D 看板娘已启动（仅 PC 端）");
+            } else {
+                console.error("initWidget 未定义，请检查 waifu-tips.js 加载");
+            }
+        }).catch(err => {
+            console.error("Live2D 资源加载失败:", err);
+        });
+    }
+    
+    
+    function bootstrap() {
+        
+        setResponsiveBackground();
+        
+        
+        initParticles();
+        
+        
+        const isPCMode = window.innerWidth >= PC_BREAKPOINT;
+        if (isPCMode) {
+            console.log("屏幕宽度 ≥768px，加载 Live2D 看板娘");
+            initLive2DForPC();
+        } else {
+            console.log("手机模式（宽度 <768px），不加载 Live2D 看板娘以节省性能，但粒子动画正常显示");
+        }
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootstrap);
+    } else {
+        bootstrap();
+    }
 </script>
+
+
 <div id="particles-js"></div>
 
-<script src="https://www.unkillablevillain-blog.online/temp/particles.min.js"></script>
-<script>
-  particlesJS.load('particles-js',"https://www.unkillablevillain-blog.online/temp/particlesjs-config.json", function() {
-    console.log('particles.js loaded - callback');
-  });
-</script>
 
-<style>
-  #particles-js {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: -1;
-  }
-</style>
-<style>
-  body {
-    background: url("https://www.unkillablevillain-blog.online/background/preview.jpg") no-repeat center top;
-    background-size: cover;
-    background-attachment: fixed;
-  }
-</style>
-
+</body>
+</html>
 
 
     </body>
