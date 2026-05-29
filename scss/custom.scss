@@ -447,3 +447,20 @@ code {
     }
   }
 }
+
+// ========== 新增：手机端代码块字体调小 ==========
+@media (max-width: 767px) {
+  .highlight,
+  .chroma,
+  .highlight pre,
+  .chroma pre,
+  .highlight code,
+  .chroma code {
+    font-size: 0.75rem !important;  // 手机端字体大小，可按需改为 0.7rem 或 12px
+  }
+  
+  // 如果行内代码也需要调整，取消下面注释
+  // code:not([class*="language-"]) {
+  //   font-size: 0.8rem !important;
+  // }
+}
