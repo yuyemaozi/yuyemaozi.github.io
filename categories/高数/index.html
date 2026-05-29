@@ -625,14 +625,55 @@
     })();
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script>
+<script>
+    var pjax = new Pjax({
+        selectors: [
+            ".main-container"
+        ]
+    })
+</script>
+
+<script>
+    pjax._handleResponse = pjax.handleResponse;
+    pjax.handleResponse = function(responseText, request, href, options) {
+        if (request.responseText.match("<html")) {
+            if (responseText) {
+                
+                let newDom = new DOMParser().parseFromString(responseText, 'text/html');
+                
+                let bodyClass = newDom.body.className;
+                document.body.setAttribute("class", bodyClass)
+            }
+            
+            pjax._handleResponse(responseText, request, href, options);
+        } else {
+            
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('pjax:complete', () => {
+        
+        window.Stack.init();
+    })
+</script>
+
+
 
 <script>
     async function renderKaTeX() {
+        
         let katex = document.querySelector(".math-katex");
-        if (!katex) return;
-        while (typeof renderMathInElement !== 'function') {
-            await new Promise(resolve => setTimeout(resolve, 500));
+        if (!katex) {
+            return;
         }
+        
+        while (typeof renderMathInElement !== 'function') {
+            await delay(500);
+        }        
+        
         renderMathInElement(document.body, {
             delimiters: [
                 { left: "$$", right: "$$", display: true },
@@ -643,7 +684,18 @@
             ignoredClasses: ["gist"]
         });
     }
-    document.addEventListener('pjax:complete', () => { renderKaTeX(); });
+    
+    
+
+    function delay(time) {
+        return new Promise(resolve => {
+            setTimeout(resolve, time)
+        })
+    }
+
+    document.addEventListener('pjax:complete', () => {
+        renderKaTeX();
+    })
 </script>
 
 </body>
