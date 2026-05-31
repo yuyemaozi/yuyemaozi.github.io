@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>C语言 on 杀不死的坏蛋-Unkillable Villain</title>
-        <link>https://yuyemaozi.github.io/categories/c%E8%AF%AD%E8%A8%80/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/categories/c%E8%AF%AD%E8%A8%80/</link>
         <description>Recent content in C语言 on 杀不死的坏蛋-Unkillable Villain</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>杀不死的坏蛋-Unkillable Villain</copyright>
-        <lastBuildDate>Sat, 30 May 2026 16:02:47 +0800</lastBuildDate><atom:link href="https://yuyemaozi.github.io/categories/c%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 30 May 2026 16:02:47 +0800</lastBuildDate><atom:link href="https://yuyemaozi.unkillablevillain-blog.online/categories/c%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Shell脚本学习笔记</title>
-        <link>https://yuyemaozi.github.io/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sat, 30 May 2026 16:02:47 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         <description>&lt;h1 id=&#34;shell脚本学习&#34;&gt;shell脚本学习
 &lt;/h1&gt;&lt;h2 id=&#34;前言&#34;&gt;前言
 &lt;/h2&gt;&lt;p&gt;在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记录一些shell的使用技巧（也许）&lt;/p&gt;
@@ -380,19 +380,19 @@
         </item>
         <item>
         <title>Makefile文件学习</title>
-        <link>https://yuyemaozi.github.io/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</link>
         <pubDate>Sat, 30 May 2026 15:25:17 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</guid>
         <description></description>
         </item>
         <item>
         <title>Learn c the hard way</title>
-        <link>https://yuyemaozi.github.io/p/learn-c-the-hard-way/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/</link>
         <pubDate>Fri, 17 Apr 2026 19:22:54 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/learn-c-the-hard-way/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.jpg" alt="Featured image of post Learn c the hard way" /&gt;&lt;h2 id=&#34;栈和堆的内存分配&#34;&gt;栈和堆的内存分配
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.jpg" alt="Featured image of post Learn c the hard way" /&gt;&lt;h2 id=&#34;栈和堆的内存分配&#34;&gt;栈和堆的内存分配
 &lt;/h2&gt;&lt;p&gt;网站的代码：(注释版本和原版还是分开做吧)&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;

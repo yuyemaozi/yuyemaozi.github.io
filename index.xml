@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>杀不死的坏蛋-Unkillable Villain</title>
-        <link>https://yuyemaozi.github.io/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/</link>
         <description>Recent content on 杀不死的坏蛋-Unkillable Villain</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>杀不死的坏蛋-Unkillable Villain</copyright>
-        <lastBuildDate>Sat, 30 May 2026 16:02:47 +0800</lastBuildDate><atom:link href="https://yuyemaozi.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 30 May 2026 16:02:47 +0800</lastBuildDate><atom:link href="https://yuyemaozi.unkillablevillain-blog.online/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Shell脚本学习笔记</title>
-        <link>https://yuyemaozi.github.io/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sat, 30 May 2026 16:02:47 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         <description>&lt;h1 id=&#34;shell脚本学习&#34;&gt;shell脚本学习
 &lt;/h1&gt;&lt;h2 id=&#34;前言&#34;&gt;前言
 &lt;/h2&gt;&lt;p&gt;在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记录一些shell的使用技巧（也许）&lt;/p&gt;
@@ -380,19 +380,19 @@
         </item>
         <item>
         <title>Makefile文件学习</title>
-        <link>https://yuyemaozi.github.io/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</link>
         <pubDate>Sat, 30 May 2026 15:25:17 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</guid>
         <description></description>
         </item>
         <item>
         <title>5.24随笔</title>
-        <link>https://yuyemaozi.github.io/p/5.24%E9%9A%8F%E7%AC%94/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/5.24%E9%9A%8F%E7%AC%94/</link>
         <pubDate>Sun, 24 May 2026 23:11:03 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/5.24%E9%9A%8F%E7%AC%94/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/5.24%E9%9A%8F%E7%AC%94/%E8%83%8C%E6%99%AF.webp" alt="Featured image of post 5.24随笔" /&gt;&lt;p&gt;又来写随笔了，这次想写的内容攒了很久，可能写好几天，就慢慢写吧&lt;/p&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/5.24%E9%9A%8F%E7%AC%94/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/5.24%E9%9A%8F%E7%AC%94/%E8%83%8C%E6%99%AF.webp" alt="Featured image of post 5.24随笔" /&gt;&lt;p&gt;又来写随笔了，这次想写的内容攒了很久，可能写好几天，就慢慢写吧&lt;/p&gt;
 &lt;h2 id=&#34;ai时代&#34;&gt;ai时代
 &lt;/h2&gt;&lt;p&gt;ai发展的发展十分迅速，现在绝对没有人比ai博学，它几乎了解人类迄今为止记录下来的所有的知识&lt;/p&gt;
 &lt;p&gt;提笔的原因又两个，一是影视飓风今年发的有关ai的视频，二是5.21日ai独立解决了一个数学领域70多年的一个猜想&lt;/p&gt;
@@ -444,19 +444,19 @@ function _click_handler(el, password, id) {
         </item>
         <item>
         <title>矩阵</title>
-        <link>https://yuyemaozi.github.io/p/%E7%9F%A9%E9%98%B5/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/%E7%9F%A9%E9%98%B5/</link>
         <pubDate>Sun, 19 Apr 2026 21:10:42 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/%E7%9F%A9%E9%98%B5/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/%E7%9F%A9%E9%98%B5/OIP-C.webp" alt="Featured image of post 矩阵" /&gt;</description>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/%E7%9F%A9%E9%98%B5/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/%E7%9F%A9%E9%98%B5/OIP-C.webp" alt="Featured image of post 矩阵" /&gt;</description>
         </item>
         <item>
         <title>Learn c the hard way</title>
-        <link>https://yuyemaozi.github.io/p/learn-c-the-hard-way/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/</link>
         <pubDate>Fri, 17 Apr 2026 19:22:54 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/learn-c-the-hard-way/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.jpg" alt="Featured image of post Learn c the hard way" /&gt;&lt;h2 id=&#34;栈和堆的内存分配&#34;&gt;栈和堆的内存分配
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.jpg" alt="Featured image of post Learn c the hard way" /&gt;&lt;h2 id=&#34;栈和堆的内存分配&#34;&gt;栈和堆的内存分配
 &lt;/h2&gt;&lt;p&gt;网站的代码：(注释版本和原版还是分开做吧)&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -3292,11 +3292,11 @@ function _click_handler(el, password, id) {
         </item>
         <item>
         <title>多元函数</title>
-        <link>https://yuyemaozi.github.io/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/</link>
         <pubDate>Fri, 17 Apr 2026 17:45:29 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%9B%BE%E5%BD%A2.png" alt="Featured image of post 多元函数" /&gt;&lt;h1 id=&#34;多元齐次函数欧拉定理&#34;&gt;多元齐次函数欧拉定理
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%9B%BE%E5%BD%A2.png" alt="Featured image of post 多元函数" /&gt;&lt;h1 id=&#34;多元齐次函数欧拉定理&#34;&gt;多元齐次函数欧拉定理
 &lt;/h1&gt;&lt;p&gt;设函数 $f(x, y, z)$ 满足&lt;br&gt;
 $$
 f(tx, ty, tz) = t^n f(x, y, z) \quad (t \text{ 为任意实数}),
@@ -3335,11 +3335,11 @@ $$
         </item>
         <item>
         <title>算法笔记</title>
-        <link>https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Thu, 02 Apr 2026 20:08:36 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C.jpg" alt="Featured image of post 算法笔记" /&gt;&lt;blockquote&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C.jpg" alt="Featured image of post 算法笔记" /&gt;&lt;blockquote&gt;
 &lt;p&gt;这是我的学习笔记，所有的代码来自&lt;a class=&#34;link&#34; href=&#34;https://www.hello-algo.com/chapter_hello_algo/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;序 - Hello 算法&lt;/a&gt;和&lt;a class=&#34;link&#34; href=&#34;https://labuladong.online/zh/algo/home/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Navigation的算法笔记&lt;/a&gt;，放在这里仅供我自己总结学习和记录&lt;/p&gt;
@@ -3950,10 +3950,10 @@ $$
 &lt;/h2&gt;&lt;p&gt;栈（stack）是一种遵循先入后出逻辑的线性数据结构。&lt;/p&gt;
 &lt;p&gt;我们可以将栈类比为桌面上的一摞盘子，规定每次只能移动一个盘子，那么想取出底部的盘子，则需要先将上面的盘子依次移走。我们将盘子替换为各种类型的元素（如整数、字符、对象等），就得到了栈这种数据结构。&lt;/p&gt;
 &lt;p&gt;我们把堆叠元素的顶部称为“栈顶”，底部称为“栈底”。将把元素添加到栈顶的操作叫作“入栈”，删除栈顶元素的操作叫作“出栈”。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552.png&#34;
 	width=&#34;1221&#34;
 	height=&#34;595&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu13514807064957782184.png 480w, https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu17650816566098834570.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu13514807064957782184.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu17650816566098834570.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;栈&#34;
@@ -5247,11 +5247,11 @@ $$
         </item>
         <item>
         <title>Verilog学习笔记</title>
-        <link>https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Mon, 23 Mar 2026 23:07:04 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%83%8C%E6%99%AF.png" alt="Featured image of post Verilog学习笔记" /&gt;&lt;p&gt;最近开始学习了Verilog，之前的学习我也开始意识到记录自己的学习思路的重要性，以便以后的自己可以复盘，也是对自己一段时间学习的总结和回顾&lt;/p&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%83%8C%E6%99%AF.png" alt="Featured image of post Verilog学习笔记" /&gt;&lt;p&gt;最近开始学习了Verilog，之前的学习我也开始意识到记录自己的学习思路的重要性，以便以后的自己可以复盘，也是对自己一段时间学习的总结和回顾&lt;/p&gt;
 &lt;p&gt;我使用的是HDLBits进行的学习，这里附上链接&lt;a class=&#34;link&#34; href=&#34;https://hdlbits.01xz.net/wiki/Main_Page&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;HDLBits&lt;/a&gt;，由于是纯英语网站，所以需要配合浏览器的沉浸式翻译，其实效果也一般，也可以借助AI，不过只用作翻译，不要要求它解答&lt;/p&gt;
 &lt;p&gt;由于是个人的回顾，所以整体的思路不连贯，仅仅作个人记录&lt;/p&gt;
@@ -5659,10 +5659,10 @@ $$
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;这样就可以了，因为i*x，最终是一个数字&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507.png&#34;
 	width=&#34;2095&#34;
 	height=&#34;1582&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu15763740965578833049.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu13321923474851575882.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu15763740965578833049.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu13321923474851575882.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Verilog的一道题&#34;
@@ -5720,10 +5720,10 @@ $$
 &lt;hr&gt;
 &lt;h3 id=&#34;verilog部分题目的总结&#34;&gt;Verilog部分题目的总结
 &lt;/h3&gt;&lt;h4 id=&#34;时钟&#34;&gt;时钟
-&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117.png&#34;
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117.png&#34;
 	width=&#34;1991&#34;
 	height=&#34;728&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu8133919660145964550.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu5743247467523108779.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu8133919660145964550.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu5743247467523108779.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;时钟&#34;
@@ -6063,10 +6063,10 @@ $$
 &lt;p&gt;为什么要加3呢，其实这是一个神奇的地方，（abc + 0011）*2+d，即&lt;font color=&#34;red&#34;&gt;abc X 2+6 &lt;/font&gt; + d，红字的部分就直接 ≥ 16 了，超过了4位2进制数表示的范围, 向更高位进一位！那么此时表示十位的BCD码为0001。&lt;/p&gt;
 &lt;p&gt;在修正的结果上送入第四位得到1_0100，即0001_0100即为1110的BCD码（十进制14）。&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038.png&#34;
 	width=&#34;1773&#34;
 	height=&#34;1155&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu6174467605347702487.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu708535268236511772.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu6174467605347702487.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu708535268236511772.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;生命游戏&#34;
@@ -6333,10 +6333,10 @@ $$
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;时序逻辑这一块之前又出现延迟了，这次算是真正搞清楚了，我们为什么需要时序逻辑？粗浅的理解就是这里需要寄存器，我们必须将细胞的状态存储在寄存器中，因为细胞下一刻的状态与现在细胞的状态有关，所以需要将这存储起来，这里&lt;code&gt;temp_next&lt;/code&gt;既要接输出，又要接寄存器，就是这么一个道理&lt;/p&gt;
 &lt;h4 id=&#34;状态机&#34;&gt;状态机
-&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318.png&#34;
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318.png&#34;
 	width=&#34;2427&#34;
 	height=&#34;963&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu7794704999594027502.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu5011168357329910665.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu7794704999594027502.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu5011168357329910665.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;状态机&#34;
@@ -6409,10 +6409,10 @@ $$
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;说实话，这个bug真的很抽象&lt;/p&gt;
 &lt;p&gt;直接看错误的逻辑图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321.png&#34;
 	width=&#34;1763&#34;
 	height=&#34;740&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu18308513695516278964.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu10321969456419693981.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu18308513695516278964.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu10321969456419693981.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;错误的逻辑图&#34;
@@ -6515,10 +6515,10 @@ $$
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h4 id=&#34;状态机遇到的一个bug&#34;&gt;状态机遇到的一个bug
-&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985.png&#34;
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985.png&#34;
 	width=&#34;1791&#34;
 	height=&#34;953&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu9772632342990113123.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu10792195422472966487.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu9772632342990113123.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu10792195422472966487.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;image-20260504144611985&#34;
@@ -6809,10 +6809,10 @@ $$
 &lt;p&gt;&lt;code&gt;assign&lt;/code&gt;是连续赋值， 所以只要等号右侧的值无论是谁发生改变，就会立即发生改变。&lt;/p&gt;
 &lt;p&gt;那就必须要注意左侧的所有变量的值要同时发生改变（大部分情况），所以左侧都是寄存器类型的变量，都在一个周期结束后被赋值，其实就是避免的毛刺现象&lt;/p&gt;
 &lt;h3 id=&#34;状态机题目引发的延迟和毛刺现象的思考&#34;&gt;状态机题目引发的延迟和毛刺现象的思考
-&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745.png&#34;
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745.png&#34;
 	width=&#34;1775&#34;
 	height=&#34;633&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu2953925591068064043.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu1293199645608941011.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu2953925591068064043.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu1293199645608941011.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;状态机题目引发的延迟和毛刺现象的思考&#34;
@@ -6959,10 +6959,10 @@ $$
 &lt;p&gt;这正是&lt;strong&gt;时序逻辑&lt;/strong&gt;的典型应用：需要“记忆”历史值。&lt;/p&gt;
 &lt;h3 id=&#34;处理数据的状态机&#34;&gt;处理数据的状态机
 &lt;/h3&gt;&lt;p&gt;下一刻的状态和我们存储的数据有关，有不同的方法来处理，尽量选择简单的方法&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777.png&#34;
 	width=&#34;1489&#34;
 	height=&#34;1344&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777_hu17324863317729583775.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777_hu16671545408603570954.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777_hu17324863317729583775.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777_hu16671545408603570954.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Fsm serialdp&#34;
@@ -7115,10 +7115,10 @@ $$
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;这里是通过1个数奇偶来判断的，相对来说比较简单，最开始1的个数为0，每多一个1就反转就行了，其实和历史状态没什么关系了，相当于把历史状态转化为了目前的状态&lt;/p&gt;
 &lt;p&gt;看一下另一道题目&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379.png&#34;
 	width=&#34;1379&#34;
 	height=&#34;1312&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379_hu8573409858502880821.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379_hu4504207293175476016.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379_hu8573409858502880821.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379_hu4504207293175476016.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Fsm hdlc&#34;
@@ -7225,11 +7225,11 @@ $$
         </item>
         <item>
         <title>3.14太原买“枪”日记</title>
-        <link>https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/</link>
         <pubDate>Sun, 15 Mar 2026 23:02:06 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E8%83%8C%E6%99%AF.jpg" alt="Featured image of post 3.14太原买“枪”日记" /&gt;&lt;div id=&#34;encrypted-0&#34; class=&#34;hugo-encryptor-container&#34;&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E8%83%8C%E6%99%AF.jpg" alt="Featured image of post 3.14太原买“枪”日记" /&gt;&lt;div id=&#34;encrypted-0&#34; class=&#34;hugo-encryptor-container&#34;&gt;
   &lt;div class=&#34;hugo-encryptor-prompt&#34;&gt;
     &lt;input type=&#34;password&#34; id=&#34;pwd-encrypted-0&#34; placeholder=&#34;请输入密码&#34; /&gt;
     &lt;input type=&#34;submit&#34; onclick=&#34;_click_handler(this, &#39;Xg@1314520&#39;, &#39;encrypted-0&#39;)&#34; value=&#34;提交&#34; /&gt;
@@ -7241,10 +7241,10 @@ $$
 &lt;p&gt;路上突然想到要不要拍几张照片记录一下，于是就有了这篇博客&lt;/p&gt;
 &lt;p&gt;来的路上没有拍照片，也没什么好说的，其实就是一路坐公交&lt;/p&gt;
 &lt;h2 id=&#34;正文&#34;&gt;正文
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%9C%B0%E9%93%81.jpg&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%9C%B0%E9%93%81.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%9C%B0%E9%93%81_hu15017747805207510360.jpg 480w, https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%9C%B0%E9%93%81_hu16250846824159881277.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%9C%B0%E9%93%81_hu15017747805207510360.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%9C%B0%E9%93%81_hu16250846824159881277.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;地铁&#34;
@@ -7258,10 +7258,10 @@ $$
 &lt;p&gt;第一次进太原的地铁站，虽然是只进去上了个厕所（（（&lt;/p&gt;
 &lt;p&gt;但下次保不齐会出去玩，算是熟悉流程吧，毕竟我和我舍友两个人在旁边研究了5分钟，两个二愣子&lt;/p&gt;
 &lt;p&gt;长治路，不知道还有什么路，有机会看看&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E9%AB%98%E6%A5%BC.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E9%AB%98%E6%A5%BC.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E9%AB%98%E6%A5%BC_hu14997698769578438818.jpg 480w, https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E9%AB%98%E6%A5%BC_hu10754139209891222957.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E9%AB%98%E6%A5%BC_hu14997698769578438818.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E9%AB%98%E6%A5%BC_hu10754139209891222957.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;高楼&#34;
@@ -7273,10 +7273,10 @@ $$
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;说实话，我在榆次，一进去太原就发现高楼还是很多的，毕竟也算是一个二线城市了，希望以后有机会可以去一线城市甚至超一线城市看看，努力吧。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%9A%84%E8%8A%B1.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%9A%84%E8%8A%B1.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%9A%84%E8%8A%B1_hu16801115538654666385.jpg 480w, https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%9A%84%E8%8A%B1_hu5556605745821145461.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%9A%84%E8%8A%B1_hu16801115538654666385.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%9A%84%E8%8A%B1_hu5556605745821145461.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;太原的花&#34;
@@ -7289,10 +7289,10 @@ $$
 &gt;&lt;/p&gt;
 &lt;p&gt;这是在去最后一个地方的路上拍的，虽然最后希望破灭了，但起码还赏到了花。&lt;/p&gt;
 &lt;p&gt;太原的温度还是比榆次要高不少，我们学校的花还是花骨朵，太原的有的已经开放了，还是很好看的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%831.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%831.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%831_hu7491087429680286162.jpg 480w, https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%831_hu8548952779704863385.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%831_hu7491087429680286162.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%831_hu8548952779704863385.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;山西师范1&#34;
@@ -7305,10 +7305,10 @@ $$
 &gt;&lt;/p&gt;
 &lt;p&gt;回来的路上看到朋友的学校了，就拍了几张照片&lt;/p&gt;
 &lt;p&gt;说实话，我都不知道这个是不是她的学校的建筑，管他了，反正拍了就放上了（（（&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%83%E5%8C%97%E9%97%A8.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%83%E5%8C%97%E9%97%A8.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%83%E5%8C%97%E9%97%A8_hu13309173092199928595.jpg 480w, https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%83%E5%8C%97%E9%97%A8_hu13674449765177209022.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%83%E5%8C%97%E9%97%A8_hu13309173092199928595.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%B1%B1%E8%A5%BF%E5%B8%88%E8%8C%83%E5%8C%97%E9%97%A8_hu13674449765177209022.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;山西师范北门&#34;
@@ -7321,10 +7321,10 @@ $$
 &gt;&lt;/p&gt;
 &lt;p&gt;反正这个肯定是了，说实话，这学校的大门修的真气派，就是不让我进去（（（玩笑&lt;/p&gt;
 &lt;p&gt;不知道有没有机会进去瞅瞅，偷摸潜进去，感觉会挨打（（（&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E6%99%8B%E4%B8%AD%E5%AD%A6%E9%99%A2.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E6%99%8B%E4%B8%AD%E5%AD%A6%E9%99%A2.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E6%99%8B%E4%B8%AD%E5%AD%A6%E9%99%A2_hu4033316960983127433.jpg 480w, https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E6%99%8B%E4%B8%AD%E5%AD%A6%E9%99%A2_hu831657986065235327.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E6%99%8B%E4%B8%AD%E5%AD%A6%E9%99%A2_hu4033316960983127433.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E6%99%8B%E4%B8%AD%E5%AD%A6%E9%99%A2_hu831657986065235327.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;晋中学院&#34;
@@ -7338,10 +7338,10 @@ $$
 &lt;p&gt;这是晋中学院的照片，就在我们学校对面，从这张照片也能看出来榆次的花半开不开吧&lt;/p&gt;
 &lt;p&gt;顺带一提，他们学校的图书馆修的真不错，不知道里面怎么样，有机会进去瞅瞅&lt;/p&gt;
 &lt;p&gt;怎么感觉自己哪个学校都想进去逛逛，无所谓了，有机会还是要多走走的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%90%86%E5%B7%A5.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%90%86%E5%B7%A5.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%90%86%E5%B7%A5_hu16672089297951857288.jpg 480w, https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%90%86%E5%B7%A5_hu4026604514433869717.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%90%86%E5%B7%A5_hu16672089297951857288.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%A4%AA%E5%8E%9F%E7%90%86%E5%B7%A5_hu4026604514433869717.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;太原理工&#34;
@@ -7355,10 +7355,10 @@ $$
 &lt;p&gt;终于到我们学校的照片了，这是在理工桥上照的，这是我第一次上这座桥（（（&lt;/p&gt;
 &lt;p&gt;没怎么好好拍，角度也不太好，天气也不太好，debuff叠满了（（（&lt;/p&gt;
 &lt;p&gt;没事，有机会再照一张，其实我们学校的建筑风格还是很明显的，就是不知道体育馆什么时候能修好&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%AD%A6%E6%A0%A1%E7%9A%84%E8%8A%B1.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%AD%A6%E6%A0%A1%E7%9A%84%E8%8A%B1.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%AD%A6%E6%A0%A1%E7%9A%84%E8%8A%B1_hu1355627301524113860.jpg 480w, https://yuyemaozi.github.io/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%AD%A6%E6%A0%A1%E7%9A%84%E8%8A%B1_hu8352735119723760617.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%AD%A6%E6%A0%A1%E7%9A%84%E8%8A%B1_hu1355627301524113860.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.14%E5%A4%AA%E5%8E%9F%E4%B9%B0%E6%9E%AA%E6%97%A5%E8%AE%B0/%E5%AD%A6%E6%A0%A1%E7%9A%84%E8%8A%B1_hu8352735119723760617.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;学校的花&#34;
@@ -7396,11 +7396,11 @@ function _click_handler(el, password, id) {
         </item>
         <item>
         <title>3.15随笔</title>
-        <link>https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/</link>
         <pubDate>Sun, 15 Mar 2026 22:26:57 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/%E8%83%8C%E6%99%AF.png" alt="Featured image of post 3.15随笔" /&gt;&lt;div id=&#34;encrypted-0&#34; class=&#34;hugo-encryptor-container&#34;&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/%E8%83%8C%E6%99%AF.png" alt="Featured image of post 3.15随笔" /&gt;&lt;div id=&#34;encrypted-0&#34; class=&#34;hugo-encryptor-container&#34;&gt;
   &lt;div class=&#34;hugo-encryptor-prompt&#34;&gt;
     &lt;input type=&#34;password&#34; id=&#34;pwd-encrypted-0&#34; placeholder=&#34;请输入密码&#34; /&gt;
     &lt;input type=&#34;submit&#34; onclick=&#34;_click_handler(this, &#39;Xg@1314520&#39;, &#39;encrypted-0&#39;)&#34; value=&#34;提交&#34; /&gt;
@@ -7412,10 +7412,10 @@ function _click_handler(el, password, id) {
 &lt;/h2&gt;&lt;h3 id=&#34;关于一生一芯的学习&#34;&gt;关于“一生一芯”的学习
 &lt;/h3&gt;&lt;p&gt;还是因为忙挑战杯，进度没有推进多少，这周算是润过去了，不过接下来将要猛攻&lt;/p&gt;
 &lt;p&gt;顺带一提，获得的F考核的证书，附上&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/F%E8%80%83%E6%A0%B8%E8%AF%81%E4%B9%A6.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/F%E8%80%83%E6%A0%B8%E8%AF%81%E4%B9%A6.jpg&#34;
 	width=&#34;1224&#34;
 	height=&#34;1731&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/F%E8%80%83%E6%A0%B8%E8%AF%81%E4%B9%A6_hu7573964400982926361.jpg 480w, https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/F%E8%80%83%E6%A0%B8%E8%AF%81%E4%B9%A6_hu12346251907812932167.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/F%E8%80%83%E6%A0%B8%E8%AF%81%E4%B9%A6_hu7573964400982926361.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/F%E8%80%83%E6%A0%B8%E8%AF%81%E4%B9%A6_hu12346251907812932167.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;F考核证书&#34;
@@ -7428,10 +7428,10 @@ function _click_handler(el, password, id) {
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;挑战杯&#34;&gt;挑战杯
 &lt;/h3&gt;&lt;p&gt;终于是做完了挑战杯的内容了，但是由于基础知识的欠缺，没有真正把东西做出来，接下来会补我的基础知识，把这个东西真正的完成，加油奥里给！！！附上成品图&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/%E7%A9%BA%E6%B0%94%E5%87%80%E5%8C%96%E5%99%A8.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/%E7%A9%BA%E6%B0%94%E5%87%80%E5%8C%96%E5%99%A8.jpg&#34;
 	width=&#34;4096&#34;
 	height=&#34;3072&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/%E7%A9%BA%E6%B0%94%E5%87%80%E5%8C%96%E5%99%A8_hu17378814397250516312.jpg 480w, https://yuyemaozi.github.io/p/3.15%E9%9A%8F%E7%AC%94/%E7%A9%BA%E6%B0%94%E5%87%80%E5%8C%96%E5%99%A8_hu12422548947602185813.jpg 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/%E7%A9%BA%E6%B0%94%E5%87%80%E5%8C%96%E5%99%A8_hu17378814397250516312.jpg 480w, https://yuyemaozi.unkillablevillain-blog.online/p/3.15%E9%9A%8F%E7%AC%94/%E7%A9%BA%E6%B0%94%E5%87%80%E5%8C%96%E5%99%A8_hu12422548947602185813.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;空气净化器&#34;
@@ -7468,11 +7468,11 @@ function _click_handler(el, password, id) {
         </item>
         <item>
         <title>2026.03.11随笔</title>
-        <link>https://yuyemaozi.github.io/p/2026.03.11%E9%9A%8F%E7%AC%94/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/2026.03.11%E9%9A%8F%E7%AC%94/</link>
         <pubDate>Wed, 11 Mar 2026 22:01:55 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/2026.03.11%E9%9A%8F%E7%AC%94/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/2026.03.11%E9%9A%8F%E7%AC%94/R-C.jpg" alt="Featured image of post 2026.03.11随笔" /&gt;&lt;div id=&#34;encrypted-0&#34; class=&#34;hugo-encryptor-container&#34;&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/2026.03.11%E9%9A%8F%E7%AC%94/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/2026.03.11%E9%9A%8F%E7%AC%94/R-C.jpg" alt="Featured image of post 2026.03.11随笔" /&gt;&lt;div id=&#34;encrypted-0&#34; class=&#34;hugo-encryptor-container&#34;&gt;
   &lt;div class=&#34;hugo-encryptor-prompt&#34;&gt;
     &lt;input type=&#34;password&#34; id=&#34;pwd-encrypted-0&#34; placeholder=&#34;请输入密码&#34; /&gt;
     &lt;input type=&#34;submit&#34; onclick=&#34;_click_handler(this, &#39;Xg@1314520&#39;, &#39;encrypted-0&#39;)&#34; value=&#34;提交&#34; /&gt;
@@ -7520,11 +7520,11 @@ function _click_handler(el, password, id) {
         </item>
         <item>
         <title>第一个博客</title>
-        <link>https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/</link>
         <pubDate>Sun, 08 Mar 2026 12:26:05 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/R-C.jpg" alt="Featured image of post 第一个博客" /&gt;&lt;div id=&#34;encrypted-0&#34; class=&#34;hugo-encryptor-container&#34;&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/R-C.jpg" alt="Featured image of post 第一个博客" /&gt;&lt;div id=&#34;encrypted-0&#34; class=&#34;hugo-encryptor-container&#34;&gt;
   &lt;div class=&#34;hugo-encryptor-prompt&#34;&gt;
     &lt;input type=&#34;password&#34; id=&#34;pwd-encrypted-0&#34; placeholder=&#34;请输入密码&#34; /&gt;
     &lt;input type=&#34;submit&#34; onclick=&#34;_click_handler(this, &#39;Xg@1314520&#39;, &#39;encrypted-0&#39;)&#34; value=&#34;提交&#34; /&gt;
@@ -7537,10 +7537,10 @@ function _click_handler(el, password, id) {
 &lt;p&gt;这一周开学了，刚开学一周，也不是很忙，对我来说意义比较重大的事情就是成功结束了“一生一芯”F阶段的学习，并且成为了先研的正式学员。&lt;/p&gt;
 &lt;p&gt;由于导员让每一个班出两个队伍参加挑战杯的校赛，不得不被迫营业，打算做一个空气净化器，但自己什么也不会，只能在网上抄，原谅孩子吧，我会仔细学习原理的。&lt;/p&gt;
 &lt;p&gt;顺便吐槽一下，我们的物理课好烦，又要周末讨论发视频，还要再知到平台刷课，一堆事情，自己的线性代数的书还没有到，明天又要上3小时的线性代数，这种大课到底是谁安排的，实在太折磨了，无所谓了，加油吧。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/image-20260308202239633.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/image-20260308202239633.png&#34;
 	width=&#34;2027&#34;
 	height=&#34;1214&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/image-20260308202239633_hu7914927687387375408.png 480w, https://yuyemaozi.github.io/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/image-20260308202239633_hu8414782815568217090.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/image-20260308202239633_hu7914927687387375408.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/image-20260308202239633_hu8414782815568217090.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;image-20260308202239633&#34;
@@ -7572,35 +7572,35 @@ function _click_handler(el, password, id) {
         </item>
         <item>
         <title>归档</title>
-        <link>https://yuyemaozi.github.io/archives/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>https://yuyemaozi.github.io/archives/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>关于</title>
-        <link>https://yuyemaozi.github.io/%E5%85%B3%E4%BA%8E/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/%E5%85%B3%E4%BA%8E/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://yuyemaozi.github.io/%E5%85%B3%E4%BA%8E/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/%E5%85%B3%E4%BA%8E/</guid>
         <description>&lt;p&gt;大家好，我是杀不死的坏蛋，现在是一个大一学生，这个网站是用hugo+github+cloudflare 制作而成，如果有时间我应该给会出一个教程，并发在我的博客上。&lt;/p&gt;
 </description>
         </item>
         <item>
         <title>搜索</title>
-        <link>https://yuyemaozi.github.io/search/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://yuyemaozi.github.io/search/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/search/</guid>
         <description></description>
         </item>
         <item>
         <title>友情链接</title>
-        <link>https://yuyemaozi.github.io/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://yuyemaozi.github.io/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/</guid>
         <description>&lt;p&gt;这里是放一些个人觉得好用的网站的，目前还没几个，可能把以后收集的链接都放在这里吧&lt;/p&gt;
 </description>
         </item>

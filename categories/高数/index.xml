@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>高数 on 杀不死的坏蛋-Unkillable Villain</title>
-        <link>https://yuyemaozi.github.io/categories/%E9%AB%98%E6%95%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/categories/%E9%AB%98%E6%95%B0/</link>
         <description>Recent content in 高数 on 杀不死的坏蛋-Unkillable Villain</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>杀不死的坏蛋-Unkillable Villain</copyright>
-        <lastBuildDate>Fri, 17 Apr 2026 17:45:29 +0800</lastBuildDate><atom:link href="https://yuyemaozi.github.io/categories/%E9%AB%98%E6%95%B0/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 17 Apr 2026 17:45:29 +0800</lastBuildDate><atom:link href="https://yuyemaozi.unkillablevillain-blog.online/categories/%E9%AB%98%E6%95%B0/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>多元函数</title>
-        <link>https://yuyemaozi.github.io/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/</link>
         <pubDate>Fri, 17 Apr 2026 17:45:29 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%9B%BE%E5%BD%A2.png" alt="Featured image of post 多元函数" /&gt;&lt;h1 id=&#34;多元齐次函数欧拉定理&#34;&gt;多元齐次函数欧拉定理
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%9B%BE%E5%BD%A2.png" alt="Featured image of post 多元函数" /&gt;&lt;h1 id=&#34;多元齐次函数欧拉定理&#34;&gt;多元齐次函数欧拉定理
 &lt;/h1&gt;&lt;p&gt;设函数 $f(x, y, z)$ 满足&lt;br&gt;
 $$
 f(tx, ty, tz) = t^n f(x, y, z) \quad (t \text{ 为任意实数}),

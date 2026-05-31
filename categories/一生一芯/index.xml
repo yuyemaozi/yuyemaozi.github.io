@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>一生一芯 on 杀不死的坏蛋-Unkillable Villain</title>
-        <link>https://yuyemaozi.github.io/categories/%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/categories/%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF/</link>
         <description>Recent content in 一生一芯 on 杀不死的坏蛋-Unkillable Villain</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>杀不死的坏蛋-Unkillable Villain</copyright>
-        <lastBuildDate>Sat, 30 May 2026 16:02:47 +0800</lastBuildDate><atom:link href="https://yuyemaozi.github.io/categories/%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 30 May 2026 16:02:47 +0800</lastBuildDate><atom:link href="https://yuyemaozi.unkillablevillain-blog.online/categories/%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Shell脚本学习笔记</title>
-        <link>https://yuyemaozi.github.io/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sat, 30 May 2026 16:02:47 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         <description>&lt;h1 id=&#34;shell脚本学习&#34;&gt;shell脚本学习
 &lt;/h1&gt;&lt;h2 id=&#34;前言&#34;&gt;前言
 &lt;/h2&gt;&lt;p&gt;在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记录一些shell的使用技巧（也许）&lt;/p&gt;
@@ -380,19 +380,19 @@
         </item>
         <item>
         <title>Makefile文件学习</title>
-        <link>https://yuyemaozi.github.io/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</link>
         <pubDate>Sat, 30 May 2026 15:25:17 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</guid>
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</guid>
         <description></description>
         </item>
         <item>
         <title>Learn c the hard way</title>
-        <link>https://yuyemaozi.github.io/p/learn-c-the-hard-way/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/</link>
         <pubDate>Fri, 17 Apr 2026 19:22:54 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/learn-c-the-hard-way/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.jpg" alt="Featured image of post Learn c the hard way" /&gt;&lt;h2 id=&#34;栈和堆的内存分配&#34;&gt;栈和堆的内存分配
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.jpg" alt="Featured image of post Learn c the hard way" /&gt;&lt;h2 id=&#34;栈和堆的内存分配&#34;&gt;栈和堆的内存分配
 &lt;/h2&gt;&lt;p&gt;网站的代码：(注释版本和原版还是分开做吧)&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -3228,11 +3228,11 @@
         </item>
         <item>
         <title>算法笔记</title>
-        <link>https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Thu, 02 Apr 2026 20:08:36 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C.jpg" alt="Featured image of post 算法笔记" /&gt;&lt;blockquote&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C.jpg" alt="Featured image of post 算法笔记" /&gt;&lt;blockquote&gt;
 &lt;p&gt;这是我的学习笔记，所有的代码来自&lt;a class=&#34;link&#34; href=&#34;https://www.hello-algo.com/chapter_hello_algo/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;序 - Hello 算法&lt;/a&gt;和&lt;a class=&#34;link&#34; href=&#34;https://labuladong.online/zh/algo/home/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Navigation的算法笔记&lt;/a&gt;，放在这里仅供我自己总结学习和记录&lt;/p&gt;
@@ -3843,10 +3843,10 @@
 &lt;/h2&gt;&lt;p&gt;栈（stack）是一种遵循先入后出逻辑的线性数据结构。&lt;/p&gt;
 &lt;p&gt;我们可以将栈类比为桌面上的一摞盘子，规定每次只能移动一个盘子，那么想取出底部的盘子，则需要先将上面的盘子依次移走。我们将盘子替换为各种类型的元素（如整数、字符、对象等），就得到了栈这种数据结构。&lt;/p&gt;
 &lt;p&gt;我们把堆叠元素的顶部称为“栈顶”，底部称为“栈底”。将把元素添加到栈顶的操作叫作“入栈”，删除栈顶元素的操作叫作“出栈”。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552.png&#34;
 	width=&#34;1221&#34;
 	height=&#34;595&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu13514807064957782184.png 480w, https://yuyemaozi.github.io/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu17650816566098834570.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu13514807064957782184.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/image-20260409224828552_hu17650816566098834570.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;栈&#34;
@@ -5140,11 +5140,11 @@
         </item>
         <item>
         <title>Verilog学习笔记</title>
-        <link>https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <link>https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Mon, 23 Mar 2026 23:07:04 +0800</pubDate>
         
-        <guid>https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-        <description>&lt;img src="https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%83%8C%E6%99%AF.png" alt="Featured image of post Verilog学习笔记" /&gt;&lt;p&gt;最近开始学习了Verilog，之前的学习我也开始意识到记录自己的学习思路的重要性，以便以后的自己可以复盘，也是对自己一段时间学习的总结和回顾&lt;/p&gt;
+        <guid>https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;img src="https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%83%8C%E6%99%AF.png" alt="Featured image of post Verilog学习笔记" /&gt;&lt;p&gt;最近开始学习了Verilog，之前的学习我也开始意识到记录自己的学习思路的重要性，以便以后的自己可以复盘，也是对自己一段时间学习的总结和回顾&lt;/p&gt;
 &lt;p&gt;我使用的是HDLBits进行的学习，这里附上链接&lt;a class=&#34;link&#34; href=&#34;https://hdlbits.01xz.net/wiki/Main_Page&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;HDLBits&lt;/a&gt;，由于是纯英语网站，所以需要配合浏览器的沉浸式翻译，其实效果也一般，也可以借助AI，不过只用作翻译，不要要求它解答&lt;/p&gt;
 &lt;p&gt;由于是个人的回顾，所以整体的思路不连贯，仅仅作个人记录&lt;/p&gt;
@@ -5552,10 +5552,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;这样就可以了，因为i*x，最终是一个数字&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507.png&#34;
 	width=&#34;2095&#34;
 	height=&#34;1582&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu15763740965578833049.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu13321923474851575882.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu15763740965578833049.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260402193604507_hu13321923474851575882.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Verilog的一道题&#34;
@@ -5613,10 +5613,10 @@
 &lt;hr&gt;
 &lt;h3 id=&#34;verilog部分题目的总结&#34;&gt;Verilog部分题目的总结
 &lt;/h3&gt;&lt;h4 id=&#34;时钟&#34;&gt;时钟
-&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117.png&#34;
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117.png&#34;
 	width=&#34;1991&#34;
 	height=&#34;728&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu8133919660145964550.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu5743247467523108779.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu8133919660145964550.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260412174937117_hu5743247467523108779.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;时钟&#34;
@@ -5956,10 +5956,10 @@
 &lt;p&gt;为什么要加3呢，其实这是一个神奇的地方，（abc + 0011）*2+d，即&lt;font color=&#34;red&#34;&gt;abc X 2+6 &lt;/font&gt; + d，红字的部分就直接 ≥ 16 了，超过了4位2进制数表示的范围, 向更高位进一位！那么此时表示十位的BCD码为0001。&lt;/p&gt;
 &lt;p&gt;在修正的结果上送入第四位得到1_0100，即0001_0100即为1110的BCD码（十进制14）。&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038.png&#34;
 	width=&#34;1773&#34;
 	height=&#34;1155&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu6174467605347702487.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu708535268236511772.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu6174467605347702487.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260417161213038_hu708535268236511772.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;生命游戏&#34;
@@ -6226,10 +6226,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;时序逻辑这一块之前又出现延迟了，这次算是真正搞清楚了，我们为什么需要时序逻辑？粗浅的理解就是这里需要寄存器，我们必须将细胞的状态存储在寄存器中，因为细胞下一刻的状态与现在细胞的状态有关，所以需要将这存储起来，这里&lt;code&gt;temp_next&lt;/code&gt;既要接输出，又要接寄存器，就是这么一个道理&lt;/p&gt;
 &lt;h4 id=&#34;状态机&#34;&gt;状态机
-&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318.png&#34;
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318.png&#34;
 	width=&#34;2427&#34;
 	height=&#34;963&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu7794704999594027502.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu5011168357329910665.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu7794704999594027502.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419091930318_hu5011168357329910665.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;状态机&#34;
@@ -6302,10 +6302,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;说实话，这个bug真的很抽象&lt;/p&gt;
 &lt;p&gt;直接看错误的逻辑图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321.png&#34;
 	width=&#34;1763&#34;
 	height=&#34;740&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu18308513695516278964.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu10321969456419693981.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu18308513695516278964.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260419092410321_hu10321969456419693981.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;错误的逻辑图&#34;
@@ -6408,10 +6408,10 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h4 id=&#34;状态机遇到的一个bug&#34;&gt;状态机遇到的一个bug
-&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985.png&#34;
+&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985.png&#34;
 	width=&#34;1791&#34;
 	height=&#34;953&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu9772632342990113123.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu10792195422472966487.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu9772632342990113123.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504144611985_hu10792195422472966487.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;image-20260504144611985&#34;
@@ -6702,10 +6702,10 @@
 &lt;p&gt;&lt;code&gt;assign&lt;/code&gt;是连续赋值， 所以只要等号右侧的值无论是谁发生改变，就会立即发生改变。&lt;/p&gt;
 &lt;p&gt;那就必须要注意左侧的所有变量的值要同时发生改变（大部分情况），所以左侧都是寄存器类型的变量，都在一个周期结束后被赋值，其实就是避免的毛刺现象&lt;/p&gt;
 &lt;h3 id=&#34;状态机题目引发的延迟和毛刺现象的思考&#34;&gt;状态机题目引发的延迟和毛刺现象的思考
-&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745.png&#34;
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745.png&#34;
 	width=&#34;1775&#34;
 	height=&#34;633&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu2953925591068064043.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu1293199645608941011.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu2953925591068064043.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260504171643745_hu1293199645608941011.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;状态机题目引发的延迟和毛刺现象的思考&#34;
@@ -6852,10 +6852,10 @@
 &lt;p&gt;这正是&lt;strong&gt;时序逻辑&lt;/strong&gt;的典型应用：需要“记忆”历史值。&lt;/p&gt;
 &lt;h3 id=&#34;处理数据的状态机&#34;&gt;处理数据的状态机
 &lt;/h3&gt;&lt;p&gt;下一刻的状态和我们存储的数据有关，有不同的方法来处理，尽量选择简单的方法&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777.png&#34;
 	width=&#34;1489&#34;
 	height=&#34;1344&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777_hu17324863317729583775.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777_hu16671545408603570954.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777_hu17324863317729583775.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521231618777_hu16671545408603570954.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Fsm serialdp&#34;
@@ -7008,10 +7008,10 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;这里是通过1个数奇偶来判断的，相对来说比较简单，最开始1的个数为0，每多一个1就反转就行了，其实和历史状态没什么关系了，相当于把历史状态转化为了目前的状态&lt;/p&gt;
 &lt;p&gt;看一下另一道题目&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379.png&#34;
 	width=&#34;1379&#34;
 	height=&#34;1312&#34;
-	srcset=&#34;https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379_hu8573409858502880821.png 480w, https://yuyemaozi.github.io/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379_hu4504207293175476016.png 1024w&#34;
+	srcset=&#34;https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379_hu8573409858502880821.png 480w, https://yuyemaozi.unkillablevillain-blog.online/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image-20260521232652379_hu4504207293175476016.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Fsm hdlc&#34;
