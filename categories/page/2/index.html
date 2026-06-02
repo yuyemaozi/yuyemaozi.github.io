@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://unkillablevillain-blog.online/categories/'>
 
-<link rel="stylesheet" href="/scss/style.min.b4614de17944d5d1e8d3fbcfaf274ca6951a4be05154c8fdf32a920c6abba07d.css"><meta property='og:title' content="Categories">
+<link rel="stylesheet" href="/scss/style.min.e6044d2627d9dfe2bf6058ff13a80296cfe0b75d03abbb94d09dd87e772e7092.css"><meta property='og:title' content="Categories">
 <meta property='og:description' content="欢迎来到我的个人博客，目前在校大学生一枚，这个网站我用来分享个人生活和学习情况，数学，电子爱好者（菜鸟），希望和大家一块交流学习">
 <meta property='og:url' content='https://unkillablevillain-blog.online/categories/'>
 <meta property='og:site_name' content='杀不死的坏蛋-Unkillable Villain'>
@@ -15,7 +15,68 @@
 <meta name="twitter:description" content="欢迎来到我的个人博客，目前在校大学生一枚，这个网站我用来分享个人生活和学习情况，数学，电子爱好者（菜鸟），希望和大家一块交流学习"><link rel="alternate" type="application/rss&#43;xml" href="https://unkillablevillain-blog.online/categories/index.xml">
   
 
+<script>
+(function () {
+  
+  const selector = [
+    '.article-list article',
+    '.article-list--compact article',
+    '.article-list--tile article',
+    '.archives-group article',
+    '.archives-group .article-time--item'
+  ].join(', ');
 
+  
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.classList.contains('reveal-visible')) {
+        entry.target.classList.add('reveal-visible');
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -30px 0px'
+  });
+
+  
+  function observeCards(elements) {
+    elements.forEach(el => {
+      if (!el.classList.contains('observed-reveal')) {
+        el.classList.add('observed-reveal');
+        revealObserver.observe(el);
+      }
+    });
+  }
+
+  
+  observeCards(document.querySelectorAll(selector));
+
+  
+  const domObserver = new MutationObserver((mutations) => {
+    mutations.forEach(mutation => {
+      mutation.addedNodes.forEach(node => {
+        
+        if (node.nodeType === 1 && node.matches(selector)) {
+          observeCards([node]);
+        }
+        
+        if (node.nodeType === 1 && node.querySelectorAll) {
+          const innerCards = node.querySelectorAll(selector);
+          if (innerCards.length > 0) {
+            observeCards(innerCards);
+          }
+        }
+      });
+    });
+  });
+
+  
+  domObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+})();
+</script>
     </head>
     <body class="">
     <script>

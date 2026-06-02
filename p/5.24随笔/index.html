@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://unkillablevillain-blog.online/p/5.24%E9%9A%8F%E7%AC%94/'>
 
-<link rel="stylesheet" href="/scss/style.min.b4614de17944d5d1e8d3fbcfaf274ca6951a4be05154c8fdf32a920c6abba07d.css"><meta property='og:title' content="5.24随笔">
+<link rel="stylesheet" href="/scss/style.min.e6044d2627d9dfe2bf6058ff13a80296cfe0b75d03abbb94d09dd87e772e7092.css"><meta property='og:title' content="5.24随笔">
 <meta property='og:description' content="又来写随笔了，这次想写的内容攒了很久，可能写好几天，就慢慢写吧 ai时代 ai发展的发展十分迅速，现在绝对没有人比ai博学，它几乎了解人类迄今为">
 <meta property='og:url' content='https://unkillablevillain-blog.online/p/5.24%E9%9A%8F%E7%AC%94/'>
 <meta property='og:site_name' content='杀不死的坏蛋-Unkillable Villain'>
@@ -16,7 +16,68 @@
     <meta name="twitter:image" content='https://unkillablevillain-blog.online/p/5.24%E9%9A%8F%E7%AC%94/%E8%83%8C%E6%99%AF.webp' />
   
 
+<script>
+(function () {
+  
+  const selector = [
+    '.article-list article',
+    '.article-list--compact article',
+    '.article-list--tile article',
+    '.archives-group article',
+    '.archives-group .article-time--item'
+  ].join(', ');
 
+  
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.classList.contains('reveal-visible')) {
+        entry.target.classList.add('reveal-visible');
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -30px 0px'
+  });
+
+  
+  function observeCards(elements) {
+    elements.forEach(el => {
+      if (!el.classList.contains('observed-reveal')) {
+        el.classList.add('observed-reveal');
+        revealObserver.observe(el);
+      }
+    });
+  }
+
+  
+  observeCards(document.querySelectorAll(selector));
+
+  
+  const domObserver = new MutationObserver((mutations) => {
+    mutations.forEach(mutation => {
+      mutation.addedNodes.forEach(node => {
+        
+        if (node.nodeType === 1 && node.matches(selector)) {
+          observeCards([node]);
+        }
+        
+        if (node.nodeType === 1 && node.querySelectorAll) {
+          const innerCards = node.querySelectorAll(selector);
+          if (innerCards.length > 0) {
+            observeCards(innerCards);
+          }
+        }
+      });
+    });
+  });
+
+  
+  domObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+})();
+</script>
     </head>
     <body class="
     article-page
