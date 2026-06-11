@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://unkillablevillain-blog.online/p/learn-c-the-hard-way/'>
 
-<link rel="stylesheet" href="/scss/style.min.62542b984923b333dfa841a88c8d5b7738fc4da5caec6a0b421ca5ea3b699526.css"><meta property='og:title' content="Learn c the hard way">
+<link rel="stylesheet" href="/scss/style.min.1d51b122fa52be7145a701b3ea225cb2c5a2e2783f039c270026d5c3799df066.css"><meta property='og:title' content="Learn c the hard way">
 <meta property='og:description' content="栈和堆的内存分配 网站的代码：(注释版本和原版还是分开做吧) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41">
 <meta property='og:url' content='https://unkillablevillain-blog.online/p/learn-c-the-hard-way/'>
 <meta property='og:site_name' content='杀不死的坏蛋-Unkillable Villain'>
@@ -3551,28 +3551,23 @@
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
 
-        #particles-js {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
 
         @media (max-width: 767px) {
             body {
                 background-attachment: scroll;
             }
         }
+
+#back-to-top.visible { opacity: 1 !important; transform: translateY(0) scale(1) !important; pointer-events: auto !important; }
+#back-to-top:hover { transform: translateY(-4px) scale(1.05) !important; }
+#back-to-top:hover svg { transform: rotate(-45deg) scale(1.15); }
+[data-scheme=light] #back-to-top { background: rgba(255,255,255,.7) !important; border-color: rgba(0,0,0,.06) !important; color: var(--card-text-color-main) !important; box-shadow: 0 4px 20px rgba(0,0,0,.04) !important; }
+[data-scheme=light] #back-to-top:hover { background: rgba(255,255,255,.85) !important; }
+@media(max-width:767px){ #back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; } #back-to-top svg { width: 20px; height: 20px; } }
     </style>
 </head>
 <body>
 
-
-<div id="waifu-tips" style="display: none;"></div>
-<div id="waifu" style="display: none;"></div>
 
 <script>
     
@@ -3626,25 +3621,6 @@
     }
     
     
-    function initParticles() {
-        const container = document.getElementById('particles-js');
-        if (!container) return;
-        container.style.display = 'block';
-        const particlesJsUrl = "https://www.unkillablevillain-blog.online/temp/particles.min.js";
-        const particlesConfigUrl = "https://www.unkillablevillain-blog.online/temp/particlesjs-config.json";
-        
-        loadExternalResource(particlesJsUrl, "js")
-            .then(() => {
-                if (typeof particlesJS !== 'undefined' && particlesJS.load) {
-                    particlesJS.load('particles-js', particlesConfigUrl, () => {
-                        console.log('粒子动画已启动');
-                    });
-                } else {
-                    console.error("particlesJS 加载失败");
-                }
-            })
-            .catch(err => console.error("粒子库错误:", err));
-    }
     
     
     function initLive2DForPC() {
@@ -3701,7 +3677,6 @@
     
     function bootstrap() {
         setResponsiveBackground();
-        initParticles();
         
         const isPCMode = window.innerWidth >= PC_BREAKPOINT;
         if (isPCMode && !live2dInitialized) {
@@ -3719,7 +3694,6 @@
     }
 </script>
 
-<div id="particles-js"></div>
 
 
 <script src="https://www.unkillablevillain-blog.online/temp/topbar.min.js"></script>
@@ -3825,6 +3799,27 @@
     })
 </script>
 
+
+
+<button id='back-to-top' aria-label='回到顶部' style='display:flex;position:fixed;bottom:28px;right:28px;z-index:999;width:46px;height:46px;border-radius:14px;cursor:pointer;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.08);background:rgba(35,35,42,.42);backdrop-filter:blur(12px)saturate(150%);-webkit-backdrop-filter:blur(12px)saturate(150%);box-shadow:0 4px 20px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.06);color:#fff;transition:all .3s ease;opacity:0;transform:translateY(20px) scale(.9);pointer-events:none'>
+  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+    <path d='M4 13a8 8 0 0 1 7-7 7 7 0 0 1 7 7 5 5 0 0 1-4 5v-2.5a3 3 0 0 0-6 0v2.5a5 5 0 0 1-4-5z'/>
+    <path d='M12 7v6'/>
+    <path d='M10 11 12 13 14 11'/>
+    <path d='M9 17h6'/>
+  </svg>
+</button>
+<script>
+(function(){
+  var btn=document.getElementById('back-to-top');
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  var s=document.createElement('div');
+  s.style.cssText='position:absolute;top:300px;left:0;height:1px;width:1px;pointer-events:none';
+  document.body.appendChild(s);
+  new IntersectionObserver(function(e){btn.classList.toggle('visible',!e[0].isIntersecting)},{rootMargin:'0px'}).observe(s);
+})();
+</script>
+<script src='/js/sakura.js'></script>
 </body>
 </html>
 

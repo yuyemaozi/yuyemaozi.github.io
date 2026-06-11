@@ -1,4 +1,4 @@
-/// ---------------页面基本配色---------------
+﻿/// ---------------椤甸潰鍩烘湰閰嶈壊---------------
 :root {
   --main-top-padding: 30px;
   --card-border-radius: 25px;
@@ -12,6 +12,11 @@
     --code-text-color: #e96900;
   }
 }
+.container.main-container {
+  position: relative;
+  z-index: 1;
+}
+
 
 .article-content {
   blockquote {
@@ -362,11 +367,11 @@ code {
 }
 
 /* =====================================================
-   Stack 主题暗色高级毛玻璃（全部组件，含分页）
+   Stack 涓婚鏆楄壊楂樼骇姣涚幓鐠冿紙鍏ㄩ儴缁勪欢锛屽惈鍒嗛〉锛?
    ===================================================== */
 [data-scheme="dark"] {
 
-  /* 首页文章卡片 + 文章正文 */
+  /* 棣栭〉鏂囩珷鍗＄墖 + 鏂囩珷姝ｆ枃 */
   .article-list article,
   .article-list .article-preview,
   .main-article {
@@ -415,7 +420,7 @@ code {
     text-shadow: 0 1px 3px rgba(0,0,0,.4);
   }
 
-  /* 右侧小部件 */
+  /* 鍙充晶灏忛儴浠?*/
   .widget,
   .search-form,
   .search-box,
@@ -445,7 +450,7 @@ code {
     border: 1px solid rgba(255,255,255,.06);
   }
 
-  /* 文章目录 */
+  /* 鏂囩珷鐩綍 */
   .widget--toc {
     background: rgba(35,35,42,.38) !important;
     backdrop-filter: blur(20px) saturate(170%);
@@ -467,7 +472,7 @@ code {
     color: var(--body-text-color);
   }
 
-  /* 归档卡片 */
+  /* 褰掓。鍗＄墖 */
   .main.full-width .article-list--compact article,
   .article-list--compact article,
   .archives-group .article-list article,
@@ -495,7 +500,7 @@ code {
       inset 0 1px 0 rgba(255,255,255,.10);
   }
 
-  /* 分页导航 */
+  /* 鍒嗛〉瀵艰埅 */
   .pagination {
     background: rgba(35,35,42,.38) !important;
     backdrop-filter: blur(20px) saturate(170%);
@@ -506,7 +511,7 @@ code {
       0 8px 30px rgba(0,0,0,.22),
       inset 0 1px 0 rgba(255,255,255,.06);
     transition: all .3s ease;
-    padding: 12px 20px;  /* 适当内边距，保证内容不贴边 */
+    padding: 12px 20px;  /* 閫傚綋鍐呰竟璺濓紝淇濊瘉鍐呭涓嶈创杈?*/
   }
   .pagination:hover {
     transform: translateY(-3px);
@@ -515,7 +520,7 @@ code {
       inset 0 1px 0 rgba(255,255,255,.08);
   }
 
-  /* 标签 & 分类按钮 */
+  /* 鏍囩 & 鍒嗙被鎸夐挳 */
   .tagCloud-tags a,
   .widget--tag-cloud a,
   .widget--categories a {

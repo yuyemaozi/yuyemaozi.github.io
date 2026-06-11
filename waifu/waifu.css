@@ -44,12 +44,9 @@
 	display: none;
 }
 
-#waifu:hover {
-	transform: translateY(20px);
-}
 
-#waifu-tips {
-	animation: waifu-shake 50s ease-in-out 5s infinite;
+#waifu-tips { contain: layout style paint;
+	/* animation: waifu-shake 50s ... disabled */
 	background-color: rgba(236, 217, 188, .5);
 	border: 1px solid rgba(224, 186, 140, .62);
 	border-radius: 12px;
@@ -117,14 +114,14 @@
 }
 #waifu {
     bottom: 0 !important;
-    transform: none !important;
+    transform: translateZ(0);
     transition: none !important;
 }
 #waifu-toggle {
     display: none !important;
 }
 
-@keyframes waifu-shake {
+@keyframes waifu-shake {/* disabled */}/*
 	2% {
 		transform: translate(.5px, -1.5px) rotate(-.5deg);
 	}
@@ -276,3 +273,18 @@
 		transform: translate(0, 0) rotate(0);
 	}
 }
+
+/* 移动端优化：缩小画布 */
+@media (max-width: 767px) {
+  #live2d {
+    width: 200px !important;
+    height: 200px !important;
+  }
+  #waifu-tips { contain: layout style paint;
+    width: 180px !important;
+    font-size: 12px !important;
+    min-height: 50px !important;
+    margin: -20px 10px !important;
+  }
+}
+
