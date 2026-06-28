@@ -6,11 +6,11 @@
 
 <link rel='canonical' href='https://unkillablevillain-blog.online/categories/c%E8%AF%AD%E8%A8%80/'>
 
-<link rel="stylesheet" href="/scss/style.min.1d51b122fa52be7145a701b3ea225cb2c5a2e2783f039c270026d5c3799df066.css"><meta property='og:title' content="Category: C语言 - 杀不死的坏蛋-Unkillable Villain">
+<link rel="stylesheet" href="/scss/style.min.1105f1e314d54456d7ebcc1048f12dac24d4be727cf0a0a5a2b1be57d33aa957.css"><meta property='og:title' content="Category: C语言 - 杀不死的坏蛋-Unkillable Villain">
 <meta property='og:description' content="欢迎来到我的个人博客，目前在校大学生一枚，这个网站我用来分享个人生活和学习情况，数学，电子爱好者（菜鸟），希望和大家一块交流学习">
 <meta property='og:url' content='https://unkillablevillain-blog.online/categories/c%E8%AF%AD%E8%A8%80/'>
 <meta property='og:site_name' content='杀不死的坏蛋-Unkillable Villain'>
-<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2026-05-30T16:02:47&#43;08:00 '/><meta property='og:image' content='https://unkillablevillain-blog.online/categories/c%E8%AF%AD%E8%A8%80/%E8%83%8C%E6%99%AF.png' />
+<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2026-06-27T22:00:00&#43;08:00 '/><meta property='og:image' content='https://unkillablevillain-blog.online/categories/c%E8%AF%AD%E8%A8%80/%E8%83%8C%E6%99%AF.png' />
 <meta name="twitter:title" content="Category: C语言 - 杀不死的坏蛋-Unkillable Villain">
 <meta name="twitter:description" content="欢迎来到我的个人博客，目前在校大学生一枚，这个网站我用来分享个人生活和学习情况，数学，电子爱好者（菜鸟），希望和大家一块交流学习"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://unkillablevillain-blog.online/categories/c%E8%AF%AD%E8%A8%80/%E8%83%8C%E6%99%AF.png' /><link rel="alternate" type="application/rss&#43;xml" href="https://unkillablevillain-blog.online/categories/c%E8%AF%AD%E8%A8%80/index.xml">
@@ -18,7 +18,8 @@
 
 <script>
 (function () {
-  
+  'use strict';
+
   const selector = [
     '.article-list article',
     '.article-list--compact article',
@@ -27,57 +28,105 @@
     '.archives-group .article-time--item'
   ].join(', ');
 
-  
+  if (window.__blogReveal && typeof window.__blogReveal.observe === 'function') {
+    window.__blogReveal.observe(document);
+    return;
+  }
+
+  const state = window.__blogReveal = {
+    queued: new Set(),
+    visible: new Set(),
+    observe,
+    queuedFrame: 0,
+    visibleFrame: 0
+  };
+
   const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !entry.target.classList.contains('reveal-visible')) {
-        entry.target.classList.add('reveal-visible');
-      }
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      state.visible.add(entry.target);
+      revealObserver.unobserve(entry.target);
     });
+
+    if (!state.visibleFrame) {
+      state.visibleFrame = requestAnimationFrame(showVisibleCards);
+    }
   }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -30px 0px'
+    threshold: 0.08,
+    rootMargin: '0px 0px -80px 0px'
   });
 
-  
-  function observeCards(elements) {
-    elements.forEach(el => {
-      if (!el.classList.contains('observed-reveal')) {
-        el.classList.add('observed-reveal');
-        revealObserver.observe(el);
-      }
+  function collect(root) {
+    if (!root || (root.nodeType !== 1 && root.nodeType !== 9)) return;
+
+    if (root.nodeType === 1 && root.matches(selector)) {
+      state.queued.add(root);
+    }
+
+    root.querySelectorAll?.(selector).forEach((el) => {
+      state.queued.add(el);
+    });
+
+    if (!state.queuedFrame) {
+      state.queuedFrame = requestAnimationFrame(flushQueuedCards);
+    }
+  }
+
+  function observe(root) {
+    collect(root || document);
+  }
+
+  function flushQueuedCards() {
+    state.queuedFrame = 0;
+    let index = 0;
+
+    state.queued.forEach((el) => {
+      state.queued.delete(el);
+      if (el.classList.contains('observed-reveal') || el.classList.contains('reveal-visible')) return;
+
+      el.style.setProperty('--reveal-index', Math.min(index, 8));
+      el.classList.add('observed-reveal');
+      revealObserver.observe(el);
+      index++;
     });
   }
 
-  
-  observeCards(document.querySelectorAll(selector));
+  function showVisibleCards() {
+    state.visibleFrame = 0;
 
-  
+    state.visible.forEach((el) => {
+      state.visible.delete(el);
+      el.classList.add('reveal-visible');
+
+      window.setTimeout(() => {
+        el.classList.add('reveal-done');
+      }, 760);
+    });
+  }
+
+  function observeInitialCards() {
+    observe(document);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeInitialCards, { once: true });
+  } else {
+    observeInitialCards();
+  }
+
   const domObserver = new MutationObserver((mutations) => {
-    mutations.forEach(mutation => {
-      mutation.addedNodes.forEach(node => {
-        
-        if (node.nodeType === 1 && node.matches(selector)) {
-          observeCards([node]);
-        }
-        
-        if (node.nodeType === 1 && node.querySelectorAll) {
-          const innerCards = node.querySelectorAll(selector);
-          if (innerCards.length > 0) {
-            observeCards(innerCards);
-          }
-        }
-      });
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach(collect);
     });
   });
 
-  
-  domObserver.observe(document.documentElement, {
+  domObserver.observe(document.body || document.documentElement, {
     childList: true,
     subtree: true
   });
 })();
 </script>
+
     </head>
     <body class="">
     <script>
@@ -273,6 +322,25 @@
             </a>
         </li>
         
+        
+        <li >
+            <a href='/rants/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-messages" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
+  <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
+</svg>
+
+
+
+                
+                <span>每日一槽</span>
+            </a>
+        </li>
+        
         <li class="menu-bottom-section">
             <ol class="menu">
 
@@ -332,10 +400,6 @@
         
             <a href="/categories/c%E8%AF%AD%E8%A8%80/" class="font_size_3">
                 C语言
-            </a>
-        
-            <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="font_size_1">
-                线性代数
             </a>
         
             <a href="/categories/%E9%AB%98%E6%95%B0/" class="font_size_1">
@@ -474,301 +538,292 @@
         document.head.appendChild(customFont);
     }());
 </script>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>看板娘与动态背景</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-repeat: no-repeat;
-            background-position: center top;
-            background-size: cover;
-            background-attachment: fixed;
-            background-color: #1a1a2e;
-            min-height: 100vh;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        }
-
-
-        @media (max-width: 767px) {
-            body {
-                background-attachment: scroll;
-            }
-        }
-
-#back-to-top.visible { opacity: 1 !important; transform: translateY(0) scale(1) !important; pointer-events: auto !important; }
-#back-to-top:hover { transform: translateY(-4px) scale(1.05) !important; }
-#back-to-top:hover svg { transform: rotate(-45deg) scale(1.15); }
-[data-scheme=light] #back-to-top { background: rgba(255,255,255,.7) !important; border-color: rgba(0,0,0,.06) !important; color: var(--card-text-color-main) !important; box-shadow: 0 4px 20px rgba(0,0,0,.04) !important; }
-[data-scheme=light] #back-to-top:hover { background: rgba(255,255,255,.85) !important; }
-@media(max-width:767px){ #back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; } #back-to-top svg { width: 20px; height: 20px; } }
-    </style>
-</head>
-<body>
-
+<style>
+    #back-to-top.visible { opacity: 1 !important; transform: translateY(0) scale(1) !important; pointer-events: auto !important; }
+    #back-to-top:hover { transform: translateY(-4px) scale(1.05) !important; }
+    #back-to-top:hover svg { transform: rotate(-45deg) scale(1.15); }
+    [data-scheme=light] #back-to-top { background: rgba(255,255,255,.7) !important; border-color: rgba(0,0,0,.06) !important; color: var(--card-text-color-main) !important; box-shadow: 0 4px 20px rgba(0,0,0,.04) !important; }
+    [data-scheme=light] #back-to-top:hover { background: rgba(255,255,255,.85) !important; }
+    @media(max-width:767px){ #back-to-top { bottom: 20px !important; right: 20px !important; width: 42px !important; height: 42px !important; } #back-to-top svg { width: 20px; height: 20px; } }
+</style>
 
 <script>
-    
-    const PC_BG_URL = "https://www.unkillablevillain-blog.online/background/preview.jpg";
-    const MOBILE_BG_URL = "https://www.unkillablevillain-blog.online/temp/mobile_preview.png";
-    const PC_BREAKPOINT = 768;
-    
-    let live2dInitialized = false;  
-    
-    
-    function setResponsiveBackground() {
-        const isMobile = window.innerWidth < PC_BREAKPOINT;
-        const backgroundImageUrl = isMobile ? MOBILE_BG_URL : PC_BG_URL;
-        document.body.style.backgroundImage = `url("${backgroundImageUrl}")`;
-        console.log(`[背景] ${isMobile ? '手机' : '电脑'}模式`);
-    }
-    
-    
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-        if (resizeTimer) clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            setResponsiveBackground();
-            const isPCMode = window.innerWidth >= PC_BREAKPOINT;
-            if (isPCMode && !live2dInitialized) {
-                console.log("窗口变为PC模式且Live2D未加载，尝试初始化");
-                initLive2DForPC();
-            }
-        }, 150);
-    });
-    
-    
-    function loadExternalResource(url, type) {
-        return new Promise((resolve, reject) => {
-            let tag;
-            if (type === "css") {
-                tag = document.createElement("link");
-                tag.rel = "stylesheet";
-                tag.href = url;
-            } else if (type === "js") {
-                tag = document.createElement("script");
-                tag.src = url;
-            } else {
-                reject("未知类型");
-                return;
-            }
-            tag.onload = () => resolve(url);
-            tag.onerror = () => reject(url);
-            document.head.appendChild(tag);
-        });
-    }
-    
-    
-    
-    
-    function initLive2DForPC() {
-        if (live2dInitialized) {
-            console.log("Live2D 已经初始化过，跳过重复加载");
-            return;
-        }
-        
-        const css_Path = "https://www.unkillablevillain-blog.online/waifu/waifu.css";
-        const json_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.json";
-        const model_path = "https://www.unkillablevillain-blog.online/Resources/";
-        const q_Path = "https://www.unkillablevillain-blog.online/waifu/waifu-tips.js";
-        const live2dcubismcore_path = "https://www.unkillablevillain-blog.online/waifu/live2dcubismcore.js";
-        const live2d_sdk_path = "https://www.unkillablevillain-blog.online/waifu/live2d-sdk.js";
-        
-        const config = {
-            path: {
-                homePath: "/",
-                modelPath: model_path,
-                cssPath: css_Path,
-                tipsJsonPath: json_Path,
-                tipsJsPath: q_Path,
-                live2dCorePath: live2dcubismcore_path,
-                live2dSdkPath: live2d_sdk_path
-            },
-            tools: ["hitokoto", "asteroids", "express", "photo"],
-            drag: { enable: false, direction: ["x", "y"] },
-            switchType: "order"
+    (function () {
+        const motion = window.__blogMotion = window.__blogMotion || {
+            resources: {},
+            live2d: { loading: false, initialized: false, failed: false },
+            pjaxReady: false
         };
-        
-        Promise.all([
-            loadExternalResource(config.path.cssPath, "css"),
-            loadExternalResource(config.path.live2dCorePath, "js"),
-            loadExternalResource(config.path.live2dSdkPath, "js"),
-            loadExternalResource(config.path.tipsJsPath, "js")
-        ]).then(() => {
-            if (typeof initWidget === 'function') {
-                initWidget({
+
+        function normalizeUrl(url) {
+            return new URL(url, window.location.href).href;
+        }
+
+        function loadExternalResource(url, type) {
+            const absoluteUrl = normalizeUrl(url);
+            if (motion.resources[absoluteUrl]) return motion.resources[absoluteUrl];
+
+            const selector = type === "css"
+                ? `link[rel="stylesheet"][href="${absoluteUrl}"],link[rel="stylesheet"][href="${url}"]`
+                : `script[src="${absoluteUrl}"],script[src="${url}"]`;
+            const existing = document.querySelector(selector);
+            if (existing) {
+                motion.resources[absoluteUrl] = Promise.resolve(absoluteUrl);
+                return motion.resources[absoluteUrl];
+            }
+
+            motion.resources[absoluteUrl] = new Promise((resolve, reject) => {
+                let tag;
+                if (type === "css") {
+                    tag = document.createElement("link");
+                    tag.rel = "stylesheet";
+                    tag.href = url;
+                } else {
+                    tag = document.createElement("script");
+                    tag.src = url;
+                    tag.defer = false;
+                }
+                tag.dataset.blogMotionResource = absoluteUrl;
+                tag.onload = () => resolve(absoluteUrl);
+                tag.onerror = () => {
+                    delete motion.resources[absoluteUrl];
+                    reject(new Error(`资源加载失败: ${url}`));
+                };
+                document.head.appendChild(tag);
+            });
+            return motion.resources[absoluteUrl];
+        }
+
+        function removeLegacyWaifuPlaceholders() {
+            document.querySelectorAll("#waifu").forEach((node) => {
+                if (!node.querySelector("#live2d")) node.remove();
+            });
+            document.querySelectorAll("#waifu-tips").forEach((node) => {
+                if (!node.closest("#waifu")) node.remove();
+            });
+        }
+
+        function ensureLive2DLauncher() {
+            if (document.getElementById("blog-live2d-launch")) return;
+            const launcher = document.createElement("button");
+            launcher.id = "blog-live2d-launch";
+            launcher.type = "button";
+            launcher.setAttribute("aria-label", "显示看板娘");
+            launcher.innerHTML = "<span class='blog-live2d-launch__spark'>?</span><span class='blog-live2d-launch__tip'>按一下有惊喜</span>";
+            launcher.addEventListener("click", () => showLive2D());
+            document.body.appendChild(launcher);
+        }
+
+        async function initLive2D() {
+            if (motion.live2d.initialized || motion.live2d.loading) return motion.live2d.promise;
+
+            motion.live2d.loading = true;
+            motion.live2d.failed = false;
+            removeLegacyWaifuPlaceholders();
+
+            const config = {
+                path: {
+                    homePath: "/",
+                    modelPath: "/Resources/",
+                    cssPath: "/waifu/waifu.css",
+                    tipsJsonPath: "/waifu/waifu-tips.json",
+                    tipsJsPath: "/waifu/waifu-tips.js",
+                    live2dCorePath: "/waifu/live2dcubismcore.js",
+                    live2dSdkPath: "/waifu/live2d-sdk.js"
+                },
+                tools: ["hitokoto", "asteroids", "express", "photo", "quit"],
+                drag: { enable: false, direction: ["x", "y"] },
+                switchType: "order"
+            };
+
+            motion.live2d.promise = Promise.all([
+                loadExternalResource(config.path.cssPath, "css"),
+                loadExternalResource(config.path.live2dCorePath, "js"),
+                loadExternalResource(config.path.live2dSdkPath, "js"),
+                loadExternalResource(config.path.tipsJsPath, "js")
+            ]).then(() => {
+                if (typeof window.initWidget !== "function") {
+                    throw new Error("initWidget 未定义，请检查 waifu-tips.js");
+                }
+                localStorage.setItem("waifu-display", Date.now());
+                window.initWidget({
                     waifuPath: config.path.tipsJsonPath,
                     cdnPath: config.path.modelPath,
                     tools: config.tools,
                     dragEnable: config.drag.enable,
                     dragDirection: config.drag.direction,
-                    switchType: config.switchType
+                    switchType: config.switchType,
+                    homePath: config.path.homePath
                 });
-                live2dInitialized = true;
-                console.log("Live2D 看板娘已启动（仅一次）");
-            } else {
-                console.error("initWidget 未定义，请检查 waifu-tips.js");
+                motion.live2d.initialized = true;
+            }).catch((err) => {
+                motion.live2d.failed = true;
+                motion.live2d.promise = null;
+                console.error("Live2D 资源加载失败:", err);
+            }).finally(() => {
+                motion.live2d.loading = false;
+            });
+
+            return motion.live2d.promise;
+        }
+
+        async function showLive2D() {
+            const launcher = document.getElementById("blog-live2d-launch");
+            launcher?.classList.add("is-loading");
+            await initLive2D();
+            const nativeToggle = document.getElementById("waifu-toggle");
+            if (!document.getElementById("waifu") && nativeToggle) nativeToggle.click();
+            const waifu = document.getElementById("waifu");
+            if (waifu) {
+                waifu.style.display = "";
+                requestAnimationFrame(() => waifu.classList.add("blog-waifu-visible"));
             }
-        }).catch(err => console.error("Live2D 资源加载失败:", err));
-    }
-    
-    
-    function bootstrap() {
-        setResponsiveBackground();
-        
-        const isPCMode = window.innerWidth >= PC_BREAKPOINT;
-        if (isPCMode && !live2dInitialized) {
-            console.log("首次加载，PC模式，初始化 Live2D");
-            initLive2DForPC();
+            launcher?.classList.remove("is-loading");
+            launcher?.classList.add("is-hidden");
+        }
+
+        function bindLive2DQuit() {
+            if (motion.live2dQuitBound) return;
+            motion.live2dQuitBound = true;
+            document.addEventListener("click", (event) => {
+                const quit = event.target.closest("#waifu-tool-quit");
+                if (!quit) return;
+                const waifu = document.getElementById("waifu");
+                const launcher = document.getElementById("blog-live2d-launch");
+                waifu?.classList.remove("blog-waifu-visible");
+                window.setTimeout(() => {
+                    launcher?.classList.remove("is-hidden", "is-loading");
+                }, 2600);
+            });
+        }
+
+        function delay(time) {
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
+
+        async function renderKaTeX() {
+            if (!document.querySelector(".math-katex")) return;
+            while (typeof renderMathInElement !== "function") {
+                await delay(500);
+            }
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true }
+                ],
+                ignoredClasses: ["gist"]
+            });
+        }
+
+        function syncBodyClass(responseText) {
+            if (!responseText || !responseText.match("<html")) return;
+            const newDom = new DOMParser().parseFromString(responseText, "text/html");
+            document.body.setAttribute("class", newDom.body.className || "");
+        }
+
+        function initBackToTop() {
+            const btn = document.getElementById("back-to-top");
+            if (!btn || btn.dataset.ready) return;
+            btn.dataset.ready = "true";
+            btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+            const sentinel = document.createElement("div");
+            sentinel.style.cssText = "position:absolute;top:300px;left:0;height:1px;width:1px;pointer-events:none";
+            document.body.appendChild(sentinel);
+            new IntersectionObserver((entries) => {
+                btn.classList.toggle("visible", !entries[0].isIntersecting);
+            }, { rootMargin: "0px" }).observe(sentinel);
+        }
+
+        function runPageInitializers() {
+            ensureLive2DLauncher();
+            bindLive2DQuit();
+            if (window.BlogHomeHero) window.BlogHomeHero.init();
+            if (window.BlogSakura) window.BlogSakura.init();
+            if (window.__blogReveal && typeof window.__blogReveal.observe === "function") {
+                window.__blogReveal.observe(document);
+            }
+        }
+
+        function scrollAfterPjax() {
+            if (!document.body.classList.contains("template-home")) {
+                window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+                return;
+            }
+
+            window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        }
+
+        function initPjaxOnce() {
+            if (typeof window.Pjax !== "function" || motion.pjaxReady) return;
+            motion.pjaxReady = true;
+
+            if (typeof topbar !== "undefined") {
+                topbar.config({
+                    barColors: { "0": "rgba(255,255,255,1)", "1.0": "rgba(0,149,234,1)" }
+                });
+            }
+
+            window.pjax = window.pjax || new Pjax({
+                selectors: [".main-container"]
+            });
+
+            if (window.pjax && window.pjax.handleResponse && !window.pjax.__blogMotionWrapped) {
+                const originalHandleResponse = window.pjax.handleResponse.bind(window.pjax);
+                window.pjax.handleResponse = function (responseText, request, href, options) {
+                    const html = responseText || (request && request.responseText) || "";
+                    syncBodyClass(html);
+                    return originalHandleResponse(responseText, request, href, options);
+                };
+                window.pjax.__blogMotionWrapped = true;
+            }
+
+            document.addEventListener("pjax:send", () => {
+                if (typeof topbar !== "undefined") topbar.show();
+            });
+
+            document.addEventListener("pjax:complete", () => {
+                if (typeof topbar !== "undefined") topbar.hide();
+                scrollAfterPjax();
+                if (window.Stack && typeof window.Stack.init === "function") window.Stack.init();
+                renderKaTeX();
+                runPageInitializers();
+            });
+        }
+
+        function bootstrapMotion() {
+            initBackToTop();
+            initPjaxOnce();
+            renderKaTeX();
+            runPageInitializers();
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", bootstrapMotion, { once: true });
         } else {
-            console.log("手机模式或 Live2D 已存在，不重复初始化");
+            bootstrapMotion();
         }
-    }
-    
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bootstrap);
-    } else {
-        bootstrap();
-    }
-</script>
 
-
-
-<script src="https://www.unkillablevillain-blog.online/temp/topbar.min.js"></script>
-<script>
-    if (typeof topbar !== 'undefined') {
-        topbar.config({
-            barColors: { '0': 'rgba(255,255,255,1)', '1.0': 'rgba(0,149,234,1)' }
-        });
-    }
-    document.addEventListener('pjax:send', () => { if (typeof topbar !== 'undefined') topbar.show(); });
-    document.addEventListener('pjax:complete', () => { if (typeof topbar !== 'undefined') topbar.hide(); });
-</script>
-
-
-<script>
-    (function() {
-        if (window.pjax && pjax.handleResponse) {
-            pjax._handleResponse = pjax.handleResponse;
-            pjax.handleResponse = function(responseText, request, href, options) {
-                if (request.responseText && request.responseText.match("<html")) {
-                    if (responseText) {
-                        let newDom = new DOMParser().parseFromString(responseText, 'text/html');
-                        let bodyClass = newDom.body.className;
-                        if (bodyClass) document.body.setAttribute("class", bodyClass);
-                    }
-                    pjax._handleResponse(responseText, request, href, options);
-                }
-            };
-        }
+        window.renderKaTeX = renderKaTeX;
+        window.initLive2DForPC = showLive2D;
     })();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script>
-<script>
-    var pjax = new Pjax({
-        selectors: [
-            ".main-container"
-        ]
-    })
-</script>
-
-<script>
-    pjax._handleResponse = pjax.handleResponse;
-    pjax.handleResponse = function(responseText, request, href, options) {
-        if (request.responseText.match("<html")) {
-            if (responseText) {
-                
-                let newDom = new DOMParser().parseFromString(responseText, 'text/html');
-                
-                let bodyClass = newDom.body.className;
-                document.body.setAttribute("class", bodyClass)
-            }
-            
-            pjax._handleResponse(responseText, request, href, options);
-        } else {
-            
-        }
-    }
-</script>
-
-<script>
-    document.addEventListener('pjax:complete', () => {
-        
-        window.Stack.init();
-    })
-</script>
-
-
-
-<script>
-    async function renderKaTeX() {
-        
-        let katex = document.querySelector(".math-katex");
-        if (!katex) {
-            return;
-        }
-        
-        while (typeof renderMathInElement !== 'function') {
-            await delay(500);
-        }        
-        
-        renderMathInElement(document.body, {
-            delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true }
-            ],
-            ignoredClasses: ["gist"]
-        });
-    }
-    
-    
-
-    function delay(time) {
-        return new Promise(resolve => {
-            setTimeout(resolve, time)
-        })
-    }
-
-    document.addEventListener('pjax:complete', () => {
-        renderKaTeX();
-    })
-</script>
-
-
-
-<button id='back-to-top' aria-label='回到顶部' style='display:flex;position:fixed;bottom:28px;right:28px;z-index:999;width:46px;height:46px;border-radius:14px;cursor:pointer;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.08);background:rgba(35,35,42,.42);backdrop-filter:blur(12px)saturate(150%);-webkit-backdrop-filter:blur(12px)saturate(150%);box-shadow:0 4px 20px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.06);color:#fff;transition:all .3s ease;opacity:0;transform:translateY(20px) scale(.9);pointer-events:none'>
-  <svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-    <path d='M4 13a8 8 0 0 1 7-7 7 7 0 0 1 7 7 5 5 0 0 1-4 5v-2.5a3 3 0 0 0-6 0v2.5a5 5 0 0 1-4-5z'/>
-    <path d='M12 7v6'/>
-    <path d='M10 11 12 13 14 11'/>
-    <path d='M9 17h6'/>
+<button id="back-to-top" aria-label="回到顶部" style="display:flex;position:fixed;bottom:28px;right:28px;z-index:999;width:46px;height:46px;border-radius:14px;cursor:pointer;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.08);background:rgba(35,35,42,.42);backdrop-filter:blur(12px)saturate(150%);-webkit-backdrop-filter:blur(12px)saturate(150%);box-shadow:0 4px 20px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.06);color:#fff;transition:opacity .3s ease,transform .3s ease;opacity:0;transform:translateY(20px) scale(.9);pointer-events:none">
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 13a8 8 0 0 1 7-7 7 7 0 0 1 7 7 5 5 0 0 1-4 5v-2.5a3 3 0 0 0-6 0v2.5a5 5 0 0 1-4-5z"/>
+    <path d="M12 7v6"/>
+    <path d="M10 11 12 13 14 11"/>
+    <path d="M9 17h6"/>
   </svg>
 </button>
-<script>
-(function(){
-  var btn=document.getElementById('back-to-top');
-  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
-  var s=document.createElement('div');
-  s.style.cssText='position:absolute;top:300px;left:0;height:1px;width:1px;pointer-events:none';
-  document.body.appendChild(s);
-  new IntersectionObserver(function(e){btn.classList.toggle('visible',!e[0].isIntersecting)},{rootMargin:'0px'}).observe(s);
-})();
-</script>
-<script src='/js/sakura.js'></script>
-</body>
-</html>
 
+<script src="/temp/topbar.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script>
+<script src="/js/home-hero.js"></script>
+<script src="/js/sakura.js"></script>
 
     </body>
 </html>

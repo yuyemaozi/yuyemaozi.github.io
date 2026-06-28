@@ -288,3 +288,54 @@
   }
 }
 
+/* Blog override: the model is loaded only after the custom surprise button is clicked. */
+#waifu-toggle {
+  display: none !important;
+}
+
+#waifu {
+  bottom: -500px !important;
+  right: 8px !important;
+  z-index: 998 !important;
+  opacity: 0 !important;
+  transform: translate3d(32px, 36px, 0) scale(.94) !important;
+  transition:
+    bottom .78s cubic-bezier(.22,1,.36,1),
+    transform .78s cubic-bezier(.22,1,.36,1),
+    opacity .42s ease !important;
+  will-change: bottom, transform, opacity;
+}
+
+#waifu.blog-waifu-visible {
+  bottom: 0 !important;
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+#waifu-tool {
+  left: -48px !important;
+  right: auto !important;
+  margin-left: 0 !important;
+  top: 72px !important;
+  padding: 8px 6px;
+  border-radius: 16px;
+  background: rgba(35, 35, 42, .42);
+  border: 1px solid rgba(255, 255, 255, .1);
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+}
+
+#waifu-tool-quit svg {
+  fill: #ff8fa3;
+}
+
+@media (max-width: 767px) {
+  #waifu {
+    right: -10px !important;
+  }
+
+  #waifu-tool {
+    left: -42px !important;
+    top: 52px !important;
+  }
+}

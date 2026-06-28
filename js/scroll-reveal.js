@@ -1,46 +1,110 @@
-// assets/js/scroll-reveal.js
 (function () {
-  // 需要添加动画的元素选择器，覆盖首页文章卡片、归档卡片等
-  const selectors = [
-    '.article-list article',        // 首页卡片
-    '.article-list--compact article', // 归档紧凑卡片
-    '.article-list--tile article',    // 分类/标签瓷砖
-    '.archives-group article',        // 归档组
-    '.archives-group .article-time--item'
-  ];
+  'use strict';
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('reveal-visible');
-        // 动画只播放一次，之后不再触发
-        observer.unobserve(entry.target);
-      }
+  var selector = [
+    '.article-list article',
+    '.article-list--compact article',
+    '.article-list--tile article',
+    '.archives-group article',
+    '.archives-group .article-time--item'
+  ].join(', ');
+
+  if (window.__blogReveal && typeof window.__blogReveal.observe === 'function') {
+    window.__blogReveal.observe(document);
+    return;
+  }
+
+  var state = window.__blogReveal = {
+    queued: new Set(),
+    visible: new Set(),
+    observe: observe,
+    queuedFrame: 0,
+    visibleFrame: 0
+  };
+
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      state.visible.add(entry.target);
+      revealObserver.unobserve(entry.target);
     });
+
+    if (!state.visibleFrame) {
+      state.visibleFrame = requestAnimationFrame(showVisibleCards);
+    }
   }, {
-    threshold: 0.15,          // 卡片 15% 进入视口时触发
-    rootMargin: '0px 0px -30px 0px' // 稍微提前触发，避免看到生硬的突然出现
+    threshold: 0.08,
+    rootMargin: '0px 0px -80px 0px'
   });
 
-  function observeCards() {
-    const elements = document.querySelectorAll(selectors.join(','));
-    elements.forEach(el => observer.observe(el));
+  function collect(root) {
+    if (!root || (root.nodeType !== 1 && root.nodeType !== 9)) return;
+
+    if (root.nodeType === 1 && root.matches(selector)) {
+      state.queued.add(root);
+    }
+
+    if (root.querySelectorAll) {
+      root.querySelectorAll(selector).forEach(function (el) {
+        state.queued.add(el);
+      });
+    }
+
+    if (!state.queuedFrame) {
+      state.queuedFrame = requestAnimationFrame(flushQueuedCards);
+    }
   }
 
-  // 初始观察
-  if (document.readyState === 'complete') {
-    observeCards();
-  } else {
-    window.addEventListener('load', observeCards);
+  function observe(root) {
+    collect(root || document);
   }
 
-  // Hugo 的 PJAX 或无限滚动可能导致 DOM 更新，这里简单用 MutationObserver 监听
-  // 如果你的主题有 PJAX（Stack 默认无），可保留下面代码，否则可以删除
-  const mainContainer = document.querySelector('.main-container');
-  if (mainContainer) {
-    const mo = new MutationObserver(() => {
-      observeCards();
+  function flushQueuedCards() {
+    state.queuedFrame = 0;
+    var index = 0;
+
+    state.queued.forEach(function (el) {
+      state.queued.delete(el);
+      if (el.classList.contains('observed-reveal') || el.classList.contains('reveal-visible')) return;
+
+      el.style.setProperty('--reveal-index', Math.min(index, 8));
+      el.classList.add('observed-reveal');
+      revealObserver.observe(el);
+      index++;
     });
-    mo.observe(mainContainer, { childList: true, subtree: true });
   }
+
+  function showVisibleCards() {
+    state.visibleFrame = 0;
+
+    state.visible.forEach(function (el) {
+      state.visible.delete(el);
+      el.classList.add('reveal-visible');
+
+      window.setTimeout(function () {
+        el.classList.add('reveal-done');
+      }, 760);
+    });
+  }
+
+  function observeInitialCards() {
+    observe(document);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeInitialCards, { once: true });
+  } else {
+    observeInitialCards();
+  }
+
+  var domObserver = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      mutation.addedNodes.forEach(collect);
+    });
+  });
+
+  domObserver.observe(document.body || document.documentElement, {
+    childList: true,
+    subtree: true
+  });
 })();

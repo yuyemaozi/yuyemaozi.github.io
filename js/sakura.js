@@ -1,204 +1,221 @@
-﻿/**
- * sakura.js — 动态樱花背景（性能优化版）
- *
- * 优化策略：
- * 1. 离屏 Canvas 预渲染花瓣位图，每帧用 drawImage() 替代 175 次 ellipse() 路径操作
- * 2. 粒子数从 35 → 25
- * 3. 30fps 渲染（requestAnimationFrame + 跳帧），为主线程交互预留时间片
- * 4. Canvas 元素添加 will-change: transform 触发 GPU 合成层
- */
 (function () {
   'use strict';
 
-  /* ────── 配置 ────── */
-  var MAX_PARTICLES = 25;
-  var RENDER_INTERVAL = 2;
-  var PETAL_FIXED_SIZE = 16;
-
-  var LIGHT_COLORS = ['rgba(255,183,197,0.8)', 'rgba(255,179,186,0.7)', 'rgba(255,200,210,0.7)'];
-  var DARK_COLORS  = ['rgba(255,160,175,0.6)', 'rgba(255,150,165,0.5)', 'rgba(255,180,190,0.5)'];
-
-  /* ────── 状态 ────── */
-  var canvas, ctx;
-  var particles = [];
-  var animationId = null;
-  var frameCount = 0;
-  var isDark = document.documentElement.getAttribute('data-scheme') === 'dark';
-  var petalCache = {};
-
-  /* ────── 离屏花瓣预渲染 ────── */
-  function createPetalBitmap(fillStyle) {
-    var margin = 2;
-    var r = PETAL_FIXED_SIZE;
-    var halfSize = Math.ceil(r * 1.4) + margin;
-    var bitmap = document.createElement('canvas');
-    bitmap.width = bitmap.height = halfSize * 2;
-    var bCtx = bitmap.getContext('2d');
-
-    bCtx.fillStyle = fillStyle;
-    for (var i = 0; i < 5; i++) {
-      bCtx.save();
-      bCtx.translate(halfSize, halfSize);
-      bCtx.rotate((i * 72 * Math.PI) / 180);
-      bCtx.beginPath();
-      bCtx.ellipse(0, r * 0.6, r * 0.4, r * 0.8, 0, 0, Math.PI * 2);
-      bCtx.fill();
-      bCtx.restore();
-    }
-    return bitmap;
-  }
-
-  function getOrCreatePetal(fillStyle) {
-    if (!petalCache[fillStyle]) {
-      petalCache[fillStyle] = createPetalBitmap(fillStyle);
-    }
-    return petalCache[fillStyle];
-  }
-
-  function getColors() {
-    return isDark ? DARK_COLORS : LIGHT_COLORS;
-  }
-
-  /* ────── 粒子 ────── */
-  function Sakura() {
-    this.reset(false);
-  }
-
-  Sakura.prototype.reset = function () {
-    var W = window.innerWidth;
-    this.x = Math.random() * W;
-    this.y = -10 - Math.random() * 200;
-    this.size = Math.random() * 10 + 6;
-    this.speedX = Math.random() * 1.5 - 0.75;
-    this.speedY = Math.random() * 1.5 + 1;
-    this.rotation = Math.random() * 360;
-    this.rotationSpeed = Math.random() * 2 - 1;
-    this.opacity = Math.random() * 0.6 + 0.4;
-    var colors = getColors();
-    this.colorIdx = Math.floor(Math.random() * colors.length);
-    this.color = colors[this.colorIdx];
-    this._bitmap = getOrCreatePetal(this.color);
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var state = {
+    canvas: null,
+    ctx: null,
+    flowers: [],
+    raf: 0,
+    runningHome: false,
+    buttonReady: false,
+    lastTime: 0
   };
 
-  Sakura.prototype.update = function () {
-    var W = window.innerWidth;
-    var H = window.innerHeight;
-    this.x += this.speedX + Math.sin(this.y / 80) * 0.5;
-    this.y += this.speedY;
-    this.rotation += this.rotationSpeed;
-    if (this.y > H + 20 || this.x < -30 || this.x > W + 30) {
-      this.x = Math.random() * W;
-      this.y = -10 - Math.random() * 100;
-      this.size = Math.random() * 10 + 6;
-      this.speedX = Math.random() * 1.5 - 0.75;
-      this.speedY = Math.random() * 1.5 + 1;
-      this.rotationSpeed = Math.random() * 2 - 1;
-      this.opacity = Math.random() * 0.6 + 0.4;
-      var colors = getColors();
-      this.colorIdx = Math.floor(Math.random() * colors.length);
-      this.color = colors[this.colorIdx];
-      this._bitmap = getOrCreatePetal(this.color);
-    }
-  };
+  var COLORS = ['rgba(255,183,197,.78)', 'rgba(255,179,186,.70)', 'rgba(255,205,214,.72)'];
+  var HOME_COUNT = 18;
+  var BURST_COUNT = 32;
+  var PETAL_CACHE = {};
 
-  Sakura.prototype.draw = function (ctx, bitmapHalf) {
-    var scale = this.size / PETAL_FIXED_SIZE;
-    ctx.save();
-    ctx.translate(this.x | 0, this.y | 0);
-    ctx.rotate((this.rotation * Math.PI) / 180);
-    ctx.scale(scale, scale);
-    ctx.globalAlpha = this.opacity;
-    ctx.drawImage(this._bitmap, -bitmapHalf, -bitmapHalf);
-    ctx.restore();
-  };
-
-  /* ────── Canvas 初始化 ────── */
-  function initCanvas() {
-    canvas = document.createElement('canvas');
+  function ensureCanvas() {
+    if (state.canvas) return state.canvas;
+    var canvas = document.createElement('canvas');
     canvas.id = 'sakura-canvas';
-    canvas.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:0;will-change:transform;';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:185;contain:strict;will-change:opacity;opacity:0;transition:opacity .7s ease';
     document.body.appendChild(canvas);
-    ctx = canvas.getContext('2d');
-    resizeCanvas();
+    state.canvas = canvas;
+    state.ctx = canvas.getContext('2d');
     window.addEventListener('resize', resizeCanvas, { passive: true });
+    return canvas;
   }
 
   function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    if (!state.canvas) return;
+    state.canvas.width = window.innerWidth;
+    state.canvas.height = window.innerHeight;
   }
 
-  /* ────── 动画循环（30 fps 跳帧） ────── */
-  function startAnimation() {
-    if (particles.length === 0) {
-      for (var i = 0; i < MAX_PARTICLES; i++) {
-        particles.push(new Sakura());
-      }
-    }
-
-    var bitmapHalf = null;
-    for (var k in petalCache) {
-      if (petalCache.hasOwnProperty(k)) {
-        bitmapHalf = petalCache[k].width / 2;
-        break;
-      }
-    }
-
-    function animate() {
-      frameCount++;
-      for (var i = 0; i < particles.length; i++) {
-        particles[i].update();
-      }
-      if (frameCount % RENDER_INTERVAL === 0) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (var i = 0; i < particles.length; i++) {
-          particles[i].draw(ctx, bitmapHalf);
-        }
-      }
-      animationId = requestAnimationFrame(animate);
-    }
-    animate();
+  function ensureButton() {
+    if (state.buttonReady || document.getElementById('sakura-burst-button')) return;
+    state.buttonReady = true;
+    var button = document.createElement('button');
+    button.id = 'sakura-burst-button';
+    button.type = 'button';
+    button.setAttribute('aria-label', '\u6492\u4e00\u9635\u6a31\u82b1');
+    button.innerHTML = '<span aria-hidden="true">\u82b1</span>';
+    button.addEventListener('click', burst);
+    document.body.appendChild(button);
   }
 
-  function stopAnimation() {
-    if (animationId) {
-      cancelAnimationFrame(animationId);
-      animationId = null;
+  function createFlowerBitmap(color) {
+    if (PETAL_CACHE[color]) return PETAL_CACHE[color];
+    var size = 56;
+    var half = size / 2;
+    var canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    var ctx = canvas.getContext('2d');
+
+    for (var i = 0; i < 5; i++) {
+      ctx.save();
+      ctx.translate(half, half);
+      ctx.rotate((i * 72 * Math.PI) / 180);
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.ellipse(0, 11, 5.8, 14, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
     }
-    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = 'rgba(255,230,238,.72)';
+    ctx.beginPath();
+    ctx.arc(half, half, 4.2, 0, Math.PI * 2);
+    ctx.fill();
+    PETAL_CACHE[color] = canvas;
+    return canvas;
   }
 
-  /* ────── 主题切换监听 ────── */
-  var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      if (mutation.attributeName === 'data-scheme') {
-        isDark = document.documentElement.getAttribute('data-scheme') === 'dark';
-        petalCache = {};
-        particles.forEach(function (p) {
-          p._bitmap = getOrCreatePetal(p.color);
-        });
-      }
-    });
-  });
-  observer.observe(document.documentElement, { attributes: true });
+  function makeFlower(homeMode) {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    return {
+      x: Math.random() * width,
+      y: homeMode ? -40 - Math.random() * height * 0.6 : -20 - Math.random() * 80,
+      vx: -0.35 + Math.random() * 0.9,
+      vy: homeMode ? 0.45 + Math.random() * 0.9 : 1.15 + Math.random() * 1.65,
+      size: 10 + Math.random() * 10,
+      rotate: Math.random() * Math.PI * 2,
+      vr: -0.025 + Math.random() * 0.05,
+      alpha: 0.45 + Math.random() * 0.36,
+      color: color,
+      bitmap: createFlowerBitmap(color),
+      life: homeMode ? Infinity : 220 + Math.random() * 105,
+      age: 0,
+      home: homeMode
+    };
+  }
 
-  /* ────── 页面可见性 ────── */
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) {
-      stopAnimation();
+  function drawFlower(ctx, flower) {
+    var alpha = flower.life === Infinity ? flower.alpha : Math.max(0, flower.alpha * (1 - flower.age / flower.life));
+    var scale = flower.size / 28;
+    ctx.save();
+    ctx.translate(flower.x | 0, flower.y | 0);
+    ctx.rotate(flower.rotate);
+    ctx.scale(scale, scale);
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(flower.bitmap, -28, -28);
+    ctx.restore();
+  }
+
+  function tick(timestamp) {
+    if (!state.ctx || !state.canvas) return;
+    if (!state.lastTime) state.lastTime = timestamp;
+    var delta = Math.min((timestamp - state.lastTime) / 16.67, 2.4) || 1;
+    state.lastTime = timestamp;
+
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+
+    for (var i = state.flowers.length - 1; i >= 0; i--) {
+      var flower = state.flowers[i];
+      flower.age += delta;
+      flower.x += (flower.vx + Math.sin((flower.y + flower.age) / 86) * 0.44) * delta;
+      flower.y += flower.vy * delta;
+      flower.rotate += flower.vr * delta;
+
+      if (flower.home && (flower.y > height + 42 || flower.x < -50 || flower.x > width + 50)) {
+        Object.assign(flower, makeFlower(true), { y: -30 });
+      }
+
+      if (!flower.home && (flower.age > flower.life || flower.y > height + 70)) {
+        state.flowers.splice(i, 1);
+        continue;
+      }
+
+      drawFlower(state.ctx, flower);
+    }
+
+    if (state.flowers.length || state.runningHome) {
+      state.raf = requestAnimationFrame(tick);
+      return;
+    }
+
+    state.raf = 0;
+    state.lastTime = 0;
+    state.canvas.style.opacity = '0';
+  }
+
+  function startLoop() {
+    if (!state.raf) state.raf = requestAnimationFrame(tick);
+  }
+
+  function startHome() {
+    if (reduceMotion) return;
+    var isHomeIntro = document.body.classList.contains('template-home') && !document.body.classList.contains('home-entered');
+    if (!isHomeIntro) {
+      stopHome();
+      return;
+    }
+
+    ensureCanvas();
+    state.runningHome = true;
+    state.canvas.style.opacity = '1';
+    state.flowers = state.flowers.filter(function (flower) { return !flower.home; });
+    while (state.flowers.filter(function (flower) { return flower.home; }).length < HOME_COUNT) {
+      state.flowers.push(makeFlower(true));
+    }
+    startLoop();
+  }
+
+  function stopHome() {
+    state.runningHome = false;
+    state.flowers = state.flowers.filter(function (flower) { return !flower.home; });
+    if (state.canvas) state.canvas.style.opacity = state.flowers.length ? '1' : '0';
+  }
+
+  function burst() {
+    if (reduceMotion) return;
+    ensureCanvas();
+    state.canvas.style.opacity = '1';
+    for (var i = 0; i < BURST_COUNT; i++) {
+      state.flowers.push(makeFlower(false));
+    }
+    startLoop();
+  }
+
+  function init() {
+    ensureButton();
+    if (document.body.classList.contains('template-home') && !document.body.classList.contains('home-entered')) {
+      startHome();
     } else {
-      startAnimation();
+      stopHome();
+    }
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && state.raf) {
+      cancelAnimationFrame(state.raf);
+      state.raf = 0;
+      state.lastTime = 0;
+    } else if (!document.hidden && (state.flowers.length || state.runningHome)) {
+      startLoop();
     }
   });
 
-  /* ────── 启动 ────── */
-  if (document.readyState === 'complete') {
-    initCanvas();
-    startAnimation();
+  window.BlogSakura = {
+    init: init,
+    startHome: startHome,
+    stopHome: stopHome,
+    burst: burst
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
-    window.addEventListener('load', function () {
-      initCanvas();
-      startAnimation();
-    });
+    init();
   }
 })();
