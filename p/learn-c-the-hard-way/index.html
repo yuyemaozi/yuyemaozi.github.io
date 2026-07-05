@@ -429,7 +429,31 @@
       </ol>
     </li>
     <li><a href="#八个防御性编程策略">八个防御性编程策略</a></li>
-    <li><a href="#clang介绍">clang介绍</a></li>
+    <li><a href="#动态库">动态库</a>
+      <ol>
+        <li><a href="#ctypeh-简介">ctype.h 简介</a></li>
+        <li><a href="#libex29c--被加载的共享库">libex29.c — 被加载的共享库</a></li>
+        <li><a href="#ex29c--动态加载器">ex29.c — 动态加载器</a></li>
+        <li><a href="#构建过程">构建过程</a></li>
+        <li><a href="#动态加载-api-总结">动态加载 API 总结</a></li>
+        <li><a href="#典型使用模式">典型使用模式</a></li>
+      </ol>
+    </li>
+    <li><a href="#从源码到可执行文件的完整链条">从源码到可执行文件的完整链条</a>
+      <ol>
+        <li><a href="#四个阶段总览">四个阶段总览</a></li>
+        <li><a href="#第一阶段预处理">第一阶段：预处理</a></li>
+        <li><a href="#第二阶段编译">第二阶段：编译</a></li>
+        <li><a href="#第三阶段汇编">第三阶段：汇编</a></li>
+        <li><a href="#第四阶段链接">第四阶段：链接</a>
+          <ol>
+            <li><a href="#静态链接">静态链接</a></li>
+            <li><a href="#动态链接">动态链接</a></li>
+          </ol>
+        </li>
+        <li><a href="#对应练习-29-的构建">对应练习 29 的构建</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -3247,6 +3271,8 @@
 </tr>
 </tbody>
 </table></div>
+<p><code>va_list</code> 是一个<strong>抽象类型</strong>，用来保存遍历变参所需的内部状态。在底层，它通常就是一个指针——指向当前正在处理的变参在栈上的位置。不同的平台/ABI 可能有不同的实现，但对使用者来说就是一个不透明的&quot;迭代器&quot;。</p>
+<p>声明 <code>va_list argp</code> 就是在栈上分配了一个保存这个状态的小变量（通常就是 4 或 8 字节）。</p>
 <h2 id="八个防御性编程策略">八个防御性编程策略
 </h2><p>一旦你接受了这一思维，你可以重新编写你的原型，并且遵循下面的八个策略，它们被我用于尽可能把代码变得可靠。当我编写代码的“实际”版本，我会严格按照下面的策略，并且尝试消除尽可能多的错误，以一些会破坏我软件的人的方式思考。</p>
 <p>永远不要信任输入</p>
@@ -3266,8 +3292,94 @@
 <p>质疑权威</p>
 <p>不要盲目遵循或拒绝规则。</p>
 <p>这些并不是全部，仅仅是一些核心的东西，我认为程序员应该在编程可靠的代码时专注于它们。要注意我并没有真正说明如何具体做到这些，我接下来会更细致地讲解每一条，并且会布置一些覆盖它们的练习。</p>
-<h2 id="clang介绍">clang介绍
-</h2><p><code>clang</code>是和<code>gcc</code>一样的编译器，<strong>包含了预处理器、编译器，而且会自己调用汇编器、连接器或加载器等多种工具，而不是单单的一个编译器</strong></p>
+<h2 id="动态库">动态库
+</h2><h3 id="ctypeh-简介">ctype.h 简介
+</h3><p><code>#include &lt;ctype.h&gt;</code> 是 C 标准库的头文件，提供字符分类和转换函数。<code>libex29.c</code> 中用到了其中两个：</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>toupper(ch)</code></td>
+<td>将小写字母转为大写，非字母原样返回</td>
+</tr>
+<tr>
+<td><code>tolower(ch)</code></td>
+<td>将大写字母转为小写，非字母原样返回</td>
+</tr>
+</tbody>
+</table></div>
+<p>还有一些常用的：</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isalpha(ch)</code></td>
+<td>判断是否为字母</td>
+</tr>
+<tr>
+<td><code>isdigit(ch)</code></td>
+<td>判断是否为数字</td>
+</tr>
+<tr>
+<td><code>isalnum(ch)</code></td>
+<td>判断是否为字母或数字</td>
+</tr>
+<tr>
+<td><code>isspace(ch)</code></td>
+<td>判断是否为空白字符（空格、换行、制表符等）</td>
+</tr>
+<tr>
+<td><code>isupper(ch)</code></td>
+<td>判断是否为大写字母</td>
+</tr>
+<tr>
+<td><code>islower(ch)</code></td>
+<td>判断是否为小写字母</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h3 id="libex29c--被加载的共享库">libex29.c — 被加载的共享库
+</h3><p>这是要编译成 <code>.so</code> 的库文件，没有 <code>main</code> 函数，只提供函数供别人调用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;ctype.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;dbg.h&#34;</span><span class="cp">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">print_a_message</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;A STRING: %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>打印字符串原样输出，返回 0 表示成功。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -3280,69 +3392,488 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">源文件（.c / .cpp）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">【预处理】 -E
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">预处理后的文件（.i 或 .ii）  ← 可保留（-save-temps）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">【编译】（前端 → IR）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ├── 词法/语法/语义分析
-</span></span><span class="line"><span class="cl">      ├── 生成 LLVM IR（.ll 文本 或 .bc 二进制）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">LLVM 中间表示（.ll 或 .bc）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">【优化 &amp; 代码生成】
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">汇编代码（.s）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">【汇编】（as）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">目标文件（.o 或 .obj）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">【链接】（ld）
-</span></span><span class="line"><span class="cl">      │
-</span></span><span class="line"><span class="cl">      ▼
-</span></span><span class="line"><span class="cl">可执行文件（无扩展名 或 .exe）
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">uppercase</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// BUG: \0 termination problems
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">msg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%c&#34;</span><span class="p">,</span> <span class="nf">toupper</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这里主要了解一下编译的过程：</p>
+</div><p>遍历字符串每个字符，用 <code>toupper</code> 转大写后打印。</p>
+<p>Bug：用 <code>msg[i] != '\0'</code> 判断结尾，如果传入的字符串不以 <code>\0</code> 结尾（如二进制数据），或中间嵌入了 <code>\0</code>，循环行为会出错。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">lowercase</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// BUG: \0 termination problems
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">msg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;%c&#34;</span><span class="p">,</span> <span class="nf">tolower</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">printf</span><span class="p">(</span><span class="s">&#34;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>与 <code>uppercase</code> 对称，用 <code>tolower</code> 转小写，存在同样的 bug。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">fail_on_purpose</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>故意返回 1（非零表示失败），用于演示加载器中的错误检查路径。</p>
+<hr>
+<h3 id="ex29c--动态加载器">ex29.c — 动态加载器
+</h3><p>这个程序有 <code>main</code> 函数，编译成可执行文件，运行时动态打开 <code>.so</code> 并调用其中的函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;dbg.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;dlfcn.h&gt;</span><span class="cp">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>&lt;dlfcn.h&gt;</code> 提供了 <code>dlopen</code>、<code>dlsym</code>、<code>dlclose</code>、<code>dlerror</code> 四个函数。编译时必须加 <code>-ldl</code> 链接 <code>libdl</code> 库。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="nf">int</span> <span class="p">(</span><span class="o">*</span><span class="n">lib_function</span><span class="p">)(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>定义函数指针类型 <code>lib_function</code>，指向接收 <code>const char *</code>、返回 <code>int</code> 的函数。<code>libex29.c</code> 中的四个函数都匹配这个签名。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check</span><span class="p">(</span><span class="n">argc</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="s">&#34;USAGE: ex29 libex29.so function data&#34;</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要 3 个命令行参数：</p>
+<ul>
+<li><code>argv[1]</code> = 库文件路径</li>
+<li><code>argv[2]</code> = 要调用的函数名</li>
+<li><code>argv[3]</code> = 传给函数的数据</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">lib_file</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">func_to_run</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="o">*</span><span class="n">lib</span> <span class="o">=</span> <span class="nf">dlopen</span><span class="p">(</span><span class="n">lib_file</span><span class="p">,</span> <span class="n">RTLD_NOW</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check</span><span class="p">(</span><span class="n">lib</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="s">&#34;Failed to open the library %s: %s&#34;</span><span class="p">,</span><span class="n">lib_file</span><span class="p">,</span> <span class="nf">dlerror</span><span class="p">());</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>dlopen</code> 打开 <code>.so</code> 文件，<code>RTLD_NOW</code> 表示立即解析所有符号。失败时返回 <code>NULL</code>，用 <code>dlerror()</code> 查看错误描述。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">    <span class="n">lib_function</span> <span class="n">func</span> <span class="o">=</span> <span class="nf">dlsym</span><span class="p">(</span><span class="n">lib</span><span class="p">,</span> <span class="n">func_to_run</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check</span><span class="p">(</span><span class="n">func</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">,</span> <span class="s">&#34;Did not find %s function in the library %s: %s&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="n">func_to_run</span><span class="p">,</span> <span class="n">lib_file</span><span class="p">,</span> <span class="nf">dlerror</span><span class="p">());</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>dlsym</code> 从已打开的库中按名字字符串查找函数，返回函数地址。找不到返回 <code>NULL</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">    <span class="n">rc</span> <span class="o">=</span> <span class="nf">func</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Function %s return %d for data: %s&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="n">func_to_run</span><span class="p">,</span> <span class="n">rc</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过函数指针调用库中的函数。返回非 0 触发错误。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">    <span class="n">rc</span> <span class="o">=</span> <span class="nf">dlclose</span><span class="p">(</span><span class="n">lib</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">check</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;Failed to close %s&#34;</span><span class="p">,</span> <span class="n">lib_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">error</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>dlclose</code> 关闭库句柄，释放资源。正常路径返回 0，出错路径跳到 <code>error:</code> 返回 1。</p>
+<hr>
+<h3 id="构建过程">构建过程
+</h3><p><strong>编译共享库（.so）：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 第一步：编译成目标文件，需要 -fPIC 生成位置无关代码</span>
+</span></span><span class="line"><span class="cl">gcc -c -fPIC libex29.c -o libex29.o
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 第二步：链接成共享库</span>
+</span></span><span class="line"><span class="cl">gcc -shared -o libex29.so libex29.o
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 或一步完成：</span>
+</span></span><span class="line"><span class="cl">gcc -shared -fPIC -o libex29.so libex29.c
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>编译加载器程序：</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 需要 -ldl 链接动态加载库</span>
+</span></span><span class="line"><span class="cl">gcc -Wall -g -DNDEBUG ex29.c -ldl -o ex29
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：<code>-ldl</code> 的位置在某些平台上会影响链接结果，如果报找不到符号，把 <code>-ldl</code> 放到源文件后面试试。</p>
+<p><strong>关键点：</strong></p>
+<ul>
+<li><code>-fPIC</code> — Position Independent Code，位置无关代码。共享库加载时地址不确定，所以里面的代码必须能在任意内存地址运行。不加在某些平台上链接时直接报错。</li>
+<li><code>-shared</code> — 告诉 gcc 生成共享库而不是可执行文件。</li>
+<li><code>-o libex29.so</code> — 输出的文件名。Linux 上惯例叫 <code>libXXX.so</code>，但不是强制。</li>
+</ul>
+<hr>
+<h3 id="动态加载-api-总结">动态加载 API 总结
+</h3><div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+<th>参数</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dlopen</code></td>
+<td>加载 .so</td>
+<td>(路径, 标志位)</td>
+<td><code>void *</code> 句柄 / <code>NULL</code></td>
+</tr>
+<tr>
+<td><code>dlsym</code></td>
+<td>按名查符号</td>
+<td>(句柄, 名字字符串)</td>
+<td><code>void *</code> 地址 / <code>NULL</code></td>
+</tr>
+<tr>
+<td><code>dlclose</code></td>
+<td>关闭库</td>
+<td>(句柄)</td>
+<td>0 成功 / 非0 失败</td>
+</tr>
+<tr>
+<td><code>dlerror</code></td>
+<td>取错误信息</td>
+<td>(无)</td>
+<td><code>char *</code> 描述 / <code>NULL</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="典型使用模式">典型使用模式
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">dlopen() -&gt; dlerror() 检查失败 -&gt; dlsym() -&gt; dlerror() 检查失败 -&gt; 调用函数 -&gt; dlclose()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个模式就是一个最小的 C 插件系统：<code>.so</code> 是插件，加载器在运行时按名字加载并调用，不需要重新编译就能换功能。</p>
+<h2 id="从源码到可执行文件的完整链条">从源码到可执行文件的完整链条
+</h2><h3 id="四个阶段总览">四个阶段总览
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">hello</span><span class="p">.</span><span class="n">c</span>  <span class="err">→</span>  <span class="p">[</span><span class="err">预处理</span><span class="p">]</span>  <span class="err">→</span>  <span class="p">[</span><span class="err">编译</span><span class="p">]</span>  <span class="err">→</span>  <span class="p">[</span><span class="err">汇编</span><span class="p">]</span>  <span class="err">→</span>  <span class="p">[</span><span class="err">链接</span><span class="p">]</span>  <span class="err">→</span>  <span class="n">hello</span><span class="err">（可执行文件）</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>命令</th>
+<th>输入</th>
+<th>输出</th>
+<th>文件性质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>预处理</td>
+<td><code>gcc -E</code></td>
+<td><code>.c</code></td>
+<td><code>.i</code></td>
+<td>文本（头文件已展开）</td>
+</tr>
+<tr>
+<td>编译</td>
+<td><code>gcc -S</code></td>
+<td><code>.i</code></td>
+<td><code>.s</code></td>
+<td>文本（汇编代码）</td>
+</tr>
+<tr>
+<td>汇编</td>
+<td><code>gcc -c</code></td>
+<td><code>.s</code></td>
+<td><code>.o</code></td>
+<td>二进制（机器码，有空洞）</td>
+</tr>
+<tr>
+<td>链接</td>
+<td><code>gcc</code></td>
+<td><code>.o</code> + 库</td>
+<td>可执行文件</td>
+<td>二进制（地址全填满）</td>
+</tr>
+</tbody>
+</table></div>
+<p>gcc 一条命令默认把四个阶段全做完，也可以用 <code>-E</code>、<code>-S</code>、<code>-c</code> 停在任意中间阶段观察产物。</p>
+<hr>
+<h3 id="第一阶段预处理">第一阶段：预处理
+</h3><p>命令：<code>gcc -E hello.c -o hello.i</code></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>具体内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>头文件展开</td>
+<td><code>#include &lt;stdio.h&gt;</code> 的内容全部复制进来</td>
+</tr>
+<tr>
+<td>宏替换</td>
+<td><code>#define MAX 100</code> 把代码里所有 <code>MAX</code> 替换成 <code>100</code></td>
+</tr>
+<tr>
+<td>条件编译</td>
+<td><code>#ifdef DEBUG ... #endif</code> 按条件保留或删除代码段</td>
+</tr>
+<tr>
+<td>删除注释</td>
+<td><code>//</code> 和 <code>/* */</code> 全部去掉</td>
+</tr>
+<tr>
+<td>处理 <code>#pragma</code></td>
+<td>编译器指令</td>
+</tr>
+</tbody>
+</table></div>
+<p>输入 <code>.c</code>，输出 <code>.i</code>（仍然是文本文件，但比原来大很多，因为头文件被展开了）。</p>
+<hr>
+<h3 id="第二阶段编译">第二阶段：编译
+</h3><p>命令：<code>gcc -S hello.s -o hello.s</code>（或 <code>gcc -S hello.c -o hello.s</code> 一步到汇编）</p>
+<p>把 C 代码翻译成汇编代码。内部包含多个子步骤：</p>
+<ul>
+<li><strong>词法分析</strong> — 把源码拆成 token（关键字、标识符、运算符等）</li>
+<li><strong>语法分析</strong> — 检查语法结构是否合法，构建语法树</li>
+<li><strong>语义分析</strong> — 检查类型是否匹配、变量是否已声明等</li>
+<li><strong>中间代码生成</strong> — 转成与具体 CPU 无关的中间表示</li>
+<li><strong>优化</strong> — 常量折叠（<code>2+3</code> 直接合并成 <code>5</code>）、死代码删除、循环展开等</li>
+<li><strong>目标代码生成</strong> — 生成针对具体 CPU 架构（x86、ARM 等）的汇编指令</li>
+</ul>
+<p>输入 <code>.i</code>，输出 <code>.s</code>（汇编文本文件，人类还能读）。</p>
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编译后可能变成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-asm" data-lang="asm"><span class="line"><span class="cl"><span class="nf">movl</span>    <span class="p">-</span><span class="mi">8</span><span class="p">(</span><span class="nv">%rbp</span><span class="p">),</span> <span class="nv">%eax</span>
+</span></span><span class="line"><span class="cl"><span class="nf">addl</span>    <span class="p">-</span><span class="mi">4</span><span class="p">(</span><span class="nv">%rbp</span><span class="p">),</span> <span class="nv">%eax</span>
+</span></span><span class="line"><span class="cl"><span class="nf">movl</span>    <span class="nv">%eax</span><span class="p">,</span> <span class="p">-</span><span class="mi">12</span><span class="p">(</span><span class="nv">%rbp</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h3 id="第三阶段汇编">第三阶段：汇编
+</h3><p>命令：<code>gcc -c hello.s -o hello.o</code>（或 <code>gcc -c hello.c -o hello.o</code>）</p>
+<p>把汇编代码转成机器码（二进制），生成 <code>.o</code> 目标文件。</p>
+<p><code>.o</code> 文件（ELF 格式）的内部结构：</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>段</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.text</code></td>
+<td>机器指令</td>
+</tr>
+<tr>
+<td><code>.data</code></td>
+<td>已初始化的全局/静态变量</td>
+</tr>
+<tr>
+<td><code>.bss</code></td>
+<td>未初始化的全局/静态变量的占位符</td>
+</tr>
+<tr>
+<td><code>.symtab</code></td>
+<td>符号表，记录所有函数名和全局变量名</td>
+</tr>
+<tr>
+<td><code>.rel.text</code></td>
+<td>重定位信息，标记哪些地址&quot;待填&quot;</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>.o</code> 文件里还有很多<strong>空洞</strong>——比如调用了 <code>printf</code>，但 <code>printf</code> 的实现不在这个 <code>.o</code> 里，编译器知道&quot;这里要跳转到某个地址&quot;，但具体地址还不知道，先留空。</p>
+<hr>
+<h3 id="第四阶段链接">第四阶段：链接
+</h3><p>命令：<code>gcc hello.o -o hello</code></p>
+<p>把多个 <code>.o</code> 文件和库拼成一个完整的可执行文件。链接器做的事：</p>
+<ul>
+<li><strong>地址重定位</strong> — 把所有 <code>.o</code> 的地址统一到一个地址空间</li>
+<li><strong>符号解析</strong> — 确认每个函数调用都能找到对应的定义</li>
+<li><strong>段合并</strong> — 把所有 <code>.o</code> 的 <code>.text</code> 合并成一个大 <code>.text</code>，<code>.data</code> 同理</li>
+<li><strong>生成入口点</strong> — 设置 <code>_start</code> 入口，让程序知道从哪里开始执行</li>
+</ul>
+<h4 id="静态链接">静态链接
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hello.o + libc.a  →  hello（自包含，约 800KB）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>把库函数的机器码从 <code>.a</code> 里复制到最终的可执行文件中</li>
+<li>填上所有未定的地址，所有函数的位置终于确定</li>
+<li>结果文件大，但移植简单，不依赖运行环境的库文件</li>
+</ul>
+<h4 id="动态链接">动态链接
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">hello.o + libc.so  →  hello（依赖 .so，约 16KB）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>不复制代码，只记录&quot;我需要 <code>libc.so.6</code> 里第 X 个位置的 <code>printf</code>&quot;</li>
+<li>真正地址在程序启动时由动态链接器（<code>/lib/ld-linux.so.2</code>）填入</li>
+<li>结果文件极小，但运行时必须能找到对应的 <code>.so</code></li>
+</ul>
+<hr>
+<h3 id="对应练习-29-的构建">对应练习 29 的构建
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 汇编阶段：源码 → .o</span>
+</span></span><span class="line"><span class="cl">gcc -c -fPIC libex29.c -o libex29.o
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 链接阶段：.o → .so（特殊形式的链接）</span>
+</span></span><span class="line"><span class="cl">gcc -shared -o libex29.so libex29.o
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 四个阶段一步到位</span>
+</span></span><span class="line"><span class="cl">gcc -Wall -g -DNDEBUG ex29.c -ldl -o ex29
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后一条命令中，gcc 内部自动执行了预处理 → 编译 → 汇编 → 链接全部四个阶段，使用者看不到中间产物，只拿到最终的可执行文件 <code>ex29</code>。</p>
 
 </section>
 

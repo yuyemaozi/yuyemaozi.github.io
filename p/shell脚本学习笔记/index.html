@@ -393,6 +393,32 @@
       </ol>
     </li>
     <li><a href="#shell数组">shell数组</a></li>
+    <li><a href="#实例">实例</a>
+      <ol>
+        <li><a href="#逐行解析">逐行解析</a>
+          <ol>
+            <li><a href="#echo-running-unit-tests"><code>echo &quot;Running unit tests:&quot;</code></a></li>
+            <li><a href="#for-i-in-tests_tests"><code>for i in tests/*_tests</code></a></li>
+            <li><a href="#do-与-done"><code>do</code> 与 <code>done</code></a></li>
+            <li><a href="#if-test--f-i"><code>if test -f $i</code></a></li>
+            <li><a href="#if-valgrind-i-2-teststestslog"><code>if $VALGRIND ./$i 2&gt;&gt; tests/tests.log</code></a></li>
+            <li><a href="#echo-i-pass"><code>echo $i PASS</code></a></li>
+            <li><a href="#失败分支">失败分支</a></li>
+            <li><a href="#fi"><code>fi</code></a></li>
+            <li><a href="#echo-"><code>echo &quot;&quot;</code></a></li>
+          </ol>
+        </li>
+        <li><a href="#整体执行流程">整体执行流程</a></li>
+        <li><a href="#valgrind-环境变量机制">VALGRIND 环境变量机制</a>
+          <ol>
+            <li><a href="#临时环境变量赋值">临时环境变量赋值</a></li>
+            <li><a href="#valgrind-参数说明">valgrind 参数说明</a></li>
+            <li><a href="#make-的作用"><code>$(MAKE)</code> 的作用</a></li>
+            <li><a href="#实际效果">实际效果</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -825,6 +851,206 @@
 <h2 id="shell数组">shell数组
 </h2><p>bash支持一维数组（不支持多维数组），并且没有限定数组的大小。</p>
 <p>类似于 C 语言，数组元素的下标由 0 开始编号。获取数组中的元素要利用下标，下标可以是整数或算术表达式，其值应大于或等于 0。</p>
+<h2 id="实例">实例
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Running unit tests:&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> i in tests/*_tests
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">test</span> -f <span class="nv">$i</span>
+</span></span><span class="line"><span class="cl">    <span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nv">$VALGRIND</span> ./<span class="nv">$i</span> 2&gt;&gt; tests/tests.log
+</span></span><span class="line"><span class="cl">        <span class="k">then</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="nv">$i</span> PASS
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;ERROR in test </span><span class="nv">$i</span><span class="s2">: here&#39;s tests/tests.log&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;------&#34;</span>
+</span></span><span class="line"><span class="cl">            tail tests/tests.log
+</span></span><span class="line"><span class="cl">            <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="逐行解析">逐行解析
+</h3><h4 id="echo-running-unit-tests"><code>echo &quot;Running unit tests:&quot;</code>
+</h4><p><code>echo</code> 是 shell 命令，将后面的文字原样打印到终端。这一行只是提示，运行时屏幕先显示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Running unit tests:
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="for-i-in-tests_tests"><code>for i in tests/*_tests</code>
+</h4><p><strong><code>for ... in ...</code></strong> 是循环结构。把后面列出的东西一个一个取出来，每次把当前值赋给变量 <code>i</code>，然后执行 <code>do ... done</code> 之间的代码。</p>
+<p><strong><code>tests/*_tests</code></strong> 中的 <code>*</code> 是通配符。Shell 在执行前会把模式展开成实际文件名列表。如果 <code>tests/</code> 下有 <code>foo_tests</code> 和 <code>bar_tests</code>，展开后等价于：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> i in tests/foo_tests tests/bar_tests
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>整体含义：把 <code>tests/</code> 下所有以 <code>_tests</code> 结尾的文件名，挨个放进变量 <code>i</code>，对每个文件执行一次循环体。</p>
+<h4 id="do-与-done"><code>do</code> 与 <code>done</code>
+</h4><p><code>do</code> 标记循环体开始，<code>done</code> 标记结束。两者之间的代码针对 <code>for</code> 取出的每一个值执行一次。</p>
+<h4 id="if-test--f-i"><code>if test -f $i</code>
+</h4><p><strong><code>$i</code></strong> — <code>$</code> 取变量里的内容。如 <code>i</code> 中存的是 <code>tests/foo_tests</code>，<code>$i</code> 被替换成 <code>tests/foo_tests</code>。</p>
+<p><strong><code>test -f</code></strong> — <code>test</code> 是条件检查命令。<code>-f</code> 检查后面的路径是否是一个<strong>普通文件</strong>（不是目录等）。</p>
+<p>合起来：<strong>如果 <code>$i</code> 是真实存在的普通文件，才执行后续代码。</strong> 保护机制，避免通配符意外匹配到目录。</p>
+<h4 id="if-valgrind-i-2-teststestslog"><code>if $VALGRIND ./$i 2&gt;&gt; tests/tests.log</code>
+</h4><p>核心逻辑，拆成几块：</p>
+<p><strong><code>$VALGRIND</code></strong> — 变量取值。正常 <code>make tests</code> 时 <code>VALGRIND</code> 未设置，展开为空。<code>make valgrind</code> 时它被设为 <code>valgrind --log-file=/tmp/valgrind-%p.log</code>，测试就在 valgrind 监控下运行。</p>
+<p><strong><code>./$i</code></strong> — 执行当前目录下的测试程序。当前目录一般不在 <code>PATH</code> 中，所以必须加 <code>./</code> 前缀。</p>
+<p><strong><code>2&gt;&gt; tests/tests.log</code></strong> — <code>2</code> 是标准错误输出（stderr），<code>&gt;&gt;</code> 是追加重定向。合起来：<strong>把测试程序的标准错误输出追加到 <code>tests/tests.log</code></strong>，不在终端显示。</p>
+<p><strong><code>if ... then ... else ... fi</code></strong> — 检查命令退出码。0（成功）走 <code>then</code>，非 0（失败）走 <code>else</code>。整体含义：<strong>运行测试，检查退出码，通过则打印 PASS，否则打印错误并退出。</strong></p>
+<h4 id="echo-i-pass"><code>echo $i PASS</code>
+</h4><p>测试通过时输出。如变量 <code>i</code> 是 <code>tests/foo_tests</code>，显示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tests/foo_tests PASS
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="失败分支">失败分支
+</h4><p>测试返回非 0 退出码时依次执行：</p>
+<ol>
+<li><code>echo &quot;ERROR in test $i: here's tests/tests.log&quot;</code> — 提示哪个测试失败</li>
+<li><code>echo &quot;------&quot;</code> — 分隔线</li>
+<li><code>tail tests/tests.log</code> — 显示日志文件最后 10 行，让用户看到具体错误</li>
+<li><code>exit 1</code> — 结束脚本并返回退出码 1（非 0 表示失败），make 看到后会停止后续操作</li>
+</ol>
+<h4 id="fi"><code>fi</code>
+</h4><p><code>fi</code> 是 <code>if</code> 倒过来写，结束 <code>if</code> 代码块。</p>
+<h4 id="echo-"><code>echo &quot;&quot;</code>
+</h4><p>打印空行，让输出末尾整洁一点。</p>
+<h3 id="整体执行流程">整体执行流程
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">打印 &#34;Running unit tests:&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">对于 tests/ 下每个以 _tests 结尾的东西：
+</span></span><span class="line"><span class="cl">    如果是普通文件（不是目录等）：
+</span></span><span class="line"><span class="cl">        运行它（可能用 valgrind 包裹）
+</span></span><span class="line"><span class="cl">        错误信息记入 tests/tests.log（不显示在屏幕）
+</span></span><span class="line"><span class="cl">        如果退出码是 0（测试通过）：
+</span></span><span class="line"><span class="cl">            打印 &#34;文件名 PASS&#34;
+</span></span><span class="line"><span class="cl">        否则（测试失败）：
+</span></span><span class="line"><span class="cl">            打印 &#34;ERROR in 文件名: here&#39;s tests/tests.log&#34;
+</span></span><span class="line"><span class="cl">            打印 &#34;------&#34;
+</span></span><span class="line"><span class="cl">            打印日志文件最后几行
+</span></span><span class="line"><span class="cl">            退出脚本，返回错误码 1（告诉 make 出错了）
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="valgrind-环境变量机制">VALGRIND 环境变量机制
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nf">valgrind</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">VALGRIND</span><span class="o">=</span><span class="s2">&#34;valgrind --log-file=/tmp/valgrind-%p.log&#34;</span> <span class="k">$(</span>MAKE<span class="k">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="临时环境变量赋值">临时环境变量赋值
+</h4><p><code>VAR_NAME=&quot;值&quot; 命令</code> 是 Shell 的临时环境变量赋值。执行命令时临时设置变量，命令结束后变量自动消失。</p>
+<h4 id="valgrind-参数说明">valgrind 参数说明
+</h4><p>Valgrind 是 Linux 内存调试工具，检测内存泄漏、use-after-free、数组越界等问题。</p>
+<p><code>--log-file=/tmp/valgrind-%p.log</code> 指定检测结果写入文件：</p>
+<ul>
+<li><code>/tmp/</code> — 系统临时目录，重启后清空</li>
+<li><code>%p</code> — 占位符，valgrind 替换为当前进程的 PID，避免多测试输出互相覆盖</li>
+</ul>
+<h4 id="make-的作用"><code>$(MAKE)</code> 的作用
+</h4><p>make 的内置变量，值为 <code>make</code> 命令本身。使用它可保留父 make 的并行参数 <code>-j</code> 等特殊状态。</p>
+<h4 id="实际效果">实际效果
+</h4><p>运行 <code>make valgrind</code> 后 Makefile 递归调用自身，<code>runtests.sh</code> 看到 <code>VALGRIND</code> 不为空，每个测试实际变为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">valgrind --log-file<span class="o">=</span>/tmp/valgrind-%p.log ./tests/foo_tests 2&gt;&gt; tests/tests.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>检测结果写入 <code>/tmp/valgrind-xxx.log</code>，可通过以下查看：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat /tmp/valgrind-*.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>典型泄漏报告示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">==1234== HEAP SUMMARY:
+</span></span><span class="line"><span class="cl">==1234==     in use at exit: 42 bytes in 3 blocks
+</span></span><span class="line"><span class="cl">==1234==   total heap usage: 5 allocs, 2 frees, 1,034 bytes allocated
+</span></span><span class="line"><span class="cl">==1234==
+</span></span><span class="line"><span class="cl">==1234== 42 bytes in 3 blocks are definitely lost in loss record 1 of 1
+</span></span><span class="line"><span class="cl">==1234==    at 0x4A06A18: malloc (vg_replace_malloc.c:236)
+</span></span><span class="line"><span class="cl">==1234==    by 0x4005E4: create_person (person.c:12)
+</span></span><span class="line"><span class="cl">==1234==    by 0x40061A: main (test_person.c:8)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>表示 <code>person.c:12</code> 中 <code>malloc</code> 分配的内存未释放。</p>
 
 </section>
 
