@@ -153,10 +153,19 @@
     if (!state.raf) state.raf = requestAnimationFrame(tick);
   }
 
+  function isHomeIntroActive() {
+    var path = window.location.pathname.replace(/\/+$/, '');
+    var isSiteRoot = path === '' || path === '/index.html';
+    return isSiteRoot &&
+      document.body.classList.contains('template-home') &&
+      document.body.classList.contains('home-hero-active') &&
+      !document.body.classList.contains('home-entered') &&
+      !!document.querySelector('.home-hero');
+  }
+
   function startHome() {
     if (reduceMotion) return;
-    var isHomeIntro = document.body.classList.contains('template-home') && !document.body.classList.contains('home-entered');
-    if (!isHomeIntro) {
+    if (!isHomeIntroActive()) {
       stopHome();
       return;
     }
@@ -174,7 +183,17 @@
   function stopHome() {
     state.runningHome = false;
     state.flowers = state.flowers.filter(function (flower) { return !flower.home; });
-    if (state.canvas) state.canvas.style.opacity = state.flowers.length ? '1' : '0';
+    if (!state.flowers.length && state.raf) {
+      cancelAnimationFrame(state.raf);
+      state.raf = 0;
+      state.lastTime = 0;
+    }
+    if (state.canvas) {
+      if (!state.flowers.length && state.ctx) {
+        state.ctx.clearRect(0, 0, state.canvas.width, state.canvas.height);
+      }
+      state.canvas.style.opacity = state.flowers.length ? '1' : '0';
+    }
   }
 
   function burst() {
@@ -189,7 +208,7 @@
 
   function init() {
     ensureButton();
-    if (document.body.classList.contains('template-home') && !document.body.classList.contains('home-entered')) {
+    if (isHomeIntroActive()) {
       startHome();
     } else {
       stopHome();
