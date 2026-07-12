@@ -1,1606 +1,229 @@
-<!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="shell脚本学习 前言 在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记">
-<title>Shell脚本学习笔记</title>
-
-<link rel='canonical' href='https://unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
-
-<link rel="stylesheet" href="/scss/style.min.1105f1e314d54456d7ebcc1048f12dac24d4be727cf0a0a5a2b1be57d33aa957.css"><meta property='og:title' content="Shell脚本学习笔记">
-<meta property='og:description' content="shell脚本学习 前言 在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记">
-<meta property='og:url' content='https://unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
-<meta property='og:site_name' content='杀不死的坏蛋-Unkillable Villain'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-05-30T16:02:47&#43;08:00'/><meta property='article:modified_time' content='2026-05-30T16:02:47&#43;08:00'/>
-<meta name="twitter:title" content="Shell脚本学习笔记">
-<meta name="twitter:description" content="shell脚本学习 前言 在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记">
-  
-
-<script>
-(function () {
-  'use strict';
-
-  const selector = [
-    '.article-list article',
-    '.article-list--compact article',
-    '.article-list--tile article',
-    '.archives-group article',
-    '.archives-group .article-time--item'
-  ].join(', ');
-
-  if (window.__blogReveal && typeof window.__blogReveal.observe === 'function') {
-    window.__blogReveal.observe(document);
-    return;
-  }
-
-  const state = window.__blogReveal = {
-    queued: new Set(),
-    visible: new Set(),
-    observe,
-    queuedFrame: 0,
-    visibleFrame: 0
-  };
-
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      state.visible.add(entry.target);
-      revealObserver.unobserve(entry.target);
-    });
-
-    if (!state.visibleFrame) {
-      state.visibleFrame = requestAnimationFrame(showVisibleCards);
-    }
-  }, {
-    threshold: 0.08,
-    rootMargin: '0px 0px -80px 0px'
-  });
-
-  function collect(root) {
-    if (!root || (root.nodeType !== 1 && root.nodeType !== 9)) return;
-
-    if (root.nodeType === 1 && root.matches(selector)) {
-      state.queued.add(root);
-    }
-
-    root.querySelectorAll?.(selector).forEach((el) => {
-      state.queued.add(el);
-    });
-
-    if (!state.queuedFrame) {
-      state.queuedFrame = requestAnimationFrame(flushQueuedCards);
-    }
-  }
-
-  function observe(root) {
-    collect(root || document);
-  }
-
-  function flushQueuedCards() {
-    state.queuedFrame = 0;
-    let index = 0;
-
-    state.queued.forEach((el) => {
-      state.queued.delete(el);
-      if (el.classList.contains('observed-reveal') || el.classList.contains('reveal-visible')) return;
-
-      el.style.setProperty('--reveal-index', Math.min(index, 8));
-      el.classList.add('observed-reveal');
-      revealObserver.observe(el);
-      index++;
-    });
-  }
-
-  function showVisibleCards() {
-    state.visibleFrame = 0;
-
-    state.visible.forEach((el) => {
-      state.visible.delete(el);
-      el.classList.add('reveal-visible');
-
-      window.setTimeout(() => {
-        el.classList.add('reveal-done');
-      }, 760);
-    });
-  }
-
-  function observeInitialCards() {
-    observe(document);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', observeInitialCards, { once: true });
-  } else {
-    observeInitialCards();
-  }
-
-  const domObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach(collect);
-    });
-  });
-
-  domObserver.observe(document.body || document.documentElement, {
-    childList: true,
-    subtree: true
-  });
-})();
-</script>
-
-    </head>
-    <body class="
-    article-page
-    ">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            localStorage.setItem(colorSchemeKey, "dark");
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header>
-        
-            
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/avatar_hu13856131942767222513.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-                </a>
-                
-                    <span class="emoji">🤔</span>
-                
-            </figure>
-            
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">杀不死的坏蛋-Unkillable Villain</a></h1>
-            <h2 class="site-description">欢迎来到我的个人博客，目前在校大学生一枚，这个网站我用来分享个人生活和学习情况。数学，电子爱好者（菜鸟），希望和大家一块交流学习。</h2>
-        </div>
-    </header><ol class="menu-social">
-            
-                <li>
-                    <a 
-                        href='https://github.com/yuyemaozi'
-                        target="_blank"
-                        title="GitHub"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
-
-
-
-                        
-                    </a>
-                </li>
-            
-        </ol><ol class="menu" id="main-menu">
-        
-        
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>
-
-
-
-                
-                <span>主页</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E5%85%B3%E4%BA%8E/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                
-                <span>关于</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
-</svg>
-
-
-
-                
-                <span>归档</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
-
-
-
-                
-                <span>搜索</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
-</svg>
-
-
-
-                
-                <span>友情链接</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/tasks/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checklist" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" />
-  <path d="M14 19l2 2l4 -4" />
-  <path d="M9 8h4" />
-  <path d="M9 12h2" />
-</svg>
-                
-                <span>每日任务</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/rants/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-messages" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
-  <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
-</svg>
-
-
-
-                
-                <span>每日一槽</span>
-            </a>
-        </li>
-        
-        <li class="menu-bottom-section">
-            <ol class="menu">
-
-                
-            </ol>
-        </li>
-    </ol>
-</aside>
-
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">目录</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#shell变量">shell变量</a>
-      <ol>
-        <li><a href="#使用变量">使用变量</a></li>
-        <li><a href="#只读变量">只读变量</a></li>
-        <li><a href="#删除变量">删除变量</a></li>
-        <li><a href="#变量类型">变量类型</a></li>
-      </ol>
-    </li>
-    <li><a href="#shell字符串">shell字符串</a>
-      <ol>
-        <li><a href="#单引号">单引号</a></li>
-        <li><a href="#双引号">双引号</a></li>
-        <li><a href="#拼接字符串">拼接字符串</a></li>
-        <li><a href="#获取字符串长度">获取字符串长度</a></li>
-        <li><a href="#提取子字符串">提取子字符串</a></li>
-        <li><a href="#查找子字符串">查找子字符串</a></li>
-      </ol>
-    </li>
-    <li><a href="#shell数组">shell数组</a></li>
-    <li><a href="#实例">实例</a>
-      <ol>
-        <li><a href="#逐行解析">逐行解析</a>
-          <ol>
-            <li><a href="#echo-running-unit-tests"><code>echo &quot;Running unit tests:&quot;</code></a></li>
-            <li><a href="#for-i-in-tests_tests"><code>for i in tests/*_tests</code></a></li>
-            <li><a href="#do-与-done"><code>do</code> 与 <code>done</code></a></li>
-            <li><a href="#if-test--f-i"><code>if test -f $i</code></a></li>
-            <li><a href="#if-valgrind-i-2-teststestslog"><code>if $VALGRIND ./$i 2&gt;&gt; tests/tests.log</code></a></li>
-            <li><a href="#echo-i-pass"><code>echo $i PASS</code></a></li>
-            <li><a href="#失败分支">失败分支</a></li>
-            <li><a href="#fi"><code>fi</code></a></li>
-            <li><a href="#echo-"><code>echo &quot;&quot;</code></a></li>
-          </ol>
-        </li>
-        <li><a href="#整体执行流程">整体执行流程</a></li>
-        <li><a href="#valgrind-环境变量机制">VALGRIND 环境变量机制</a>
-          <ol>
-            <li><a href="#临时环境变量赋值">临时环境变量赋值</a></li>
-            <li><a href="#valgrind-参数说明">valgrind 参数说明</a></li>
-            <li><a href="#make-的作用"><code>$(MAKE)</code> 的作用</a></li>
-            <li><a href="#实际效果">实际效果</a></li>
-          </ol>
-        </li>
-      </ol>
-    </li>
-  </ol>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
-            <main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/c%E8%AF%AD%E8%A8%80/" style="background-color: #2a9d8f; color: #fff;">
-                C语言
-            </a>
-        
-            <a href="/categories/%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF/" >
-                一生一芯
-            </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Shell脚本学习笔记</a>
-        </h2>
-    
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">2026-05-30</time>
-            </div>
-        
-
-        
-    </footer>
-    
-
-    
-</div>
-
-</header>
-
-    <section class="article-content">
-    
-    
-    <h1 id="shell脚本学习">shell脚本学习
-</h1><h2 id="前言">前言
-</h2><p>在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记录一些shell的使用技巧（也许）</p>
-<p>学习资料来自<a class="link" href="https://www.runoob.com/linux/linux-shell-variable.html"  target="_blank" rel="noopener"
-    >Shell 变量 | 菜鸟教程</a></p>
-<h2 id="shell变量">shell变量
-</h2><p>注意，变量名和等号之间不能有空格，这可能和你熟悉的所有编程语言都不一样</p>
-<p>变量名的命名须遵循如下规则：</p>
-<ul>
-<li><strong>只包含字母、数字和下划线：</strong> 变量名可以包含字母（大小写敏感）、数字和下划线 <strong>_</strong>，不能包含其他特殊字符。</li>
-<li><strong>不能以数字开头：</strong> 变量名不能以数字开头，但可以包含数字。</li>
-<li><strong>避免使用 Shell 关键字：</strong> 不要使用Shell的关键字（例如 if、then、else、fi、for、while 等）作为变量名，以免引起混淆。</li>
-<li><strong>使用大写字母表示常量：</strong> 习惯上，常量的变量名通常使用大写字母，例如 <strong>PI=3.14</strong>。</li>
-<li><strong>避免使用特殊符号：</strong> 尽量避免在变量名中使用特殊符号，因为它们可能与 Shell 的语法产生冲突。</li>
-<li><strong>避免使用空格：</strong> 变量名中不应该包含空格，因为空格通常用于分隔命令和参数。</li>
-</ul>
-<p>有效的变量命名：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">RUNOOB</span><span class="o">=</span><span class="s2">&#34;www.runoob.com&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="s2">&#34;/bin/&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">_var</span><span class="o">=</span><span class="s2">&#34;123&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">var2</span><span class="o">=</span><span class="s2">&#34;abc&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>无效的变量命名：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 避免使用if作为变量名</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="o">=</span><span class="s2">&#34;some_value&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 避免使用 $ 等特殊符号</span>
-</span></span><span class="line"><span class="cl">variable_with_$<span class="o">=</span><span class="m">42</span>
-</span></span><span class="line"><span class="cl">?var<span class="o">=</span><span class="m">123</span>
-</span></span><span class="line"><span class="cl">user*name<span class="o">=</span>runoob
-</span></span><span class="line"><span class="cl"><span class="c1"># 避免空格</span>
-</span></span><span class="line"><span class="cl">variable with <span class="nv">space</span><span class="o">=</span><span class="s2">&#34;value&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="使用变量">使用变量
-</h3><p>使用一个定义过的变量，只要在变量名前面加美元符号即可，如：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">your_name</span><span class="o">=</span><span class="s2">&#34;qinjx&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$your_name</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="si">${</span><span class="nv">your_name</span><span class="si">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>变量名外面的花括号是可选的，加不加都行，加花括号是为了帮助解释器识别变量的边界，比如下面这种情况：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> skill in Ada Coffe Action Java<span class="p">;</span> <span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;I am good at </span><span class="si">${</span><span class="nv">skill</span><span class="si">}</span><span class="s2">Script&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>如果不给skill变量加花括号，写成echo &ldquo;I am good at $skillScript&rdquo;，解释器就会把$skillScript当成一个变量（其值为空），代码执行结果就不是我们期望的样子了。</p>
-<p>推荐给所有变量加上花括号，这是个好的编程习惯。</p>
-<p>第二次赋值的时候不能写第二次赋值的时候不能写<code>$your_name=&quot;alibaba&quot;，使用变量的时候才加美元符（$）。</code></p>
-<h3 id="只读变量">只读变量
-</h3><p>使用 readonly 命令可以将变量定义为只读变量，只读变量的值不能被改变。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">myUrl</span><span class="o">=</span><span class="s2">&#34;https://www.google.com&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">readonly</span> myUrl
-</span></span><span class="line"><span class="cl"><span class="nv">myUrl</span><span class="o">=</span><span class="s2">&#34;https://www.runoob.com&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>运行脚本，结果如下：</p>
-<p><code>/bin/sh: NAME: This variable is read only.</code></p>
-<h3 id="删除变量">删除变量
-</h3><p>使用 unset 命令可以删除变量。语法：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="nv">myUrl</span><span class="o">=</span><span class="s2">&#34;https://www.runoob.com&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">unset</span> myUrl
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$myUrl</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>以上实例执行将没有任何输出。</p>
-<h3 id="变量类型">变量类型
-</h3><p><strong>字符串变量：</strong> 在 Shell中，变量通常被视为字符串。你可以使用单引号 <strong>&rsquo;</strong> 或双引号 <strong>&quot;</strong> 来定义字符串</p>
-<p><strong>整数变量</strong>： 在一些Shell中，你可以使用 <strong>declare</strong> 或 <strong>typeset</strong> 命令来声明整数变量。</p>
-<p>这样的变量只包含整数值，例如：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">declare</span> -i <span class="nv">my_integer</span><span class="o">=</span><span class="m">42</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>这样的声明告诉 Shell 将 my_integer 视为整数，如果尝试将非整数值赋给它，Shell会尝试将其转换为整数。</p>
-<p><strong>数组变量：</strong> Shell 也支持数组，允许你在一个变量中存储多个值。</p>
-<p>数组可以是整数索引数组或关联数组，以下是一个简单的整数索引数组的例子：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">declare</span> -a my_array
-</span></span><span class="line"><span class="cl"><span class="nv">my_array</span><span class="o">=(</span> <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span> <span class="m">5</span> <span class="o">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 可以不显示申明，直接my_array=( 1 2 3 4 5 )</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>或者关联数组：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">declare</span> -A associative_array
-</span></span><span class="line"><span class="cl">associative_array<span class="o">[</span><span class="s2">&#34;name&#34;</span><span class="o">]=</span><span class="s2">&#34;John&#34;</span>
-</span></span><span class="line"><span class="cl">associative_array<span class="o">[</span><span class="s2">&#34;age&#34;</span><span class="o">]=</span><span class="m">30</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="table-wrapper"><table>
-<thead>
-<tr>
-<th style="text-align:left">特性</th>
-<th style="text-align:left">普通数组（Indexed Array）</th>
-<th style="text-align:left">关联数组（Associative Array）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><strong>索引（键）类型</strong></td>
-<td style="text-align:left"><strong>非负整数</strong>（0, 1, 2, &hellip;）</td>
-<td style="text-align:left"><strong>任意字符串</strong>（包括数字字符串）</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>声明方式</strong></td>
-<td style="text-align:left"><code>arr=(value1 value2)</code> 或 <code>declare -a arr</code></td>
-<td style="text-align:left"><code>declare -A arr</code>（必须显式声明）</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>赋值示例</strong></td>
-<td style="text-align:left"><code>arr[0]=&quot;hello&quot;</code></td>
-<td style="text-align:left"><code>arr[&quot;name&quot;]=&quot;John&quot;</code></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>长度获取</strong></td>
-<td style="text-align:left"><code>${#arr[@]}</code></td>
-<td style="text-align:left"><code>${#arr[@]}</code>（同样返回键值对个数）</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>遍历所有元素</strong></td>
-<td style="text-align:left"><code>for i in &quot;${arr[@]}&quot;; do ...</code></td>
-<td style="text-align:left"><code>for key in &quot;${!arr[@]}&quot;; do ...</code></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>键列表获取</strong></td>
-<td style="text-align:left">不适用（或 <code>${!arr[@]}</code> 返回索引）</td>
-<td style="text-align:left"><code>${!arr[@]}</code> 返回所有键</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>内存/性能</strong></td>
-<td style="text-align:left">更紧凑，访问快</td>
-<td style="text-align:left">哈希表实现，稍占更多内存，访问稍慢</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>有序性</strong></td>
-<td style="text-align:left">按整数索引顺序存储</td>
-<td style="text-align:left">顺序依赖于内部哈希算法实际上，Bash 的关联数组遍历顺序是<strong>基于哈希顺序，不保证与插入顺序一致</strong>；而普通数组保证按索引升序。</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>适用场景</strong></td>
-<td style="text-align:left">列表、序列、固定偏移的数据</td>
-<td style="text-align:left">映射、字典、配置项、需要字符串键的查找表</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>环境变量：</strong> 这些是由操作系统或用户设置的特殊变量，用于配置 Shell 的行为和影响其执行环境。</p>
-<p>例如，PATH 变量包含了操作系统搜索可执行文件的路径：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$PATH</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>特殊变量：</strong> 有一些特殊变量在 Shell 中具有特殊含义，例如 <strong>$0</strong> 表示脚本的名称，<strong>$1</strong>, <strong>$2</strong>, 等表示脚本的参数。</p>
-<p><strong>$#<strong>表示传递给脚本的参数数量，</strong>$?</strong> 表示上一个命令的退出状态等。</p>
-<h2 id="shell字符串">shell字符串
-</h2><h3 id="单引号">单引号
-</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">str</span><span class="o">=</span><span class="s1">&#39;this is a string&#39;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>单引号字符串的限制：</p>
-<ul>
-<li>单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；</li>
-<li>单引号字符串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用。</li>
-</ul>
-<h3 id="双引号">双引号
-</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">your_name</span><span class="o">=</span><span class="s2">&#34;runoob&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">str</span><span class="o">=</span><span class="s2">&#34;Hello, I know you are \&#34;</span><span class="nv">$your_name</span><span class="s2">\&#34;! \n&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> -e <span class="nv">$str</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>输出结果为：</p>
-<p><code>Hello, I know you are &quot;runoob&quot;! </code></p>
-<p>双引号的优点：</p>
-<ul>
-<li>双引号里可以有变量</li>
-<li>双引号里可以出现转义字符</li>
-</ul>
-<h3 id="拼接字符串">拼接字符串
-</h3><p>在 Bash 中，字符串拼接非常简单：<strong>直接并排写在一起</strong>。不需要像其他语言那样使用 <code>+</code> 或 <code>.</code> 运算符。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">your_name</span><span class="o">=</span><span class="s2">&#34;runoob&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># 使用双引号拼接</span>
-</span></span><span class="line"><span class="cl"><span class="nv">greeting</span><span class="o">=</span><span class="s2">&#34;hello, &#34;</span><span class="nv">$your_name</span><span class="s2">&#34; !&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">greeting_1</span><span class="o">=</span><span class="s2">&#34;hello, </span><span class="si">${</span><span class="nv">your_name</span><span class="si">}</span><span class="s2"> !&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$greeting</span>  <span class="nv">$greeting_1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 使用单引号拼接</span>
-</span></span><span class="line"><span class="cl"><span class="nv">greeting_2</span><span class="o">=</span><span class="s1">&#39;hello, &#39;</span><span class="nv">$your_name</span><span class="s1">&#39; !&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">greeting_3</span><span class="o">=</span><span class="s1">&#39;hello, ${your_name} !&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$greeting_2</span>  <span class="nv">$greeting_3</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>输出结果为：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hello, runoob ! hello, runoob !
-</span></span><span class="line"><span class="cl">hello, runoob ! hello, <span class="si">${</span><span class="nv">your_name</span><span class="si">}</span> !
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="获取字符串长度">获取字符串长度
-</h3><p>使用 <code>${#变量名}</code> 可以快速获得字符串的长度（字符数）。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">string</span><span class="o">=</span><span class="s2">&#34;abcd&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="si">${#</span><span class="nv">string</span><span class="si">}</span>   <span class="c1"># 输出 4</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>变量为字符串时，<strong>${#string}</strong> 等价于 <strong>${#string[0]}</strong>:</p>
-<h3 id="提取子字符串">提取子字符串
-</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">string</span><span class="o">=</span><span class="s2">&#34;runoob is a great site&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="si">${</span><span class="nv">string</span><span class="p">:</span><span class="nv">1</span><span class="p">:</span><span class="nv">4</span><span class="si">}</span> <span class="c1"># 输出 unoo</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>注意</strong>：第一个字符的索引值为 <strong>0</strong>。</p>
-<h3 id="查找子字符串">查找子字符串
-</h3><p>查找字符 <strong>i</strong> 或 <strong>o</strong> 的位置(哪个字母先出现就计算哪个)：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">string</span><span class="o">=</span><span class="s2">&#34;runoob is a great site&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="sb">`</span>expr index <span class="s2">&#34;</span><span class="nv">$string</span><span class="s2">&#34;</span> io<span class="sb">`</span>  <span class="c1"># 输出 4</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>注意：</strong> 以上脚本中 <strong>`</strong> 是反引号，而不是单引号 <strong>&rsquo;</strong>，不要看错了哦。</p>
-<p>反引号 <code>...</code> 用于命令替换，将 <code>expr</code> 的输出赋值给 <code>echo</code></p>
-<ul>
-<li>
-<p><code>expr index</code> 的参数：第一个是源字符串 <code>&quot;runoob is a great site&quot;</code>，第二个是字符集 <code>&quot;io&quot;</code>（包含两个字符 <code>i</code> 和 <code>o</code>）。</p>
-</li>
-<li>
-<p><code>expr index</code> 会<strong>逐个字符</strong>扫描源字符串，一旦遇到与字符集中<strong>任意字符</strong>匹配的字符，就返回该字符的位置（从 1 计数）。</p>
-</li>
-<li>
-<p>源字符串 <code>&quot;runoob is a great site&quot;</code>：</p>
-<ul>
-<li>位置 1: <code>r</code> → 不是 <code>i</code> 或 <code>o</code></li>
-<li>位置 2: <code>u</code> → 不是</li>
-<li>位置 3: <code>n</code> → 不是</li>
-<li>位置 4: <code>o</code> → <strong>是</strong> <code>o</code>，匹配字符集 <code>&quot;io&quot;</code>。</li>
-</ul>
-</li>
-<li>
-<p>因此返回 <strong>4</strong>。</p>
-</li>
-</ul>
-<h2 id="shell数组">shell数组
-</h2><p>bash支持一维数组（不支持多维数组），并且没有限定数组的大小。</p>
-<p>类似于 C 语言，数组元素的下标由 0 开始编号。获取数组中的元素要利用下标，下标可以是整数或算术表达式，其值应大于或等于 0。</p>
-<h2 id="实例">实例
-</h2><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Running unit tests:&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">for</span> i in tests/*_tests
-</span></span><span class="line"><span class="cl"><span class="k">do</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">test</span> -f <span class="nv">$i</span>
-</span></span><span class="line"><span class="cl">    <span class="k">then</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nv">$VALGRIND</span> ./<span class="nv">$i</span> 2&gt;&gt; tests/tests.log
-</span></span><span class="line"><span class="cl">        <span class="k">then</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="nv">$i</span> PASS
-</span></span><span class="line"><span class="cl">        <span class="k">else</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;ERROR in test </span><span class="nv">$i</span><span class="s2">: here&#39;s tests/tests.log&#34;</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">echo</span> <span class="s2">&#34;------&#34;</span>
-</span></span><span class="line"><span class="cl">            tail tests/tests.log
-</span></span><span class="line"><span class="cl">            <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">done</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="逐行解析">逐行解析
-</h3><h4 id="echo-running-unit-tests"><code>echo &quot;Running unit tests:&quot;</code>
-</h4><p><code>echo</code> 是 shell 命令，将后面的文字原样打印到终端。这一行只是提示，运行时屏幕先显示：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Running unit tests:
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="for-i-in-tests_tests"><code>for i in tests/*_tests</code>
-</h4><p><strong><code>for ... in ...</code></strong> 是循环结构。把后面列出的东西一个一个取出来，每次把当前值赋给变量 <code>i</code>，然后执行 <code>do ... done</code> 之间的代码。</p>
-<p><strong><code>tests/*_tests</code></strong> 中的 <code>*</code> 是通配符。Shell 在执行前会把模式展开成实际文件名列表。如果 <code>tests/</code> 下有 <code>foo_tests</code> 和 <code>bar_tests</code>，展开后等价于：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> i in tests/foo_tests tests/bar_tests
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>整体含义：把 <code>tests/</code> 下所有以 <code>_tests</code> 结尾的文件名，挨个放进变量 <code>i</code>，对每个文件执行一次循环体。</p>
-<h4 id="do-与-done"><code>do</code> 与 <code>done</code>
-</h4><p><code>do</code> 标记循环体开始，<code>done</code> 标记结束。两者之间的代码针对 <code>for</code> 取出的每一个值执行一次。</p>
-<h4 id="if-test--f-i"><code>if test -f $i</code>
-</h4><p><strong><code>$i</code></strong> — <code>$</code> 取变量里的内容。如 <code>i</code> 中存的是 <code>tests/foo_tests</code>，<code>$i</code> 被替换成 <code>tests/foo_tests</code>。</p>
-<p><strong><code>test -f</code></strong> — <code>test</code> 是条件检查命令。<code>-f</code> 检查后面的路径是否是一个<strong>普通文件</strong>（不是目录等）。</p>
-<p>合起来：<strong>如果 <code>$i</code> 是真实存在的普通文件，才执行后续代码。</strong> 保护机制，避免通配符意外匹配到目录。</p>
-<h4 id="if-valgrind-i-2-teststestslog"><code>if $VALGRIND ./$i 2&gt;&gt; tests/tests.log</code>
-</h4><p>核心逻辑，拆成几块：</p>
-<p><strong><code>$VALGRIND</code></strong> — 变量取值。正常 <code>make tests</code> 时 <code>VALGRIND</code> 未设置，展开为空。<code>make valgrind</code> 时它被设为 <code>valgrind --log-file=/tmp/valgrind-%p.log</code>，测试就在 valgrind 监控下运行。</p>
-<p><strong><code>./$i</code></strong> — 执行当前目录下的测试程序。当前目录一般不在 <code>PATH</code> 中，所以必须加 <code>./</code> 前缀。</p>
-<p><strong><code>2&gt;&gt; tests/tests.log</code></strong> — <code>2</code> 是标准错误输出（stderr），<code>&gt;&gt;</code> 是追加重定向。合起来：<strong>把测试程序的标准错误输出追加到 <code>tests/tests.log</code></strong>，不在终端显示。</p>
-<p><strong><code>if ... then ... else ... fi</code></strong> — 检查命令退出码。0（成功）走 <code>then</code>，非 0（失败）走 <code>else</code>。整体含义：<strong>运行测试，检查退出码，通过则打印 PASS，否则打印错误并退出。</strong></p>
-<h4 id="echo-i-pass"><code>echo $i PASS</code>
-</h4><p>测试通过时输出。如变量 <code>i</code> 是 <code>tests/foo_tests</code>，显示：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tests/foo_tests PASS
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="失败分支">失败分支
-</h4><p>测试返回非 0 退出码时依次执行：</p>
-<ol>
-<li><code>echo &quot;ERROR in test $i: here's tests/tests.log&quot;</code> — 提示哪个测试失败</li>
-<li><code>echo &quot;------&quot;</code> — 分隔线</li>
-<li><code>tail tests/tests.log</code> — 显示日志文件最后 10 行，让用户看到具体错误</li>
-<li><code>exit 1</code> — 结束脚本并返回退出码 1（非 0 表示失败），make 看到后会停止后续操作</li>
-</ol>
-<h4 id="fi"><code>fi</code>
-</h4><p><code>fi</code> 是 <code>if</code> 倒过来写，结束 <code>if</code> 代码块。</p>
-<h4 id="echo-"><code>echo &quot;&quot;</code>
-</h4><p>打印空行，让输出末尾整洁一点。</p>
-<h3 id="整体执行流程">整体执行流程
-</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">打印 &#34;Running unit tests:&#34;
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">对于 tests/ 下每个以 _tests 结尾的东西：
-</span></span><span class="line"><span class="cl">    如果是普通文件（不是目录等）：
-</span></span><span class="line"><span class="cl">        运行它（可能用 valgrind 包裹）
-</span></span><span class="line"><span class="cl">        错误信息记入 tests/tests.log（不显示在屏幕）
-</span></span><span class="line"><span class="cl">        如果退出码是 0（测试通过）：
-</span></span><span class="line"><span class="cl">            打印 &#34;文件名 PASS&#34;
-</span></span><span class="line"><span class="cl">        否则（测试失败）：
-</span></span><span class="line"><span class="cl">            打印 &#34;ERROR in 文件名: here&#39;s tests/tests.log&#34;
-</span></span><span class="line"><span class="cl">            打印 &#34;------&#34;
-</span></span><span class="line"><span class="cl">            打印日志文件最后几行
-</span></span><span class="line"><span class="cl">            退出脚本，返回错误码 1（告诉 make 出错了）
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="valgrind-环境变量机制">VALGRIND 环境变量机制
-</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nf">valgrind</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="nv">VALGRIND</span><span class="o">=</span><span class="s2">&#34;valgrind --log-file=/tmp/valgrind-%p.log&#34;</span> <span class="k">$(</span>MAKE<span class="k">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h4 id="临时环境变量赋值">临时环境变量赋值
-</h4><p><code>VAR_NAME=&quot;值&quot; 命令</code> 是 Shell 的临时环境变量赋值。执行命令时临时设置变量，命令结束后变量自动消失。</p>
-<h4 id="valgrind-参数说明">valgrind 参数说明
-</h4><p>Valgrind 是 Linux 内存调试工具，检测内存泄漏、use-after-free、数组越界等问题。</p>
-<p><code>--log-file=/tmp/valgrind-%p.log</code> 指定检测结果写入文件：</p>
-<ul>
-<li><code>/tmp/</code> — 系统临时目录，重启后清空</li>
-<li><code>%p</code> — 占位符，valgrind 替换为当前进程的 PID，避免多测试输出互相覆盖</li>
-</ul>
-<h4 id="make-的作用"><code>$(MAKE)</code> 的作用
-</h4><p>make 的内置变量，值为 <code>make</code> 命令本身。使用它可保留父 make 的并行参数 <code>-j</code> 等特殊状态。</p>
-<h4 id="实际效果">实际效果
-</h4><p>运行 <code>make valgrind</code> 后 Makefile 递归调用自身，<code>runtests.sh</code> 看到 <code>VALGRIND</code> 不为空，每个测试实际变为：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">valgrind --log-file<span class="o">=</span>/tmp/valgrind-%p.log ./tests/foo_tests 2&gt;&gt; tests/tests.log
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>检测结果写入 <code>/tmp/valgrind-xxx.log</code>，可通过以下查看：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat /tmp/valgrind-*.log
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>典型泄漏报告示例：</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">==1234== HEAP SUMMARY:
-</span></span><span class="line"><span class="cl">==1234==     in use at exit: 42 bytes in 3 blocks
-</span></span><span class="line"><span class="cl">==1234==   total heap usage: 5 allocs, 2 frees, 1,034 bytes allocated
-</span></span><span class="line"><span class="cl">==1234==
-</span></span><span class="line"><span class="cl">==1234== 42 bytes in 3 blocks are definitely lost in loss record 1 of 1
-</span></span><span class="line"><span class="cl">==1234==    at 0x4A06A18: malloc (vg_replace_malloc.c:236)
-</span></span><span class="line"><span class="cl">==1234==    by 0x4005E4: create_person (person.c:12)
-</span></span><span class="line"><span class="cl">==1234==    by 0x40061A: main (test_person.c:8)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>表示 <code>person.c:12</code> 中 <code>malloc</code> 分配的内存未释放。</p>
-
-</section>
-
-
-    <footer class="article-footer">
-    
-
-    
-    <section class="article-copyright">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
-</svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
-    </footer>
-
-
-    
-        <div class="math-katex"></div><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
-            ><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
-                defer
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
-                defer
-                >
-            </script><script>
-    window.addEventListener("DOMContentLoaded", () => {
-        renderMathInElement(document.body, {
-            delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true }
-            ],
-            ignoredClasses: ["gist"]
-        });})
-</script>
-    
-</article>
-
-    
-
-    
-
-<aside class="related-content--wrapper">
-    <h2 class="section-title">相关文章</h2>
-    <div class="related-content">
-        <div class="flex article-list--tile">
-            
-                
-<article class="">
-    <a href="/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Makefile文件学习</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/p/learn-c-the-hard-way/">
-        
-        
-            <div class="article-image">
-                <img src="/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.5aeab9a1875221b443c0914c7f946535_hu10319868914554698792.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Learn c the hard way"
-                        
-                        data-hash="md5-Wuq5oYdSIbRDwJFMf5RlNQ==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Learn c the hard way</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">
-        
-        
-            <div class="article-image">
-                <img src="/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C.ccab1a72a86bb2f336d6080009692210_hu14298850449769974597.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post 算法笔记"
-                        
-                        data-hash="md5-zKsacqhrsvM21ggACWkiEA==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">算法笔记</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        
-        
-            <div class="article-image">
-                <img src="/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%83%8C%E6%99%AF.8f3d185c61abe75fac2e21e1208e20e7_hu1054950418780695938.png" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Verilog学习笔记"
-                        
-                        data-hash="md5-jz0YXGGr51&#43;sLiHhII4g5w==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Verilog学习笔记</h2>
-        </div>
-    </a>
-</article>
-
-            
-        </div>
-    </div>
-</aside>
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2026 杀不死的坏蛋-Unkillable Villain
-    </section>
-    
-    <section class="powerby">
-        
-            七弦绕明宫，知音且闻音，写作智音读作知音 <br/>
-        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
-        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
-    </section>
-</footer>
-
-
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    
-    <div class="pswp__bg"></div>
-
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
-            >
-
-            </main>
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
-                
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-<style>
-    #back-to-top.visible { opacity: 1 !important; transform: translateY(0) scale(1) !important; pointer-events: auto !important; }
-    #back-to-top:hover { transform: translateY(-4px) scale(1.05) !important; }
-    #back-to-top:hover svg { transform: rotate(-45deg) scale(1.15); }
-    [data-scheme=light] #back-to-top { background: rgba(255,255,255,.7) !important; border-color: rgba(0,0,0,.06) !important; color: var(--card-text-color-main) !important; box-shadow: 0 4px 20px rgba(0,0,0,.04) !important; }
-    [data-scheme=light] #back-to-top:hover { background: rgba(255,255,255,.85) !important; }
-    @media(max-width:767px){ #back-to-top { bottom: 20px !important; right: 20px !important; width: 42px !important; height: 42px !important; } #back-to-top svg { width: 20px; height: 20px; } }
-</style>
-
-<script>
-    (function () {
-        const motion = window.__blogMotion = window.__blogMotion || {
-            resources: {},
-            live2d: { loading: false, initialized: false, failed: false },
-            pjaxReady: false
-        };
-
-        function normalizeUrl(url) {
-            return new URL(url, window.location.href).href;
-        }
-
-        function loadExternalResource(url, type) {
-            const absoluteUrl = normalizeUrl(url);
-            if (motion.resources[absoluteUrl]) return motion.resources[absoluteUrl];
-
-            const selector = type === "css"
-                ? `link[rel="stylesheet"][href="${absoluteUrl}"],link[rel="stylesheet"][href="${url}"]`
-                : `script[src="${absoluteUrl}"],script[src="${url}"]`;
-            const existing = document.querySelector(selector);
-            if (existing) {
-                motion.resources[absoluteUrl] = Promise.resolve(absoluteUrl);
-                return motion.resources[absoluteUrl];
-            }
-
-            motion.resources[absoluteUrl] = new Promise((resolve, reject) => {
-                let tag;
-                if (type === "css") {
-                    tag = document.createElement("link");
-                    tag.rel = "stylesheet";
-                    tag.href = url;
-                } else {
-                    tag = document.createElement("script");
-                    tag.src = url;
-                    tag.defer = false;
-                }
-                tag.dataset.blogMotionResource = absoluteUrl;
-                tag.onload = () => resolve(absoluteUrl);
-                tag.onerror = () => {
-                    delete motion.resources[absoluteUrl];
-                    reject(new Error(`资源加载失败: ${url}`));
-                };
-                document.head.appendChild(tag);
-            });
-            return motion.resources[absoluteUrl];
-        }
-
-        function removeLegacyWaifuPlaceholders() {
-            document.querySelectorAll("#waifu").forEach((node) => {
-                if (!node.querySelector("#live2d")) node.remove();
-            });
-            document.querySelectorAll("#waifu-tips").forEach((node) => {
-                if (!node.closest("#waifu")) node.remove();
-            });
-        }
-
-        function ensureLive2DLauncher() {
-            if (document.getElementById("blog-live2d-launch")) return;
-            const launcher = document.createElement("button");
-            launcher.id = "blog-live2d-launch";
-            launcher.type = "button";
-            launcher.setAttribute("aria-label", "显示看板娘");
-            launcher.innerHTML = "<span class='blog-live2d-launch__spark'>?</span><span class='blog-live2d-launch__tip'>按一下有惊喜</span>";
-            launcher.addEventListener("click", () => showLive2D());
-            document.body.appendChild(launcher);
-        }
-
-        async function initLive2D() {
-            if (motion.live2d.initialized || motion.live2d.loading) return motion.live2d.promise;
-
-            motion.live2d.loading = true;
-            motion.live2d.failed = false;
-            removeLegacyWaifuPlaceholders();
-
-            const config = {
-                path: {
-                    homePath: "/",
-                    modelPath: "/Resources/",
-                    cssPath: "/waifu/waifu.css",
-                    tipsJsonPath: "/waifu/waifu-tips.json",
-                    tipsJsPath: "/waifu/waifu-tips.js",
-                    live2dCorePath: "/waifu/live2dcubismcore.js",
-                    live2dSdkPath: "/waifu/live2d-sdk.js"
-                },
-                tools: ["hitokoto", "asteroids", "express", "photo", "quit"],
-                drag: { enable: false, direction: ["x", "y"] },
-                switchType: "order"
-            };
-
-            motion.live2d.promise = Promise.all([
-                loadExternalResource(config.path.cssPath, "css"),
-                loadExternalResource(config.path.live2dCorePath, "js"),
-                loadExternalResource(config.path.live2dSdkPath, "js"),
-                loadExternalResource(config.path.tipsJsPath, "js")
-            ]).then(() => {
-                if (typeof window.initWidget !== "function") {
-                    throw new Error("initWidget 未定义，请检查 waifu-tips.js");
-                }
-                localStorage.setItem("waifu-display", Date.now());
-                window.initWidget({
-                    waifuPath: config.path.tipsJsonPath,
-                    cdnPath: config.path.modelPath,
-                    tools: config.tools,
-                    dragEnable: config.drag.enable,
-                    dragDirection: config.drag.direction,
-                    switchType: config.switchType,
-                    homePath: config.path.homePath
-                });
-                motion.live2d.initialized = true;
-            }).catch((err) => {
-                motion.live2d.failed = true;
-                motion.live2d.promise = null;
-                console.error("Live2D 资源加载失败:", err);
-            }).finally(() => {
-                motion.live2d.loading = false;
-            });
-
-            return motion.live2d.promise;
-        }
-
-        async function showLive2D() {
-            const launcher = document.getElementById("blog-live2d-launch");
-            launcher?.classList.add("is-loading");
-            await initLive2D();
-            const nativeToggle = document.getElementById("waifu-toggle");
-            if (!document.getElementById("waifu") && nativeToggle) nativeToggle.click();
-            const waifu = document.getElementById("waifu");
-            if (waifu) {
-                waifu.style.display = "";
-                requestAnimationFrame(() => waifu.classList.add("blog-waifu-visible"));
-            }
-            launcher?.classList.remove("is-loading");
-            launcher?.classList.add("is-hidden");
-        }
-
-        function bindLive2DQuit() {
-            if (motion.live2dQuitBound) return;
-            motion.live2dQuitBound = true;
-            document.addEventListener("click", (event) => {
-                const quit = event.target.closest("#waifu-tool-quit");
-                if (!quit) return;
-                const waifu = document.getElementById("waifu");
-                const launcher = document.getElementById("blog-live2d-launch");
-                waifu?.classList.remove("blog-waifu-visible");
-                window.setTimeout(() => {
-                    launcher?.classList.remove("is-hidden", "is-loading");
-                }, 2600);
-            });
-        }
-
-        function delay(time) {
-            return new Promise(resolve => setTimeout(resolve, time));
-        }
-
-        async function renderKaTeX() {
-            if (!document.querySelector(".math-katex")) return;
-            while (typeof renderMathInElement !== "function") {
-                await delay(500);
-            }
-            renderMathInElement(document.body, {
-                delimiters: [
-                    { left: "$$", right: "$$", display: true },
-                    { left: "$", right: "$", display: false },
-                    { left: "\\(", right: "\\)", display: false },
-                    { left: "\\[", right: "\\]", display: true }
-                ],
-                ignoredClasses: ["gist"]
-            });
-        }
-
-        function syncBodyClass(responseText) {
-            if (!responseText || !responseText.match("<html")) return;
-            const newDom = new DOMParser().parseFromString(responseText, "text/html");
-            document.body.setAttribute("class", newDom.body.className || "");
-        }
-
-        function initBackToTop() {
-            const btn = document.getElementById("back-to-top");
-            if (!btn || btn.dataset.ready) return;
-            btn.dataset.ready = "true";
-            btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-
-            const sentinel = document.createElement("div");
-            sentinel.style.cssText = "position:absolute;top:300px;left:0;height:1px;width:1px;pointer-events:none";
-            document.body.appendChild(sentinel);
-            new IntersectionObserver((entries) => {
-                btn.classList.toggle("visible", !entries[0].isIntersecting);
-            }, { rootMargin: "0px" }).observe(sentinel);
-        }
-
-        function runPageInitializers() {
-            ensureLive2DLauncher();
-            bindLive2DQuit();
-            if (window.BlogHomeHero) window.BlogHomeHero.init();
-            if (window.BlogSakura) window.BlogSakura.init();
-            if (window.__blogReveal && typeof window.__blogReveal.observe === "function") {
-                window.__blogReveal.observe(document);
-            }
-        }
-
-        function scrollAfterPjax() {
-            if (!document.body.classList.contains("template-home")) {
-                window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-                return;
-            }
-
-            window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-        }
-
-        function initPjaxOnce() {
-            if (typeof window.Pjax !== "function" || motion.pjaxReady) return;
-            motion.pjaxReady = true;
-
-            if (typeof topbar !== "undefined") {
-                topbar.config({
-                    barColors: { "0": "rgba(255,255,255,1)", "1.0": "rgba(0,149,234,1)" }
-                });
-            }
-
-            window.pjax = window.pjax || new Pjax({
-                selectors: [".main-container"]
-            });
-
-            if (window.pjax && window.pjax.handleResponse && !window.pjax.__blogMotionWrapped) {
-                const originalHandleResponse = window.pjax.handleResponse.bind(window.pjax);
-                window.pjax.handleResponse = function (responseText, request, href, options) {
-                    const html = responseText || (request && request.responseText) || "";
-                    syncBodyClass(html);
-                    return originalHandleResponse(responseText, request, href, options);
-                };
-                window.pjax.__blogMotionWrapped = true;
-            }
-
-            document.addEventListener("pjax:send", () => {
-                if (typeof topbar !== "undefined") topbar.show();
-            });
-
-            document.addEventListener("pjax:complete", () => {
-                if (typeof topbar !== "undefined") topbar.hide();
-                scrollAfterPjax();
-                if (window.Stack && typeof window.Stack.init === "function") window.Stack.init();
-                renderKaTeX();
-                runPageInitializers();
-            });
-        }
-
-        function bootstrapMotion() {
-            initBackToTop();
-            initPjaxOnce();
-            renderKaTeX();
-            runPageInitializers();
-        }
-
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", bootstrapMotion, { once: true });
-        } else {
-            bootstrapMotion();
-        }
-
-        window.renderKaTeX = renderKaTeX;
-        window.initLive2DForPC = showLive2D;
-    })();
-</script>
-
-<button id="back-to-top" aria-label="回到顶部" style="display:flex;position:fixed;bottom:28px;right:28px;z-index:999;width:46px;height:46px;border-radius:14px;cursor:pointer;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.08);background:rgba(35,35,42,.42);backdrop-filter:blur(12px)saturate(150%);-webkit-backdrop-filter:blur(12px)saturate(150%);box-shadow:0 4px 20px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.06);color:#fff;transition:opacity .3s ease,transform .3s ease;opacity:0;transform:translateY(20px) scale(.9);pointer-events:none">
-  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M4 13a8 8 0 0 1 7-7 7 7 0 0 1 7 7 5 5 0 0 1-4 5v-2.5a3 3 0 0 0-6 0v2.5a5 5 0 0 1-4-5z"/>
-    <path d="M12 7v6"/>
-    <path d="M10 11 12 13 14 11"/>
-    <path d="M9 17h6"/>
-  </svg>
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="shell脚本学习 前言 在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记"><title>Shell脚本学习笔记</title>
+<link rel=canonical href=https://unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/><link rel=stylesheet href=/scss/style.min.267b991f44aee0d9283373b0d4eccf8473a7bd11ae3e0120f885719f5f06002d.css><meta property='og:title' content="Shell脚本学习笔记"><meta property='og:description' content="shell脚本学习 前言 在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记"><meta property='og:url' content='https://unkillablevillain-blog.online/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'><meta property='og:site_name' content='杀不死的坏蛋-Unkillable Villain'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2026-05-30T16:02:47+08:00'><meta property='article:modified_time' content='2026-05-30T16:02:47+08:00'><meta name=twitter:title content="Shell脚本学习笔记"><meta name=twitter:description content="shell脚本学习 前言 在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记"><script>(function(){"use strict";const t=[".article-list article",".article-list--compact article",".article-list--tile article",".archives-group article",".archives-group .article-time--item"].join(", ");if(window.__blogReveal&&typeof window.__blogReveal.observe=="function"){window.__blogReveal.observe(document);return}const e=window.__blogReveal={queued:new Set,visible:new Set,observe:o,queuedFrame:0,visibleFrame:0},n=new IntersectionObserver(t=>{t.forEach(t=>{if(!t.isIntersecting)return;e.visible.add(t.target),n.unobserve(t.target)}),e.visibleFrame||(e.visibleFrame=requestAnimationFrame(r))},{threshold:.08,rootMargin:"0px 0px -80px 0px"});function s(n){if(!n||n.nodeType!==1&&n.nodeType!==9)return;n.nodeType===1&&n.matches(t)&&e.queued.add(n),n.querySelectorAll?.(t).forEach(t=>{e.queued.add(t)}),e.queuedFrame||(e.queuedFrame=requestAnimationFrame(a))}function o(e){s(e||document)}function a(){e.queuedFrame=0;let t=0;e.queued.forEach(s=>{if(e.queued.delete(s),s.classList.contains("observed-reveal")||s.classList.contains("reveal-visible"))return;s.style.setProperty("--reveal-index",Math.min(t,8)),s.classList.add("observed-reveal"),n.observe(s),t++})}function r(){e.visibleFrame=0,e.visible.forEach(t=>{e.visible.delete(t),t.classList.add("reveal-visible"),window.setTimeout(()=>{t.classList.add("reveal-done")},760)})}function i(){o(document)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",i,{once:!0}):i();const c=new MutationObserver(e=>{e.forEach(e=>{e.addedNodes.forEach(s)})});c.observe(document.body||document.documentElement,{childList:!0,subtree:!0})})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.setItem(e,"dark")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu13856131942767222513.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🤔</span></figure><div class=site-meta><h1 class=site-name><a href=/>杀不死的坏蛋-Unkillable Villain</a></h1><h2 class=site-description>欢迎来到我的个人博客，目前在校大学生一枚，这个网站我用来分享个人生活和学习情况。数学，电子爱好者（菜鸟），希望和大家一块交流学习。</h2></div></header><ol class=menu-social><li><a href=https://github.com/yuyemaozi target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>主页</span></a></li><li><a href=/%E5%85%B3%E4%BA%8E/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>关于</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>归档</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>搜索</span></a></li><li><a href=/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>友情链接</span></a></li><li><a href=/tasks/><svg class="icon icon-tabler icon-tabler-checklist" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M9.615 20H7a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v8"/><path d="M14 19l2 2 4-4"/><path d="M9 8h4"/><path d="M9 12h2"/></svg>
+<span>每日任务</span></a></li><li><a href=/rants/><svg class="icon icon-tabler icon-tabler-messages" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M21 14l-3-3h-7a1 1 0 01-1-1V4a1 1 0 011-1h9a1 1 0 011 1v10"/><path d="M14 15v2a1 1 0 01-1 1H6l-3 3V11a1 1 0 011-1h2"/></svg>
+<span>每日一槽</span></a></li><li class=menu-bottom-section><ol class=menu></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#前言>前言</a></li><li><a href=#shell变量>shell变量</a><ol><li><a href=#使用变量>使用变量</a></li><li><a href=#只读变量>只读变量</a></li><li><a href=#删除变量>删除变量</a></li><li><a href=#变量类型>变量类型</a></li></ol></li><li><a href=#shell字符串>shell字符串</a><ol><li><a href=#单引号>单引号</a></li><li><a href=#双引号>双引号</a></li><li><a href=#拼接字符串>拼接字符串</a></li><li><a href=#获取字符串长度>获取字符串长度</a></li><li><a href=#提取子字符串>提取子字符串</a></li><li><a href=#查找子字符串>查找子字符串</a></li></ol></li><li><a href=#shell数组>shell数组</a></li><li><a href=#实例>实例</a><ol><li><a href=#逐行解析>逐行解析</a><ol><li><a href=#echo-running-unit-tests><code>echo "Running unit tests:"</code></a></li><li><a href=#for-i-in-tests_tests><code>for i in tests/*_tests</code></a></li><li><a href=#do-与-done><code>do</code> 与 <code>done</code></a></li><li><a href=#if-test--f-i><code>if test -f $i</code></a></li><li><a href=#if-valgrind-i-2-teststestslog><code>if $VALGRIND ./$i 2>> tests/tests.log</code></a></li><li><a href=#echo-i-pass><code>echo $i PASS</code></a></li><li><a href=#失败分支>失败分支</a></li><li><a href=#fi><code>fi</code></a></li><li><a href=#echo-><code>echo ""</code></a></li></ol></li><li><a href=#整体执行流程>整体执行流程</a></li><li><a href=#valgrind-环境变量机制>VALGRIND 环境变量机制</a><ol><li><a href=#临时环境变量赋值>临时环境变量赋值</a></li><li><a href=#valgrind-参数说明>valgrind 参数说明</a></li><li><a href=#make-的作用><code>$(MAKE)</code> 的作用</a></li><li><a href=#实际效果>实际效果</a></li></ol></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/c%E8%AF%AD%E8%A8%80/ style=background-color:#2a9d8f;color:#fff>C语言
+</a><a href=/categories/%E4%B8%80%E7%94%9F%E4%B8%80%E8%8A%AF/>一生一芯</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>Shell脚本学习笔记</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>2026-05-30</time></div></footer></div></header><section class=article-content><h1 id=shell脚本学习>shell脚本学习</h1><h2 id=前言>前言</h2><p>在学习一生一芯的途中遇上了shell脚本的使用，这块知识对我来说是空白，所以打算记录一些学习笔记，未来在后面可能也会记录一些shell的使用技巧（也许）</p><p>学习资料来自<a class=link href=https://www.runoob.com/linux/linux-shell-variable.html target=_blank rel=noopener>Shell 变量 | 菜鸟教程</a></p><h2 id=shell变量>shell变量</h2><p>注意，变量名和等号之间不能有空格，这可能和你熟悉的所有编程语言都不一样</p><p>变量名的命名须遵循如下规则：</p><ul><li><strong>只包含字母、数字和下划线：</strong> 变量名可以包含字母（大小写敏感）、数字和下划线 <strong>_</strong>，不能包含其他特殊字符。</li><li><strong>不能以数字开头：</strong> 变量名不能以数字开头，但可以包含数字。</li><li><strong>避免使用 Shell 关键字：</strong> 不要使用Shell的关键字（例如 if、then、else、fi、for、while 等）作为变量名，以免引起混淆。</li><li><strong>使用大写字母表示常量：</strong> 习惯上，常量的变量名通常使用大写字母，例如 <strong>PI=3.14</strong>。</li><li><strong>避免使用特殊符号：</strong> 尽量避免在变量名中使用特殊符号，因为它们可能与 Shell 的语法产生冲突。</li><li><strong>避免使用空格：</strong> 变量名中不应该包含空格，因为空格通常用于分隔命令和参数。</li></ul><p>有效的变量命名：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>RUNOOB</span><span class=o>=</span><span class=s2>&#34;www.runoob.com&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>LD_LIBRARY_PATH</span><span class=o>=</span><span class=s2>&#34;/bin/&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>_var</span><span class=o>=</span><span class=s2>&#34;123&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>var2</span><span class=o>=</span><span class=s2>&#34;abc&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>无效的变量命名：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 避免使用if作为变量名</span>
+</span></span><span class=line><span class=cl><span class=k>if</span><span class=o>=</span><span class=s2>&#34;some_value&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1># 避免使用 $ 等特殊符号</span>
+</span></span><span class=line><span class=cl>variable_with_$<span class=o>=</span><span class=m>42</span>
+</span></span><span class=line><span class=cl>?var<span class=o>=</span><span class=m>123</span>
+</span></span><span class=line><span class=cl>user*name<span class=o>=</span>runoob
+</span></span><span class=line><span class=cl><span class=c1># 避免空格</span>
+</span></span><span class=line><span class=cl>variable with <span class=nv>space</span><span class=o>=</span><span class=s2>&#34;value&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=使用变量>使用变量</h3><p>使用一个定义过的变量，只要在变量名前面加美元符号即可，如：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>your_name</span><span class=o>=</span><span class=s2>&#34;qinjx&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$your_name</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${</span><span class=nv>your_name</span><span class=si>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>变量名外面的花括号是可选的，加不加都行，加花括号是为了帮助解释器识别变量的边界，比如下面这种情况：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>for</span> skill in Ada Coffe Action Java<span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;I am good at </span><span class=si>${</span><span class=nv>skill</span><span class=si>}</span><span class=s2>Script&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span></code></pre></td></tr></table></div></div><p>如果不给skill变量加花括号，写成echo &ldquo;I am good at $skillScript&rdquo;，解释器就会把$skillScript当成一个变量（其值为空），代码执行结果就不是我们期望的样子了。</p><p>推荐给所有变量加上花括号，这是个好的编程习惯。</p><p>第二次赋值的时候不能写第二次赋值的时候不能写<code>$your_name="alibaba"，使用变量的时候才加美元符（$）。</code></p><h3 id=只读变量>只读变量</h3><p>使用 readonly 命令可以将变量定义为只读变量，只读变量的值不能被改变。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>myUrl</span><span class=o>=</span><span class=s2>&#34;https://www.google.com&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>readonly</span> myUrl
+</span></span><span class=line><span class=cl><span class=nv>myUrl</span><span class=o>=</span><span class=s2>&#34;https://www.runoob.com&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>运行脚本，结果如下：</p><p><code>/bin/sh: NAME: This variable is read only.</code></p><h3 id=删除变量>删除变量</h3><p>使用 unset 命令可以删除变量。语法：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/sh
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=nv>myUrl</span><span class=o>=</span><span class=s2>&#34;https://www.runoob.com&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>unset</span> myUrl
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$myUrl</span>
+</span></span></code></pre></td></tr></table></div></div><p>以上实例执行将没有任何输出。</p><h3 id=变量类型>变量类型</h3><p><strong>字符串变量：</strong> 在 Shell中，变量通常被视为字符串。你可以使用单引号 <strong>&rsquo;</strong> 或双引号 <strong>"</strong> 来定义字符串</p><p><strong>整数变量</strong>： 在一些Shell中，你可以使用 <strong>declare</strong> 或 <strong>typeset</strong> 命令来声明整数变量。</p><p>这样的变量只包含整数值，例如：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>declare</span> -i <span class=nv>my_integer</span><span class=o>=</span><span class=m>42</span>
+</span></span></code></pre></td></tr></table></div></div><p>这样的声明告诉 Shell 将 my_integer 视为整数，如果尝试将非整数值赋给它，Shell会尝试将其转换为整数。</p><p><strong>数组变量：</strong> Shell 也支持数组，允许你在一个变量中存储多个值。</p><p>数组可以是整数索引数组或关联数组，以下是一个简单的整数索引数组的例子：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>declare</span> -a my_array
+</span></span><span class=line><span class=cl><span class=nv>my_array</span><span class=o>=(</span> <span class=m>1</span> <span class=m>2</span> <span class=m>3</span> <span class=m>4</span> <span class=m>5</span> <span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=c1># 可以不显示申明，直接my_array=( 1 2 3 4 5 )</span>
+</span></span></code></pre></td></tr></table></div></div><p>或者关联数组：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>declare</span> -A associative_array
+</span></span><span class=line><span class=cl>associative_array<span class=o>[</span><span class=s2>&#34;name&#34;</span><span class=o>]=</span><span class=s2>&#34;John&#34;</span>
+</span></span><span class=line><span class=cl>associative_array<span class=o>[</span><span class=s2>&#34;age&#34;</span><span class=o>]=</span><span class=m>30</span>
+</span></span></code></pre></td></tr></table></div></div><div class=table-wrapper><table><thead><tr><th style=text-align:left>特性</th><th style=text-align:left>普通数组（Indexed Array）</th><th style=text-align:left>关联数组（Associative Array）</th></tr></thead><tbody><tr><td style=text-align:left><strong>索引（键）类型</strong></td><td style=text-align:left><strong>非负整数</strong>（0, 1, 2, &mldr;）</td><td style=text-align:left><strong>任意字符串</strong>（包括数字字符串）</td></tr><tr><td style=text-align:left><strong>声明方式</strong></td><td style=text-align:left><code>arr=(value1 value2)</code> 或 <code>declare -a arr</code></td><td style=text-align:left><code>declare -A arr</code>（必须显式声明）</td></tr><tr><td style=text-align:left><strong>赋值示例</strong></td><td style=text-align:left><code>arr[0]="hello"</code></td><td style=text-align:left><code>arr["name"]="John"</code></td></tr><tr><td style=text-align:left><strong>长度获取</strong></td><td style=text-align:left><code>${#arr[@]}</code></td><td style=text-align:left><code>${#arr[@]}</code>（同样返回键值对个数）</td></tr><tr><td style=text-align:left><strong>遍历所有元素</strong></td><td style=text-align:left><code>for i in "${arr[@]}"; do ...</code></td><td style=text-align:left><code>for key in "${!arr[@]}"; do ...</code></td></tr><tr><td style=text-align:left><strong>键列表获取</strong></td><td style=text-align:left>不适用（或 <code>${!arr[@]}</code> 返回索引）</td><td style=text-align:left><code>${!arr[@]}</code> 返回所有键</td></tr><tr><td style=text-align:left><strong>内存/性能</strong></td><td style=text-align:left>更紧凑，访问快</td><td style=text-align:left>哈希表实现，稍占更多内存，访问稍慢</td></tr><tr><td style=text-align:left><strong>有序性</strong></td><td style=text-align:left>按整数索引顺序存储</td><td style=text-align:left>顺序依赖于内部哈希算法实际上，Bash 的关联数组遍历顺序是<strong>基于哈希顺序，不保证与插入顺序一致</strong>；而普通数组保证按索引升序。</td></tr><tr><td style=text-align:left><strong>适用场景</strong></td><td style=text-align:left>列表、序列、固定偏移的数据</td><td style=text-align:left>映射、字典、配置项、需要字符串键的查找表</td></tr></tbody></table></div><p><strong>环境变量：</strong> 这些是由操作系统或用户设置的特殊变量，用于配置 Shell 的行为和影响其执行环境。</p><p>例如，PATH 变量包含了操作系统搜索可执行文件的路径：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$PATH</span>
+</span></span></code></pre></td></tr></table></div></div><p><strong>特殊变量：</strong> 有一些特殊变量在 Shell 中具有特殊含义，例如 <strong>$0</strong> 表示脚本的名称，<strong>$1</strong>, <strong>$2</strong>, 等表示脚本的参数。</p><p><strong>$#<strong>表示传递给脚本的参数数量，</strong>$?</strong> 表示上一个命令的退出状态等。</p><h2 id=shell字符串>shell字符串</h2><h3 id=单引号>单引号</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>str</span><span class=o>=</span><span class=s1>&#39;this is a string&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>单引号字符串的限制：</p><ul><li>单引号里的任何字符都会原样输出，单引号字符串中的变量是无效的；</li><li>单引号字符串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用。</li></ul><h3 id=双引号>双引号</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>your_name</span><span class=o>=</span><span class=s2>&#34;runoob&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>str</span><span class=o>=</span><span class=s2>&#34;Hello, I know you are \&#34;</span><span class=nv>$your_name</span><span class=s2>\&#34;! \n&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> -e <span class=nv>$str</span>
+</span></span></code></pre></td></tr></table></div></div><p>输出结果为：</p><p><code>Hello, I know you are "runoob"!</code></p><p>双引号的优点：</p><ul><li>双引号里可以有变量</li><li>双引号里可以出现转义字符</li></ul><h3 id=拼接字符串>拼接字符串</h3><p>在 Bash 中，字符串拼接非常简单：<strong>直接并排写在一起</strong>。不需要像其他语言那样使用 <code>+</code> 或 <code>.</code> 运算符。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>your_name</span><span class=o>=</span><span class=s2>&#34;runoob&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1># 使用双引号拼接</span>
+</span></span><span class=line><span class=cl><span class=nv>greeting</span><span class=o>=</span><span class=s2>&#34;hello, &#34;</span><span class=nv>$your_name</span><span class=s2>&#34; !&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>greeting_1</span><span class=o>=</span><span class=s2>&#34;hello, </span><span class=si>${</span><span class=nv>your_name</span><span class=si>}</span><span class=s2> !&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$greeting</span>  <span class=nv>$greeting_1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 使用单引号拼接</span>
+</span></span><span class=line><span class=cl><span class=nv>greeting_2</span><span class=o>=</span><span class=s1>&#39;hello, &#39;</span><span class=nv>$your_name</span><span class=s1>&#39; !&#39;</span>
+</span></span><span class=line><span class=cl><span class=nv>greeting_3</span><span class=o>=</span><span class=s1>&#39;hello, ${your_name} !&#39;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$greeting_2</span>  <span class=nv>$greeting_3</span>
+</span></span></code></pre></td></tr></table></div></div><p>输出结果为：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>hello, runoob ! hello, runoob !
+</span></span><span class=line><span class=cl>hello, runoob ! hello, <span class=si>${</span><span class=nv>your_name</span><span class=si>}</span> !
+</span></span></code></pre></td></tr></table></div></div><h3 id=获取字符串长度>获取字符串长度</h3><p>使用 <code>${#变量名}</code> 可以快速获得字符串的长度（字符数）。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>string</span><span class=o>=</span><span class=s2>&#34;abcd&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${#</span><span class=nv>string</span><span class=si>}</span>   <span class=c1># 输出 4</span>
+</span></span></code></pre></td></tr></table></div></div><p>变量为字符串时，<strong>${#string}</strong> 等价于 <strong>${#string[0]}</strong>:</p><h3 id=提取子字符串>提取子字符串</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>string</span><span class=o>=</span><span class=s2>&#34;runoob is a great site&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=si>${</span><span class=nv>string</span><span class=p>:</span><span class=nv>1</span><span class=p>:</span><span class=nv>4</span><span class=si>}</span> <span class=c1># 输出 unoo</span>
+</span></span></code></pre></td></tr></table></div></div><p><strong>注意</strong>：第一个字符的索引值为 <strong>0</strong>。</p><h3 id=查找子字符串>查找子字符串</h3><p>查找字符 <strong>i</strong> 或 <strong>o</strong> 的位置(哪个字母先出现就计算哪个)：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>string</span><span class=o>=</span><span class=s2>&#34;runoob is a great site&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=sb>`</span>expr index <span class=s2>&#34;</span><span class=nv>$string</span><span class=s2>&#34;</span> io<span class=sb>`</span>  <span class=c1># 输出 4</span>
+</span></span></code></pre></td></tr></table></div></div><p><strong>注意：</strong> 以上脚本中 <strong>`</strong> 是反引号，而不是单引号 <strong>&rsquo;</strong>，不要看错了哦。</p><p>反引号 <code>...</code> 用于命令替换，将 <code>expr</code> 的输出赋值给 <code>echo</code></p><ul><li><p><code>expr index</code> 的参数：第一个是源字符串 <code>"runoob is a great site"</code>，第二个是字符集 <code>"io"</code>（包含两个字符 <code>i</code> 和 <code>o</code>）。</p></li><li><p><code>expr index</code> 会<strong>逐个字符</strong>扫描源字符串，一旦遇到与字符集中<strong>任意字符</strong>匹配的字符，就返回该字符的位置（从 1 计数）。</p></li><li><p>源字符串 <code>"runoob is a great site"</code>：</p><ul><li>位置 1: <code>r</code> → 不是 <code>i</code> 或 <code>o</code></li><li>位置 2: <code>u</code> → 不是</li><li>位置 3: <code>n</code> → 不是</li><li>位置 4: <code>o</code> → <strong>是</strong> <code>o</code>，匹配字符集 <code>"io"</code>。</li></ul></li><li><p>因此返回 <strong>4</strong>。</p></li></ul><h2 id=shell数组>shell数组</h2><p>bash支持一维数组（不支持多维数组），并且没有限定数组的大小。</p><p>类似于 C 语言，数组元素的下标由 0 开始编号。获取数组中的元素要利用下标，下标可以是整数或算术表达式，其值应大于或等于 0。</p><h2 id=实例>实例</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Running unit tests:&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> i in tests/*_tests
+</span></span><span class=line><span class=cl><span class=k>do</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nb>test</span> -f <span class=nv>$i</span>
+</span></span><span class=line><span class=cl>    <span class=k>then</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=nv>$VALGRIND</span> ./<span class=nv>$i</span> 2&gt;&gt; tests/tests.log
+</span></span><span class=line><span class=cl>        <span class=k>then</span>
+</span></span><span class=line><span class=cl>            <span class=nb>echo</span> <span class=nv>$i</span> PASS
+</span></span><span class=line><span class=cl>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>            <span class=nb>echo</span> <span class=s2>&#34;ERROR in test </span><span class=nv>$i</span><span class=s2>: here&#39;s tests/tests.log&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=nb>echo</span> <span class=s2>&#34;------&#34;</span>
+</span></span><span class=line><span class=cl>            tail tests/tests.log
+</span></span><span class=line><span class=cl>            <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>        <span class=k>fi</span>
+</span></span><span class=line><span class=cl>    <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=逐行解析>逐行解析</h3><h4 id=echo-running-unit-tests><code>echo "Running unit tests:"</code></h4><p><code>echo</code> 是 shell 命令，将后面的文字原样打印到终端。这一行只是提示，运行时屏幕先显示：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Running unit tests:
+</span></span></code></pre></td></tr></table></div></div><h4 id=for-i-in-tests_tests><code>for i in tests/*_tests</code></h4><p><strong><code>for ... in ...</code></strong> 是循环结构。把后面列出的东西一个一个取出来，每次把当前值赋给变量 <code>i</code>，然后执行 <code>do ... done</code> 之间的代码。</p><p><strong><code>tests/*_tests</code></strong> 中的 <code>*</code> 是通配符。Shell 在执行前会把模式展开成实际文件名列表。如果 <code>tests/</code> 下有 <code>foo_tests</code> 和 <code>bar_tests</code>，展开后等价于：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>for</span> i in tests/foo_tests tests/bar_tests
+</span></span></code></pre></td></tr></table></div></div><p>整体含义：把 <code>tests/</code> 下所有以 <code>_tests</code> 结尾的文件名，挨个放进变量 <code>i</code>，对每个文件执行一次循环体。</p><h4 id=do-与-done><code>do</code> 与 <code>done</code></h4><p><code>do</code> 标记循环体开始，<code>done</code> 标记结束。两者之间的代码针对 <code>for</code> 取出的每一个值执行一次。</p><h4 id=if-test--f-i><code>if test -f $i</code></h4><p><strong><code>$i</code></strong> — <code>$</code> 取变量里的内容。如 <code>i</code> 中存的是 <code>tests/foo_tests</code>，<code>$i</code> 被替换成 <code>tests/foo_tests</code>。</p><p><strong><code>test -f</code></strong> — <code>test</code> 是条件检查命令。<code>-f</code> 检查后面的路径是否是一个<strong>普通文件</strong>（不是目录等）。</p><p>合起来：<strong>如果 <code>$i</code> 是真实存在的普通文件，才执行后续代码。</strong> 保护机制，避免通配符意外匹配到目录。</p><h4 id=if-valgrind-i-2-teststestslog><code>if $VALGRIND ./$i 2>> tests/tests.log</code></h4><p>核心逻辑，拆成几块：</p><p><strong><code>$VALGRIND</code></strong> — 变量取值。正常 <code>make tests</code> 时 <code>VALGRIND</code> 未设置，展开为空。<code>make valgrind</code> 时它被设为 <code>valgrind --log-file=/tmp/valgrind-%p.log</code>，测试就在 valgrind 监控下运行。</p><p><strong><code>./$i</code></strong> — 执行当前目录下的测试程序。当前目录一般不在 <code>PATH</code> 中，所以必须加 <code>./</code> 前缀。</p><p><strong><code>2>> tests/tests.log</code></strong> — <code>2</code> 是标准错误输出（stderr），<code>>></code> 是追加重定向。合起来：<strong>把测试程序的标准错误输出追加到 <code>tests/tests.log</code></strong>，不在终端显示。</p><p><strong><code>if ... then ... else ... fi</code></strong> — 检查命令退出码。0（成功）走 <code>then</code>，非 0（失败）走 <code>else</code>。整体含义：<strong>运行测试，检查退出码，通过则打印 PASS，否则打印错误并退出。</strong></p><h4 id=echo-i-pass><code>echo $i PASS</code></h4><p>测试通过时输出。如变量 <code>i</code> 是 <code>tests/foo_tests</code>，显示：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>tests/foo_tests PASS
+</span></span></code></pre></td></tr></table></div></div><h4 id=失败分支>失败分支</h4><p>测试返回非 0 退出码时依次执行：</p><ol><li><code>echo "ERROR in test $i: here's tests/tests.log"</code> — 提示哪个测试失败</li><li><code>echo "------"</code> — 分隔线</li><li><code>tail tests/tests.log</code> — 显示日志文件最后 10 行，让用户看到具体错误</li><li><code>exit 1</code> — 结束脚本并返回退出码 1（非 0 表示失败），make 看到后会停止后续操作</li></ol><h4 id=fi><code>fi</code></h4><p><code>fi</code> 是 <code>if</code> 倒过来写，结束 <code>if</code> 代码块。</p><h4 id=echo-><code>echo ""</code></h4><p>打印空行，让输出末尾整洁一点。</p><h3 id=整体执行流程>整体执行流程</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>打印 &#34;Running unit tests:&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>对于 tests/ 下每个以 _tests 结尾的东西：
+</span></span><span class=line><span class=cl>    如果是普通文件（不是目录等）：
+</span></span><span class=line><span class=cl>        运行它（可能用 valgrind 包裹）
+</span></span><span class=line><span class=cl>        错误信息记入 tests/tests.log（不显示在屏幕）
+</span></span><span class=line><span class=cl>        如果退出码是 0（测试通过）：
+</span></span><span class=line><span class=cl>            打印 &#34;文件名 PASS&#34;
+</span></span><span class=line><span class=cl>        否则（测试失败）：
+</span></span><span class=line><span class=cl>            打印 &#34;ERROR in 文件名: here&#39;s tests/tests.log&#34;
+</span></span><span class=line><span class=cl>            打印 &#34;------&#34;
+</span></span><span class=line><span class=cl>            打印日志文件最后几行
+</span></span><span class=line><span class=cl>            退出脚本，返回错误码 1（告诉 make 出错了）
+</span></span></code></pre></td></tr></table></div></div><h3 id=valgrind-环境变量机制>VALGRIND 环境变量机制</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=nf>valgrind</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>	<span class=nv>VALGRIND</span><span class=o>=</span><span class=s2>&#34;valgrind --log-file=/tmp/valgrind-%p.log&#34;</span> <span class=k>$(</span>MAKE<span class=k>)</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=临时环境变量赋值>临时环境变量赋值</h4><p><code>VAR_NAME="值" 命令</code> 是 Shell 的临时环境变量赋值。执行命令时临时设置变量，命令结束后变量自动消失。</p><h4 id=valgrind-参数说明>valgrind 参数说明</h4><p>Valgrind 是 Linux 内存调试工具，检测内存泄漏、use-after-free、数组越界等问题。</p><p><code>--log-file=/tmp/valgrind-%p.log</code> 指定检测结果写入文件：</p><ul><li><code>/tmp/</code> — 系统临时目录，重启后清空</li><li><code>%p</code> — 占位符，valgrind 替换为当前进程的 PID，避免多测试输出互相覆盖</li></ul><h4 id=make-的作用><code>$(MAKE)</code> 的作用</h4><p>make 的内置变量，值为 <code>make</code> 命令本身。使用它可保留父 make 的并行参数 <code>-j</code> 等特殊状态。</p><h4 id=实际效果>实际效果</h4><p>运行 <code>make valgrind</code> 后 Makefile 递归调用自身，<code>runtests.sh</code> 看到 <code>VALGRIND</code> 不为空，每个测试实际变为：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>valgrind --log-file<span class=o>=</span>/tmp/valgrind-%p.log ./tests/foo_tests 2&gt;&gt; tests/tests.log
+</span></span></code></pre></td></tr></table></div></div><p>检测结果写入 <code>/tmp/valgrind-xxx.log</code>，可通过以下查看：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat /tmp/valgrind-*.log
+</span></span></code></pre></td></tr></table></div></div><p>典型泄漏报告示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>==1234== HEAP SUMMARY:
+</span></span><span class=line><span class=cl>==1234==     in use at exit: 42 bytes in 3 blocks
+</span></span><span class=line><span class=cl>==1234==   total heap usage: 5 allocs, 2 frees, 1,034 bytes allocated
+</span></span><span class=line><span class=cl>==1234==
+</span></span><span class=line><span class=cl>==1234== 42 bytes in 3 blocks are definitely lost in loss record 1 of 1
+</span></span><span class=line><span class=cl>==1234==    at 0x4A06A18: malloc (vg_replace_malloc.c:236)
+</span></span><span class=line><span class=cl>==1234==    by 0x4005E4: create_person (person.c:12)
+</span></span><span class=line><span class=cl>==1234==    by 0x40061A: main (test_person.c:8)
+</span></span></code></pre></td></tr></table></div></div><p>表示 <code>person.c:12</code> 中 <code>malloc</code> 分配的内存未释放。</p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer><div class=math-katex></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})</script></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/makefile%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/><div class=article-details><h2 class=article-title>Makefile文件学习</h2></div></a></article><article class=has-image><a href=/p/learn-c-the-hard-way/><div class=article-image><img src=/p/learn-c-the-hard-way/C%E8%AF%AD%E8%A8%80.5aeab9a1875221b443c0914c7f946535_hu10319868914554698792.jpg width=250 height=150 loading=lazy alt="Featured image of post Learn c the hard way" data-hash="md5-Wuq5oYdSIbRDwJFMf5RlNQ=="></div><div class=article-details><h2 class=article-title>Learn c the hard way</h2></div></a></article><article><a href=/p/%E5%8A%A8%E6%80%81%E5%BA%93%E5%92%8C%E9%9D%99%E6%80%81%E5%BA%93/><div class=article-details><h2 class=article-title>动态库和静态库</h2></div></a></article><article class=has-image><a href=/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/><div class=article-image><img src=/p/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/R-C.ccab1a72a86bb2f336d6080009692210_hu14298850449769974597.jpg width=250 height=150 loading=lazy alt="Featured image of post 算法笔记" data-hash="md5-zKsacqhrsvM21ggACWkiEA=="></div><div class=article-details><h2 class=article-title>算法笔记</h2></div></a></article><article class=has-image><a href=/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/><div class=article-image><img src=/p/verilog%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%83%8C%E6%99%AF.8f3d185c61abe75fac2e21e1208e20e7_hu1054950418780695938.png width=250 height=150 loading=lazy alt="Featured image of post Verilog学习笔记" data-hash="md5-jz0YXGGr51+sLiHhII4g5w=="></div><div class=article-details><h2 class=article-title>Verilog学习笔记</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2026 杀不死的坏蛋-Unkillable Villain</section><section class=powerby>七弦绕明宫，知音且闻音，写作智音读作知音<br>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.26.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
 </button>
-
-<script src="/temp/topbar.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script>
-<script src="/js/home-hero.js"></script>
-<script src="/js/sakura.js"></script>
-
-    </body>
-</html>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script><style>#back-to-top.visible{opacity:1!important;transform:translateY(0)scale(1)!important;pointer-events:auto!important}#back-to-top:hover{transform:translateY(-4px)scale(1.05)!important}#back-to-top:hover svg{transform:rotate(-45deg)scale(1.15)}[data-scheme=light] #back-to-top{background:rgba(255,255,255,.7)!important;border-color:rgba(0,0,0,6%)!important;color:var(--card-text-color-main)!important;box-shadow:0 4px 20px rgba(0,0,0,4%)!important}[data-scheme=light] #back-to-top:hover{background:rgba(255,255,255,.85)!important}@media(max-width:767px){#back-to-top{bottom:20px!important;right:20px!important;width:42px!important;height:42px!important}#back-to-top svg{width:20px;height:20px}}</style><script>(function(){const e=window.__blogMotion=window.__blogMotion||{resources:{},live2d:{loading:!1,initialized:!1,failed:!1},pjaxReady:!1};function p(e){return new URL(e,window.location.href).href}function t(t,n){const s=p(t);if(e.resources[s])return e.resources[s];const o=n==="css"?`link[rel="stylesheet"][href="${s}"],link[rel="stylesheet"][href="${t}"]`:`script[src="${s}"],script[src="${t}"]`,i=document.querySelector(o);return i?(e.resources[s]=Promise.resolve(s),e.resources[s]):(e.resources[s]=new Promise((o,i)=>{let a;n==="css"?(a=document.createElement("link"),a.rel="stylesheet",a.href=t):(a=document.createElement("script"),a.src=t,a.defer=!1),a.dataset.blogMotionResource=s,a.onload=()=>o(s),a.onerror=()=>{delete e.resources[s],i(new Error(`资源加载失败: ${t}`))},document.head.appendChild(a)}),e.resources[s])}function h(){document.querySelectorAll("#waifu").forEach(e=>{e.querySelector("#live2d")||e.remove()}),document.querySelectorAll("#waifu-tips").forEach(e=>{e.closest("#waifu")||e.remove()})}function a(){if(document.getElementById("blog-live2d-launch"))return;const e=document.createElement("button");e.id="blog-live2d-launch",e.type="button",e.setAttribute("aria-label","显示看板娘"),e.innerHTML="<span class='blog-live2d-launch__spark'>?</span><span class='blog-live2d-launch__tip'>按一下有惊喜</span>",e.addEventListener("click",()=>s()),document.body.appendChild(e)}async function l(){if(e.live2d.initialized||e.live2d.loading)return e.live2d.promise;e.live2d.loading=!0,e.live2d.failed=!1,h();const n={path:{homePath:"/",modelPath:"/Resources/",cssPath:"/waifu/waifu.css",tipsJsonPath:"/waifu/waifu-tips.json",tipsJsPath:"/waifu/waifu-tips.js",live2dCorePath:"/waifu/live2dcubismcore.js",live2dSdkPath:"/waifu/live2d-sdk.js"},tools:["hitokoto","asteroids","express","photo","quit"],drag:{enable:!1,direction:["x","y"]},switchType:"order"};return e.live2d.promise=Promise.all([t(n.path.cssPath,"css"),t(n.path.live2dCorePath,"js"),t(n.path.live2dSdkPath,"js"),t(n.path.tipsJsPath,"js")]).then(()=>{if(typeof window.initWidget!="function")throw new Error("initWidget 未定义，请检查 waifu-tips.js");localStorage.setItem("waifu-display",Date.now()),window.initWidget({waifuPath:n.path.tipsJsonPath,cdnPath:n.path.modelPath,tools:n.tools,dragEnable:n.drag.enable,dragDirection:n.drag.direction,switchType:n.switchType,homePath:n.path.homePath}),e.live2d.initialized=!0}).catch(t=>{e.live2d.failed=!0,e.live2d.promise=null,console.error("Live2D 资源加载失败:",t)}).finally(()=>{e.live2d.loading=!1}),e.live2d.promise}async function s(){const e=document.getElementById("blog-live2d-launch");e?.classList.add("is-loading"),await l();const n=document.getElementById("waifu-toggle");!document.getElementById("waifu")&&n&&n.click();const t=document.getElementById("waifu");t&&(t.style.display="",requestAnimationFrame(()=>t.classList.add("blog-waifu-visible"))),e?.classList.remove("is-loading"),e?.classList.add("is-hidden")}function r(){if(e.live2dQuitBound)return;e.live2dQuitBound=!0,document.addEventListener("click",e=>{const t=e.target.closest("#waifu-tool-quit");if(!t)return;const n=document.getElementById("waifu"),s=document.getElementById("blog-live2d-launch");n?.classList.remove("blog-waifu-visible"),window.setTimeout(()=>{s?.classList.remove("is-hidden","is-loading")},2600)})}function c(e){return new Promise(t=>setTimeout(t,e))}async function n(){if(!document.querySelector(".math-katex"))return;for(;typeof renderMathInElement!="function";)await c(500);renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})}function d(e){if(!e||!e.match("<html"))return;const t=(new DOMParser).parseFromString(e,"text/html");document.body.setAttribute("class",t.body.className||"")}function u(){const e=document.getElementById("back-to-top");if(!e||e.dataset.ready)return;e.dataset.ready="true",e.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));const t=document.createElement("div");t.style.cssText="position:absolute;top:300px;left:0;height:1px;width:1px;pointer-events:none",document.body.appendChild(t),new IntersectionObserver(t=>{e.classList.toggle("visible",!t[0].isIntersecting)},{rootMargin:"0px"}).observe(t)}function i(){a(),r(),window.BlogHomeHero&&window.BlogHomeHero.init(),window.BlogSakura&&window.BlogSakura.init(),window.__blogReveal&&typeof window.__blogReveal.observe=="function"&&window.__blogReveal.observe(document)}function m(){if(!document.body.classList.contains("template-home")){window.scrollTo({top:0,left:0,behavior:"auto"});return}window.scrollTo({top:0,left:0,behavior:"auto"})}function f(){if(typeof window.Pjax!="function"||e.pjaxReady)return;if(e.pjaxReady=!0,typeof topbar!="undefined"&&topbar.config({barColors:{0:"rgba(255,255,255,1)",1.0:"rgba(0,149,234,1)"}}),window.pjax=window.pjax||new Pjax({selectors:[".main-container"]}),window.pjax&&window.pjax.handleResponse&&!window.pjax.__blogMotionWrapped){const e=window.pjax.handleResponse.bind(window.pjax);window.pjax.handleResponse=function(t,n,s,o){const i=t||n&&n.responseText||"";return d(i),e(t,n,s,o)},window.pjax.__blogMotionWrapped=!0}document.addEventListener("pjax:send",()=>{typeof topbar!="undefined"&&topbar.show()}),document.addEventListener("pjax:complete",()=>{typeof topbar!="undefined"&&topbar.hide(),m(),window.Stack&&typeof window.Stack.init=="function"&&window.Stack.init(),n(),i()})}function o(){u(),f(),n(),i()}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",o,{once:!0}):o(),window.renderKaTeX=n,window.initLive2DForPC=s})()</script><button id=back-to-top aria-label=回到顶部 style="display:flex;position:fixed;bottom:28px;right:28px;z-index:999;width:46px;height:46px;border-radius:14px;cursor:pointer;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,8%);background:rgba(35,35,42,.42);backdrop-filter:blur(12px)saturate(150%);-webkit-backdrop-filter:blur(12px)saturate(150%);box-shadow:0 4px 20px rgba(0,0,0,.15),inset 0 1px rgba(255,255,255,6%);color:#fff;transition:opacity .3s ease,transform .3s ease;opacity:0;transform:translateY(20px)scale(.9);pointer-events:none">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 017-7 7 7 0 017 7 5 5 0 01-4 5v-2.5a3 3 0 00-6 0V18a5 5 0 01-4-5z"/><path d="M12 7v6"/><path d="M10 11l2 2 2-2"/><path d="M9 17h6"/></svg>
+</button>
+<script src=/temp/topbar.min.js></script><script src=https://cdn.jsdelivr.net/npm/pjax/pjax.min.js></script><script src=/js/home-hero.js></script><script src=/js/sakura.js></script><script src=/js/hugo-encryptor.js></script></body></html>
