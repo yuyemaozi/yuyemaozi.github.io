@@ -176,7 +176,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>如果不给skill变量加花括号，写成echo &amp;ldquo;I am good at $skillScript&amp;rdquo;，解释器就会把$skillScript当成一个变量（其值为空），代码执行结果就不是我们期望的样子了。&lt;/p>
+&lt;/div>&lt;p>如果不给skill变量加花括号，写成echo &amp;ldquo;I am good at $skillScript"，解释器就会把$skillScript当成一个变量（其值为空），代码执行结果就不是我们期望的样子了。&lt;/p>
 &lt;p>推荐给所有变量加上花括号，这是个好的编程习惯。&lt;/p>
 &lt;p>第二次赋值的时候不能写第二次赋值的时候不能写&lt;code>$your_name=&amp;quot;alibaba&amp;quot;，使用变量的时候才加美元符（$）。&lt;/code>&lt;/p>
 &lt;h3 id="只读变量">只读变量
@@ -215,7 +215,7 @@
 &lt;/div>
 &lt;/div>&lt;p>以上实例执行将没有任何输出。&lt;/p>
 &lt;h3 id="变量类型">变量类型
-&lt;/h3>&lt;p>&lt;strong>字符串变量：&lt;/strong> 在 Shell中，变量通常被视为字符串。你可以使用单引号 &lt;strong>&amp;rsquo;&lt;/strong> 或双引号 &lt;strong>&amp;quot;&lt;/strong> 来定义字符串&lt;/p>
+&lt;/h3>&lt;p>&lt;strong>字符串变量：&lt;/strong> 在 Shell中，变量通常被视为字符串。你可以使用单引号 &lt;strong>&amp;rsquo;&lt;/strong> 或双引号 &lt;strong>&amp;rdquo;&lt;/strong> 来定义字符串&lt;/p>
 &lt;p>&lt;strong>整数变量&lt;/strong>： 在一些Shell中，你可以使用 &lt;strong>declare&lt;/strong> 或 &lt;strong>typeset&lt;/strong> 命令来声明整数变量。&lt;/p>
 &lt;p>这样的变量只包含整数值，例如：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -320,8 +320,8 @@
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="nv">$PATH&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>&lt;strong>特殊变量：&lt;/strong> 有一些特殊变量在 Shell 中具有特殊含义，例如 &lt;strong>$0&lt;/strong> 表示脚本的名称，&lt;strong>$1&lt;/strong>, &lt;strong>$2&lt;/strong>, 等表示脚本的参数。&lt;/p>
-&lt;p>&lt;strong>$#&lt;strong>表示传递给脚本的参数数量，&lt;/strong>$?&lt;/strong> 表示上一个命令的退出状态等。&lt;/p>
+&lt;/div>&lt;p>&lt;strong>特殊变量：&lt;/strong> 有一些特殊变量在 Shell 中具有特殊含义，例如 &lt;strong>$0** 表示脚本的名称，**$1&lt;/strong>, &lt;strong>$2&lt;/strong>, 等表示脚本的参数。&lt;/p>
+&lt;p>&lt;strong>$#**表示传递给脚本的参数数量，**$?&lt;/strong> 表示上一个命令的退出状态等。&lt;/p>
 &lt;h2 id="shell字符串">shell字符串
 &lt;/h2>&lt;h3 id="单引号">单引号
 &lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
@@ -408,7 +408,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="si">${#&lt;/span>&lt;span class="nv">string&lt;/span>&lt;span class="si">}&lt;/span> &lt;span class="c1"># 输出 4&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>变量为字符串时，&lt;strong>${#string}&lt;/strong> 等价于 &lt;strong>${#string[0]}&lt;/strong>:&lt;/p>
+&lt;/div>&lt;p>变量为字符串时，&lt;strong>${#string}** 等价于 **${#string[0]}&lt;/strong>:&lt;/p>
 &lt;h3 id="提取子字符串">提取子字符串
 &lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
