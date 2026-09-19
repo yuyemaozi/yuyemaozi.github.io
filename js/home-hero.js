@@ -48,7 +48,8 @@
     timers: [],
     entered: false,
     avatarAnimating: false,
-    lastLine: -1
+    lastLine: -1,
+    initToken: 0
   };
 
   function clearTimers() {
@@ -123,6 +124,84 @@
 
   function getSidebarAvatar() {
     return document.querySelector('.site-avatar .site-logo');
+  }
+
+  function waitForImage(image) {
+    if (!image) return Promise.resolve();
+
+    return new Promise(function (resolve) {
+      var settled = false;
+
+      function finish() {
+        if (settled) return;
+        settled = true;
+        image.removeEventListener('load', decode);
+        image.removeEventListener('error', finish);
+        resolve();
+      }
+
+      function decode() {
+        if (typeof image.decode === 'function') {
+          image.decode().catch(function () {}).then(finish);
+        } else {
+          finish();
+        }
+      }
+
+      image.addEventListener('load', decode, { once: true });
+      image.addEventListener('error', finish, { once: true });
+
+      if (image.complete) {
+        if (image.naturalWidth) decode();
+        else finish();
+      }
+    });
+  }
+
+  function preloadBackground() {
+    var isMobile = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
+    var image = new Image();
+    image.decoding = 'async';
+    image.fetchPriority = 'high';
+    image.src = isMobile ? '/background/mobile_preview.jpg' : '/background/preview.jpg';
+    return waitForImage(image);
+  }
+
+  function waitForCriticalImages() {
+    var heroAvatar = getHeroAvatar();
+    var sidebarAvatar = getSidebarAvatar();
+
+    if (heroAvatar) heroAvatar.loading = 'eager';
+    if (sidebarAvatar) sidebarAvatar.loading = 'eager';
+
+    return Promise.all([
+      preloadBackground(),
+      waitForImage(heroAvatar),
+      waitForImage(sidebarAvatar)
+    ]);
+  }
+
+  function withTimeout(promise, delay) {
+    return new Promise(function (resolve) {
+      var finished = false;
+      var timeout = window.setTimeout(function () {
+        if (finished) return;
+        finished = true;
+        resolve('timeout');
+      }, delay);
+
+      promise.then(function () {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timeout);
+        resolve('loaded');
+      }).catch(function () {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timeout);
+        resolve('error');
+      });
+    });
   }
 
   function setAvatarHidden(heroHidden, sidebarHidden) {
@@ -220,12 +299,13 @@
     if (state.cleanup) state.cleanup();
     clearTimers();
     setAvatarHidden(false, false);
+    var initToken = ++state.initToken;
 
     var hero = document.querySelector('.home-hero');
     var isHome = document.body.classList.contains('template-home') && hero;
 
     if (!isHome) {
-      document.body.classList.remove('home-hero-active', 'home-entered', 'home-avatar-in-flight');
+      document.body.classList.remove('home-hero-active', 'home-hero-loading', 'home-entered', 'home-avatar-in-flight');
       state.cleanup = null;
       state.entered = false;
       state.avatarAnimating = false;
@@ -235,17 +315,18 @@
     var typeTarget = hero.querySelector('[data-home-typewriter]');
     state.entered = window.scrollY > Math.min(window.innerHeight * 0.22, 180);
 
+    hero.classList.add('is-loading');
+    hero.classList.remove('is-ready');
+    hero.setAttribute('aria-busy', 'true');
+    document.body.classList.add('home-hero-loading');
+
     document.body.classList.toggle('home-entered', state.entered);
     document.body.classList.toggle('home-hero-active', !state.entered);
-    startTypewriter(typeTarget);
-
-    if (reduceMotion) {
-      enterHome(hero);
-      return;
-    }
 
     var ticking = false;
     var touchStartY = 0;
+    var disposed = false;
+    var interactionsBound = false;
 
     function update() {
       ticking = false;
@@ -298,19 +379,49 @@
       }
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('keydown', onKeydown);
-    window.addEventListener('wheel', onWheel, { passive: true });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: true });
-    update();
+    function bindInteractions() {
+      if (interactionsBound || reduceMotion) return;
+      interactionsBound = true;
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('keydown', onKeydown);
+      window.addEventListener('wheel', onWheel, { passive: true });
+      window.addEventListener('touchstart', onTouchStart, { passive: true });
+      window.addEventListener('touchmove', onTouchMove, { passive: true });
+      update();
+    }
 
-    state.cleanup = function () {
+    function unbindInteractions() {
+      if (!interactionsBound) return;
+      interactionsBound = false;
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('keydown', onKeydown);
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
+    }
+
+    withTimeout(waitForCriticalImages(), 4000).then(function (result) {
+      if (disposed || initToken !== state.initToken || !document.documentElement.contains(hero)) return;
+
+      hero.dataset.loadResult = result;
+      hero.classList.remove('is-loading');
+      hero.classList.add('is-ready');
+      hero.setAttribute('aria-busy', 'false');
+      document.body.classList.remove('home-hero-loading');
+      startTypewriter(typeTarget);
+
+      if (reduceMotion) {
+        enterHome(hero);
+        return;
+      }
+
+      bindInteractions();
+    });
+
+    state.cleanup = function () {
+      disposed = true;
+      unbindInteractions();
+      document.body.classList.remove('home-hero-loading');
       hero.style.removeProperty('--home-hero-progress');
     };
   }
