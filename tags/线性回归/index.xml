@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>线性回归 on 杀不死的坏蛋-Unkillable Villain</title><link>https://unkillablevillain-blog.online/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link><description>Recent content in 线性回归 on 杀不死的坏蛋-Unkillable Villain</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><copyright>杀不死的坏蛋-Unkillable Villain</copyright><lastBuildDate>Mon, 28 Sep 2026 23:39:00 +0800</lastBuildDate><atom:link href="https://unkillablevillain-blog.online/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/index.xml" rel="self" type="application/rss+xml"/><item><title>最小二乘法的几何原理</title><link>https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/</link><pubDate>Mon, 28 Sep 2026 23:39:00 +0800</pubDate><guid>https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/</guid><description>&lt;h2 id="前言">前言
+&lt;/h2>&lt;p>本文内容来自 B 站 UP 主“漫士沉思录”的视频 &lt;a class="link" href="https://www.bilibili.com/video/BV15zPBevERL" target="_blank" rel="noopener"
+>《最小二乘法的几何原理是什么？【MaExpo 获奖作品】》&lt;/a>。感兴趣的读者可以观看原视频；这篇文章是我对所学内容的整理与总结。&lt;/p>
+&lt;h2 id="这个视频想要解决的问题">这个视频想要解决的问题
+&lt;/h2>&lt;p>平时教材介绍最小二乘法时，常见路线是：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>设直线模型 $y=ax+b$。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>写出残差平方和：&lt;/p>
+$$
+\sum_{i=1}^{n}\bigl(y_i-(ax_i+b)\bigr)^2
+$$
+&lt;/li>
+&lt;li>
+&lt;p>对 $a,b$ 求偏导。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>解方程得到斜率和截距公式。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>这条路线可以算出结果，但容易让人困惑：为什么一开始就要优化“平方和”？为什么不是误差绝对值之和？视频的思路是换一个角度：把所有样本值看成向量，用投影和正交分解解释最小二乘法。&lt;/p>
+&lt;p>核心结论可以先记成一句话：&lt;/p>
+&lt;blockquote>
+&lt;p>最小二乘法是在样本空间中，把观测向量 $\vec y$ 投影到模型能表示的子空间上；残差向量就是投影误差，而残差平方和就是这个误差向量模长的平方。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="预备知识">预备知识
+&lt;/h2>&lt;p>若有 $n$ 个样本点 $(x_i,y_i)$，可以把所有 $x$ 值和 $y$ 值分别看成两个 $n$ 维向量：&lt;/p>
+$$
+\vec x=
+\begin{pmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{pmatrix},
+\qquad
+\vec y=
+\begin{pmatrix}
+y_1\\
+y_2\\
+\vdots\\
+y_n
+\end{pmatrix}
+$$
+&lt;p>点乘和模长为：&lt;/p>
+$$
+\vec x\cdot \vec y=\sum_{i=1}^{n}x_i y_i
+$$
+$$
+\|\vec x\|^2=\vec x\cdot \vec x=\sum_{i=1}^{n}x_i^2
+$$
+&lt;p>夹角公式为：&lt;/p>
+$$
+\vec x\cdot \vec y=\|\vec x\|\|\vec y\|\cos \theta
+$$
+&lt;p>这里最重要的是：$\|\vec x\|^2$ 本质上就是各分量平方和。这会直接解释“最小二乘”为什么会出现平方和。&lt;/p>
+&lt;h2 id="从两个点开始直线方程写成向量线性组合">从两个点开始：直线方程写成向量线性组合
+&lt;/h2>&lt;p>先看最简单的情形：平面上有两个点，要求过这两个点的唯一一条直线。&lt;/p>
+&lt;p>&lt;img src="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/02-vector-equation.png"
+width="852"
+height="480"
+srcset="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/02-vector-equation_hu10415273605505912046.png 480w, https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/02-vector-equation_hu8543778062380491677.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>直线模型为：&lt;/p>
+$$
+y=ax+b
+$$
+&lt;p>两个点代入后得到：&lt;/p>
+$$
+\begin{cases}
+y_1=ax_1+b\\
+y_2=ax_2+b
+\end{cases}
+$$
+&lt;p>视频不直接解这个二元一次方程组，而是把它写成向量形式。&lt;/p>
+&lt;p>定义：&lt;/p>
+$$
+\vec x=
+\begin{pmatrix}
+x_1\\
+x_2
+\end{pmatrix},
+\quad
+\vec y=
+\begin{pmatrix}
+y_1\\
+y_2
+\end{pmatrix},
+\quad
+\vec p=
+\begin{pmatrix}
+1\\
+1
+\end{pmatrix}
+$$
+&lt;p>于是方程组变成：&lt;/p>
+$$
+\vec y=a\vec x+b\vec p
+$$
+&lt;p>&lt;img src="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/02b-vector-form-1.png"
+width="852"
+height="480"
+srcset="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/02b-vector-form-1_hu4640173429957345022.png 480w, https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/02b-vector-form-1_hu4476375521981496617.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>这句话的几何意义是：&lt;/p>
+&lt;ul>
+&lt;li>$\vec x$ 是一个方向；&lt;/li>
+&lt;li>$\vec p$ 是全 1 向量，也是一个方向；&lt;/li>
+&lt;li>$a\vec x+b\vec p$ 是这两个方向的线性组合；&lt;/li>
+&lt;li>求 $a,b$，就是要用 $\vec x$ 和 $\vec p$ 拼出 $\vec y$。&lt;/li>
+&lt;/ul>
+&lt;p>两个样本点时，$\vec x,\vec p,\vec y$ 都是二维向量。只要 $\vec x$ 和 $\vec p$ 不共线，就能唯一拼出 $\vec y$。&lt;/p>
+&lt;h2 id="正交分解">正交分解
+&lt;/h2>&lt;p>视频为了后面推广，故意不用普通代数解方程，而是用正交分解。&lt;/p>
+&lt;p>以 $\vec p$ 的方向为横轴正方向。&lt;/p>
+&lt;p>任意向量 $\vec v$ 沿着 $\vec p$ 的投影为：&lt;/p>
+$$
+\begin{aligned}
+\operatorname{proj}_{\vec p}(\vec v)
+&amp;=
+\frac{\vec v\cdot \vec p}{\vec p\cdot \vec p}\vec p
+\end{aligned}
+$$
+&lt;p>垂直于 $\vec p$ 的部分为：&lt;/p>
+$$
+\begin{aligned}
+\vec v_\perp
+&amp;=
+\vec v-\frac{\vec v\cdot \vec p}{\vec p\cdot \vec p}\vec p
+\end{aligned}
+$$
+&lt;p>对 $\vec x$ 和 $\vec y$ 都这样拆：&lt;/p>
+$$
+\vec x=\vec x_{\parallel}+\vec x_{\perp}
+$$
+$$
+\vec y=\vec y_{\parallel}+\vec y_{\perp}
+$$
+&lt;p>其中：&lt;/p>
+$$
+\vec x_{\parallel}=\bar x \vec p,
+\qquad
+\vec y_{\parallel}=\bar y \vec p
+$$
+&lt;p>因为：&lt;/p>
+$$
+\begin{aligned}
+\frac{\vec x\cdot \vec p}{\vec p\cdot \vec p}
+&amp;=
+\frac{x_1+\cdots+x_n}{n}
+\\
+&amp;=
+\bar x
+\end{aligned}
+$$
+&lt;p>所以从几何上看，样本均值就是向量在全 1 方向上的投影系数。&lt;/p>
+&lt;p>两个点时，垂直于 $\vec p$ 的方向只有一维，因此只要比较垂直方向的分量，就可以得到：&lt;/p>
+$$
+a=\frac{\vec y_\perp\cdot \vec x_\perp}{\vec x_\perp\cdot \vec x_\perp}
+$$
+&lt;p>再由平行方向得到：&lt;/p>
+$$
+b=\bar y-a\bar x
+$$
+&lt;p>注意：视频这里真正想展示的不是“两个点怎么求直线”，而是为后面更多样本点铺路。&lt;/p>
+&lt;h2 id="推广到三个点">推广到三个点
+&lt;/h2>&lt;p>很多人听到“二维推广到三维”，会以为是把平面点变成空间点。但视频强调，这里的维度不是点本身的几何维度，而是样本数量。&lt;/p>
+&lt;ul>
+&lt;li>两个样本点 $\Rightarrow \vec x,\vec y,\vec p$ 是二维向量；&lt;/li>
+&lt;li>三个样本点 $\Rightarrow \vec x,\vec y,\vec p$ 是三维向量；&lt;/li>
+&lt;li>$n$ 个样本点 $\Rightarrow \vec x,\vec y,\vec p$ 是 $n$ 维向量。&lt;/li>
+&lt;/ul>
+&lt;p>三个样本点时，还是希望：&lt;/p>
+$$
+\vec y=a\vec x+b\vec p
+$$
+&lt;p>但是 $a\vec x+b\vec p$ 只能落在 $\vec x$ 和 $\vec p$ 张成的平面里。真实测量数据往往有误差，所以 $\vec y$ 不一定正好在这个平面上。&lt;/p>
+&lt;p>这就对应现实中的情况：三点通常不共线，所以不存在一条直线同时穿过三个点。&lt;/p>
+&lt;p>这时方程：&lt;/p>
+$$
+\vec y=a\vec x+b\vec p
+$$
+&lt;p>通常无解。&lt;/p>
+&lt;h2 id="关键一步把观测向量投影到模型平面上">关键一步：把观测向量投影到模型平面上
+&lt;/h2>&lt;p>既然 $\vec y$ 不在平面 $\operatorname{span}(\vec x,\vec p)$ 上，最自然的修正方式是：找到这个平面上离 $\vec y$ 最近的向量。&lt;/p>
+&lt;p>视频把这个平面上的投影向量记为 $\vec\gamma$，把误差向量记为 $\vec\delta$：&lt;/p>
+$$
+\vec y=\vec\gamma+\vec\delta
+$$
+&lt;p>其中：&lt;/p>
+&lt;ul>
+&lt;li>$\vec\gamma\in \operatorname{span}(\vec x,\vec p)$，是模型能解释的部分；&lt;/li>
+&lt;li>$\vec\delta$ 垂直于这个平面，是模型无法解释的残差；&lt;/li>
+&lt;li>$\|\vec\delta\|$ 越小，说明模型结果越接近观测数据。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/03-project-to-plane.png"
+width="852"
+height="480"
+srcset="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/03-project-to-plane_hu16809548254944778578.png 480w, https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/03-project-to-plane_hu5139016053513849316.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>最小二乘法的几何本质就是：&lt;/p>
+$$
+\min_{a,b}\|\vec y-(a\vec x+b\vec p)\|^2
+$$
+&lt;p>展开成分量就是：&lt;/p>
+$$
+\min_{a,b}\sum_{i=1}^{n}\bigl(y_i-(ax_i+b)\bigr)^2
+$$
+&lt;p>所以“平方和”不是凭空冒出来的，它来自残差向量模长的平方。&lt;/p>
+&lt;p>如果数据恰好共线，那么存在一组参数使残差为零，此时：&lt;/p>
+$$
+\min_{a,b}E(a,b)=0
+$$
+&lt;p>所以，“$\min$”不是最小二乘法额外添加的计算技巧，而是因为原方程通常无解，我们必须在许多近似答案中定义哪个最好。&lt;/p>
+&lt;h2 id="为什么投影是合理的最大似然估计的直觉">为什么投影是合理的：最大似然估计的直觉
+&lt;/h2>&lt;p>视频中间用“神枪手和普通人打靶”的例子解释最大似然估计。它想说明的是：&lt;/p>
+&lt;blockquote>
+&lt;p>在观测结果已经发生的前提下，我们倾向于选择最可能产生这个观测结果的解释。&lt;/p>
+&lt;/blockquote>
+&lt;p>对应到拟合问题：&lt;/p>
+&lt;ul>
+&lt;li>测量误差越大，发生的可能性通常越小；&lt;/li>
+&lt;li>如果某个平面上的 $\vec\gamma$ 离 $\vec y$ 更近，那么需要的误差 $\vec\delta$ 更小；&lt;/li>
+&lt;li>因此这个 $\vec\gamma$ 更可能是“真实线性关系”对应的预测向量。&lt;/li>
+&lt;/ul>
+&lt;p>如果进一步假设误差服从独立同方差的正态分布，那么最大似然估计会严格推出最小化残差平方和。这是统计解释；视频主要用几何直觉说明它为什么自然。&lt;/p>
+&lt;h2 id="如何计算投影向量">如何计算投影向量
+&lt;/h2>&lt;p>因为平面由 $\vec p$ 和 $\vec x$ 张成，先把 $\vec x$ 中平行于 $\vec p$ 的部分扣掉：&lt;/p>
+$$
+\vec x_c=\vec x-\bar x\vec p
+$$
+&lt;p>这里 $\vec x_c$ 是“中心化后的 $x$ 向量”，也就是：&lt;/p>
+$$
+\vec x_c=
+\begin{pmatrix}
+x_1-\bar x\\
+x_2-\bar x\\
+\vdots\\
+x_n-\bar x
+\end{pmatrix}
+$$
+&lt;p>中心化向量就是前面所说的 $\vec x$ 中垂直于 $\vec p$ 的分量。&lt;/p>
+&lt;p>同理：&lt;/p>
+$$
+\vec y_c=\vec y-\bar y\vec p
+$$
+&lt;p>因为 $\vec x_c$ 与 $\vec p$ 正交，所以平面中的两个正交方向可以看成：&lt;/p>
+&lt;ol>
+&lt;li>均值方向：$\vec p$&lt;/li>
+&lt;li>$x$ 的变化方向：$\vec x_c$&lt;/li>
+&lt;/ol>
+&lt;p>于是 $\vec y$ 在平面上的投影为：&lt;/p>
+$$
+\begin{aligned}
+\vec\gamma
+&amp;=
+\bar y\vec p
++
+\frac{\vec y_c\cdot \vec x_c}{\vec x_c\cdot \vec x_c}\vec x_c
+\end{aligned}
+$$
+&lt;p>也就是：&lt;/p>
+$$
+\begin{aligned}
+\vec\gamma
+&amp;=
+\bar y\vec p
++
+a(\vec x-\bar x\vec p)
+\end{aligned}
+$$
+&lt;p>其中：&lt;/p>
+$$
+a=
+\frac{\vec y_c\cdot \vec x_c}{\vec x_c\cdot \vec x_c}
+$$
+&lt;p>再整理：&lt;/p>
+$$
+\begin{aligned}
+\vec\gamma
+&amp;=
+a\vec x+(\bar y-a\bar x)\vec p
+\end{aligned}
+$$
+&lt;p>所以：&lt;/p>
+$$
+b=\bar y-a\bar x
+$$
+&lt;p>&lt;img src="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/04-gamma-expression.png"
+width="852"
+height="480"
+srcset="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/04-gamma-expression_hu13193914226498089982.png 480w, https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/04-gamma-expression_hu11889332126357652673.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>这一步是整段推导的核心：先用 $\vec p$ 解释均值，再用 $\vec x_c$ 解释围绕均值的变化。&lt;/p>
+&lt;h2 id="推广到任意多个样本点">推广到任意多个样本点
+&lt;/h2>&lt;p>推广到 $n$ 个样本点时，向量都进入 $\mathbb R^n$，但核心结构不变：&lt;/p>
+&lt;ul>
+&lt;li>$\vec p=(1,1,\dots,1)^T$&lt;/li>
+&lt;li>$\vec x=(x_1,x_2,\dots,x_n)^T$&lt;/li>
+&lt;li>$\vec y=(y_1,y_2,\dots,y_n)^T$&lt;/li>
+&lt;li>模型向量 $a\vec x+b\vec p$ 仍然落在二维子空间 $\operatorname{span}(\vec x,\vec p)$&lt;/li>
+&lt;li>最小二乘解仍然是把 $\vec y$ 投影到这个二维子空间上&lt;/li>
+&lt;/ul>
+&lt;p>令：&lt;/p>
+$$
+\vec x_c=\vec x-\bar x\vec p
+$$
+$$
+\vec y_c=\vec y-\bar y\vec p
+$$
+&lt;p>则斜率：&lt;/p>
+$$
+\begin{aligned}
+a&amp;=
+\frac{\vec y_c\cdot \vec x_c}{\vec x_c\cdot \vec x_c}
+\\
+&amp;=
+\frac{\sum_{i=1}^{n}(x_i-\bar x)(y_i-\bar y)}
+{\sum_{i=1}^{n}(x_i-\bar x)^2}
+\end{aligned}
+$$
+&lt;p>截距：&lt;/p>
+$$
+b=\bar y-a\bar x
+$$
+&lt;p>&lt;img src="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/05-n-dimensional-result.png"
+width="852"
+height="480"
+srcset="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/05-n-dimensional-result_hu11160704865252891364.png 480w, https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/05-n-dimensional-result_hu13397400503238242012.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>这里要注意两个统计量：&lt;/p>
+&lt;p>偏差平方和：&lt;/p>
+$$
+S_{xx}=\sum_{i=1}^{n}(x_i-\bar x)^2
+$$
+&lt;p>偏差乘积和：&lt;/p>
+$$
+S_{xy}=\sum_{i=1}^{n}(x_i-\bar x)(y_i-\bar y)
+$$
+&lt;p>所以斜率也可以写成：&lt;/p>
+$$
+a=\frac{S_{xy}}{S_{xx}}
+$$
+&lt;p>如果用样本方差、样本协方差表示，因为二者通常都除以 $n-1$，比例中的系数会抵消，因此也可理解为：&lt;/p>
+$$
+a=\frac{s_{xy}}{s_{xx}}
+$$
+&lt;p>其中 $s_{xy}$ 是样本协方差，$s_{xx}$ 是 $x$ 的样本方差。&lt;/p>
+&lt;h2 id="平方和分解为什么能衡量拟合好坏">平方和分解：为什么能衡量拟合好坏
+&lt;/h2>&lt;p>视频最后把几何图中的直角三角形和统计平方和联系起来。&lt;/p>
+&lt;p>中心化后的 $\vec y_c$ 可以分解成：&lt;/p>
+$$
+\vec y_c=\vec\gamma_c+\vec\delta
+$$
+&lt;p>其中：&lt;/p>
+&lt;ul>
+&lt;li>$\vec\gamma_c$：被 $x$ 的变化解释的部分；&lt;/li>
+&lt;li>$\vec\delta$：残差；&lt;/li>
+&lt;li>二者正交。&lt;/li>
+&lt;/ul>
+&lt;p>由勾股定理：&lt;/p>
+$$
+\begin{aligned}
+\|\vec y_c\|^2
+&amp;=
+\|\vec\gamma_c\|^2+\|\vec\delta\|^2
+\end{aligned}
+$$
+&lt;p>写成统计语言：&lt;/p>
+$$
+\begin{aligned}
+\sum_{i=1}^{n}(y_i-\bar y)^2
+&amp;=
+\sum_{i=1}^{n}(\hat y_i-\bar y)^2
++
+\sum_{i=1}^{n}(y_i-\hat y_i)^2
+\end{aligned}
+$$
+&lt;p>也就是：&lt;/p>
+$$
+\begin{aligned}
+\text{总偏差平方和}
+&amp;=
+\text{回归平方和}
++
+\text{残差平方和}
+\end{aligned}
+$$
+&lt;p>视频中写作：&lt;/p>
+$$
+s_{yy}^2=U+Q
+$$
+&lt;p>其中：&lt;/p>
+&lt;ul>
+&lt;li>$U$：回归平方和，表示能被线性模型解释的部分；&lt;/li>
+&lt;li>$Q$：残差平方和，表示线性模型解释不了的部分。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/06-sum-of-squares.png"
+width="852"
+height="480"
+srcset="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/06-sum-of-squares_hu7919688275389170479.png 480w, https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/06-sum-of-squares_hu2000142298743321938.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>如果残差平方和 $Q$ 很大，说明 $\vec y$ 的变化中只有很少一部分能由 $\vec x$ 解释，也就是线性关系较弱。&lt;/p>
+&lt;h2 id="相关系数的几何意义">相关系数的几何意义
+&lt;/h2>&lt;p>相关系数：&lt;/p>
+$$
+r=
+\frac{\sum_{i=1}^{n}(x_i-\bar x)(y_i-\bar y)}
+{\sqrt{\sum_{i=1}^{n}(x_i-\bar x)^2}
+\sqrt{\sum_{i=1}^{n}(y_i-\bar y)^2}}
+$$
+&lt;p>用向量写就是：&lt;/p>
+$$
+r=
+\frac{\vec x_c\cdot \vec y_c}
+{\|\vec x_c\|\|\vec y_c\|}
+$$
+&lt;p>根据点乘夹角公式：&lt;/p>
+$$
+r=\cos\theta
+$$
+&lt;p>这里的 $\theta$ 是中心化向量 $\vec x_c$ 和 $\vec y_c$ 的夹角。&lt;/p>
+&lt;p>&lt;img src="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/07-correlation-coefficient.png"
+width="852"
+height="480"
+srcset="https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/07-correlation-coefficient_hu9066113600168470271.png 480w, https://unkillablevillain-blog.online/p/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E7%9A%84%E5%87%A0%E4%BD%95%E5%8E%9F%E7%90%86/07-correlation-coefficient_hu16096106995695189042.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>所以相关系数的几何解释是：&lt;/p>
+&lt;ul>
+&lt;li>$r\approx 1$：夹角接近 $0^\circ$，$x$ 增大时 $y$ 通常也增大，强正相关；&lt;/li>
+&lt;li>$r\approx -1$：夹角接近 $180^\circ$，$x$ 增大时 $y$ 通常减小，强负相关；&lt;/li>
+&lt;li>$r\approx 0$：夹角接近 $90^\circ$，线性关系弱。&lt;/li>
+&lt;/ul></description></item></channel></rss>
